@@ -7,7 +7,8 @@ nav: true
 nav_order: 3
 ---
 
-# A more open process
+
+### A more open process
 
 For this edition of the Blogposts Track, we will forgo the need for total anonymity. We will allow
 authors to render their posts on their own repositories. In our opinion, this still largely follows the 
@@ -22,7 +23,7 @@ during the reviewing process.
 However, we understand the desire for total anonymity. Authors that wish to have a fully double-blind process might
 consider creating new GitHub accounts without identifying information which will only be used for this track.
 
-# Backend
+### Backend
 
 The workflow you will use to participate in this track should be relatively familiar to you if you are
 familiar with [Github Pages](https://pages.github.com/). Specifically, our website is based off of 
@@ -34,7 +35,7 @@ process, but it also utilizes a separate build step using
 **We stress that you must pay close attention to the steps presented in this guide. Small mistakes
 here can have very hard-to-debug consequences.**
 
-# Setup & Writing workflows
+### Setup & Writing workflows
 
 1. First and foremost, [fork this repository](https://github.com/iclr-blogposts/staging). 
     We stress that you must fork the [staging repository](https://github.com/iclr-blogposts/staging), not the main repository.
@@ -55,19 +56,19 @@ here can have very hard-to-debug consequences.**
 **Should you edit ANY files other than `_config.yml`, your new post inside the `_posts` directory, and your new folder inside the `assets` directory,
 your pull requests will automatically be ignored.**
 
-# Submission workflow
+### Submission workflow
 
 1. Strip all identifying information from your blog post. It is fine if you keep your names inside comments inside the MarkDown file
 2. Make a new Pull Request from your fork to the [staging repository](https://github.com/iclr-blogposts/staging). Your code will
     then be merged into the staging version of the blog
 3. Submit the name of your blog post and its URL to our OpenReview [TODO LINK]
 
-# Reviewing workflow
+### Reviewing workflow
 
 Reviewers will be asked to only view the live content of the blog. We ask that they act in good faith, and refrain from
 digging into the repository's logs and closed Pull Requests to find any identifying information on the authors.
 
-# Camera-ready
+### Camera-ready
 
 1. Accepted submissions will be notified
 2. Authors will then add their identifying information to the blog post

@@ -3,7 +3,7 @@ layout: about
 title: about
 permalink: /about
 nav: true
-nav_order: 4
+nav_order: 1
 subtitle:
 
 # profile:
@@ -18,7 +18,7 @@ subtitle:
 ---
 
 
-## Motivation
+# ICLR 2023 Blogposts Track
 
 The Machine Learning community is currently experiencing a
 [reproducibility crisis](https://neuripsconf.medium.com/designing-the-reproducibility-program-for-neurips-2020-7fcccaa5c6ad)
@@ -52,7 +52,10 @@ to expect a significant portion of the machine learning community to
 contribute to such an initiative when everyone is trying to establish
 themselves through publications.
 
-### A Blog Post Conference Track
+## A Blog Post Conference Track
+
+Last year, we ran the first iteration of the [Blogpost track at ICLR 2022](https://iclr-blog-track.github.io/home/)!
+It was very successful, attracting over 60 submissions and 20 accepted posts.
 
 Our goal is to create a formal call for blog posts at ICLR to
 incentivize and reward researchers to review past work and summarize the
@@ -69,6 +72,16 @@ post, we decided to restrict the range of topics for this call for blog
 posts. We identified that the blog posts that would bring to most value
 to the community and the conference would be posts that distill and
 discuss *previously published papers*.
+
+## Key Dates
+
+- **Submission deadline**: February 2nd, 2023
+&nbsp;
+
+- **Notification of acceptance**: March 31st, 2023
+&nbsp;
+
+- **Camera-ready merge**: *TBD*
 
 ### A call for blog posts discussing work previously published at ICLR
 
@@ -90,7 +103,6 @@ The format and process for this blog post track is as follows:
 
 - The posts will be published under a unified template (see [the submission instructions]({{ '/2023/submissions/' | relative_url }})
     and hosted on this very website, under [the "blog"]({{ '/2023/blog/' | relative_url }}) of this website.
-
 
 ## Submissions
 

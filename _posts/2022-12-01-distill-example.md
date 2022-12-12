@@ -2,7 +2,8 @@
 layout: distill
 title: a distill-style blog post
 description: an example of a distill-style blog post and main elements
-date: 2022-11-23
+date: 2022-12-01
+htmlwidgets: true
 
 authors:
   - name: Albert Einstein
@@ -18,7 +19,8 @@ authors:
     affiliations:
       name: IAS, Princeton
 
-bibliography: 2018-12-22-distill.bib
+# must be the exact same name as your blogpost
+bibliography: 2022-12-01-distill-example.bib  
 
 # Optionally, you can add a table of contents to your post.
 # NOTES:
@@ -28,10 +30,9 @@ bibliography: 2018-12-22-distill.bib
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
   - name: Equations
-    # if a section has subsections, you can add them as follows:
-    # subsections:
-    #   - name: Example Child Subsection 1
-    #   - name: Example Child Subsection 2
+  - name: Images and Figures
+    subsections:
+    - name: Interactive Figures
   - name: Citations
   - name: Footnotes
   - name: Code Blocks
@@ -74,7 +75,101 @@ $$
 Note that MathJax 3 is [a major re-write of MathJax](https://docs.mathjax.org/en/latest/upgrading/whats-new-3.0.html) that brought a significant improvement to the loading and rendering speed, which is now [on par with KaTeX](http://www.intmath.com/cg5/katex-mathjax-comparison.php).
 
 
-***
+## Images and Figures
+
+Its generally a better idea to avoid linking to images hosted elsewhere - links can break and you
+might face losing important information in your blog post.
+To include images in your submission in this way, you must do something like the following:
+
+```markdown
+{% raw %}{% include figure.html path="assets/img/2022-12-01-distill-example/iclr.png" class="img-fluid" %}{% endraw %}
+```
+
+which results in the following image:
+
+{% include figure.html path="assets/img/2022-12-01-distill-example/iclr.png" class="img-fluid" %}
+
+To ensure that there are no namespace conflicts, you must save your asset to your unique directory
+`/assets/img/2023-05-01-[SUBMISSION NAME]` within your submission.
+
+Please avoid using the direct markdown method of embedding images; they may not be properly resized.
+Some more complex ways to load images (note the different styles of the shapes/shadows):
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/9.jpg" class="img-fluid rounded z-depth-1" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/7.jpg" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    A simple, elegant caption looks good between image rows, after each row, or doesn't have to be there at all.
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/8.jpg" class="img-fluid z-depth-2" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/10.jpg" class="img-fluid z-depth-2" %}
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/11.jpg" class="img-fluid"  %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/12.jpg" class="img-fluid" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2022-12-01-distill-example/7.jpg" class="img-fluid" %}
+    </div>
+</div>
+
+### Interactive Figures
+
+Here's how you could embed interactive figures that have been exported as HTML files.
+Note that we will be using plotly for this demo, but anything built off of HTML should work
+(**no extra javascript is allowed!**).
+All that's required is for you to export your figure into HTML format, and make sure that the file
+exists in the `assets/html/[SUBMISSION NAME]/` directory in this repository's root directory.
+To embed it into any page, simply insert the following code anywhere into your page.
+
+```markdown
+{% raw %}{% include [FIGURE_NAME].html %}{% endraw %} 
+```
+
+For example, the following code can be used to generate the figure underneath it.
+
+```python
+import pandas as pd
+import plotly.express as px
+
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv')
+
+fig = px.density_mapbox(
+    df, lat='Latitude', lon='Longitude', z='Magnitude', radius=10,
+    center=dict(lat=0, lon=180), zoom=0, mapbox_style="stamen-terrain")
+fig.show()
+
+fig.write_html('./assets/html/2022-12-01-distill-example/plotly_demo_1.html')
+```
+
+And then include it with the following:
+
+```html
+{% raw %}<div class="l-body">
+  <iframe src="{{ 'assets/html/2022-12-01-distill-example/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%"></iframe>
+</div>{% endraw %}
+```
+
+Voila!
+
+<div class="l-body">
+  <iframe src="{{ 'assets/html/2022-12-01-distill-example/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%"></iframe>
+</div>
 
 ## Citations
 
@@ -131,6 +226,7 @@ string myString;
 }
 
 {% endhighlight %}
+
 ***
 
 ## Diagrams
@@ -189,48 +285,6 @@ For more details on using the plugin visit: [jekyll-twitter-plugin](https://gith
 
 ***
 
-## Images
-
-Markdown (note the inclusion of `{% raw  %}{{ site.url }}{% endraw  %}`):
-
-![test image]({{ site.url }}/assets/distill-example/9.jpg)
-
-Some more complex ways to load images, if the standard MarkDown way doesn't suit you.
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/9.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/7.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    A simple, elegant caption looks good between image rows, after each row, or doesn't have to be there at all.
-</div>
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/8.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/10.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/11.jpg" class="img-fluid rounded z-depth-1"  %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/12.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/distill-example/7.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-
-***
 
 ## Layouts
 

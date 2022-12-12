@@ -2,7 +2,7 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: ICLR Blogposts # the website title (if blank, full name will be used instead)
+title: ICLR Blogposts 2023 # the website title (if blank, full name will be used instead)
 first_name: abc
 middle_name: b
 last_name: c
@@ -16,10 +16,10 @@ footer_text: >
 keywords: machine-learning, ml, deep-learning, reinforcement-learning, iclr  # add your own keywords or leave empty
 
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: ⚛️  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: iclr_favicon.ico  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://iclr-blogposts.github.io # the base hostname & protocol for your site
-baseurl: /2023/ # the subpath of your site, e.g. /blog/
+baseurl: /2023 # the subpath of your site, e.g. /blog/
 last_updated: false # set to true if you want to display last updated in the footer
 impressum_path:  # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
 
@@ -186,7 +186,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-target-blank
   - jekyll-twitter-plugin
-  - jemoji
+  # - jemoji
 
 # Sitemap settings
 defaults:
