@@ -40,6 +40,25 @@ toc:
   - name: Code Blocks
   - name: Layouts
   - name: Other Typography?
+
+# Below is an example of injecting additional post-specific styles.
+# This is used in the 'Layouts' section of this post.
+# If you use this post as a template, delete this _styles block.
+_styles: >
+  .fake-img {
+    background: #bbb;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+  }
+  .fake-img p {
+    font-family: monospace;
+    color: white;
+    text-align: left;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 16px;
+  }
 ---
 
 ## Equations
@@ -143,15 +162,15 @@ fig.write_html('./assets/html/2022-12-01-distill-example/plotly_demo_1.html')
 And then include it with the following:
 
 ```html
-{% raw %}<div class="l-body">
-  <iframe src="{{ 'assets/html/2022-12-01-distill-example/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%"></iframe>
+{% raw %}<div class="l-page">
+  <iframe src="{{ 'assets/html/2022-12-01-distill-example/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="600px" width="100%"></iframe>
 </div>{% endraw %}
 ```
 
 Voila!
 
-<div class="l-body">
-  <iframe src="{{ 'assets/html/2022-12-01-distill-example/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%"></iframe>
+<div class="l-page">
+  <iframe src="{{ 'assets/html/2022-12-01-distill-example/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="600px" width="100%"></iframe>
 </div>
 
 ## Citations

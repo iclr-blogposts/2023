@@ -17,7 +17,7 @@ Reviewers will be able to access the posts directly through a public url on this
 Reviewers should refrain from looking at the git history for the post, which may reveal information about the authors.
 
 This still largely follows the Double-Blind reviewing principle; it is no less double-blind than when reviewers are asked to score papers that have previously been released to [arXiv](https://arxiv.org/), an overwhelmingly common practice in the ML community.
-This approach was chosen to lower the burden on both the organizers and the authors; last year, **many** submissions had to be reworked once deployed due to a variety of reasons.
+This approach was chosen to lower the burden on both the organizers and the authors; last year, many submissions had to be reworked once deployed due to a variety of reasons.
 By allowing the authors to render their websites to Github Pages prior to the review process, we hope to avoid this issue entirely. 
 We also avoid the issue of having to host the submissions on a separate server during the reviewing process.
 
@@ -26,7 +26,7 @@ Authors that wish to have a fully double-blind process might consider creating n
 
 ### Template
 
-The workflow you will use to participate in this track should be relatively familiar to you if have used [Github Pages](https://pages.github.com/). Specifically, our website is based off of [AL-Folio](https://github.com/alshedivat/al-folio). 
+The workflow you will use to participate in this track should be relatively familiar to you if have used [Github Pages](https://pages.github.com/). Specifically, our website is uses the [Al-Folio](https://github.com/alshedivat/al-folio) template.
 This template uses Github Pages as part of its process, but it also utilizes a separate build step using [Github Actions](https://github.com/features/actions) and intermediary [Docker Images](https://www.docker.com/).
 
 **We stress that you must pay close attention to the steps presented in this guide. 
@@ -39,13 +39,12 @@ Small mistakes here can have very hard-to-debug consequences.**
 - [Creating a Blog Post](#creating-a-blog-post)
 - [Local Serving](#local-serving)
    - [Method 1: Using Docker](#method-1-using-docker)
-      - [Serving](#serving)
    - [Method 2: Using Jekyll Manually](#method-2-using-jekyll-manually)
       - [Installation](#installation)
       - [Manual Serving](#manual-serving)
-- [Submitting Your Blog Post](#submitting-your-blog-post)
+- [Submitting Your Blog Post (TBD)](#submitting-your-blog-post)
 - [Reviewing Process](#reviewing-process)
-- [Camera Ready](#camera-ready)
+- [Camera Ready (TBD)](#camera-ready)
 
 
 ### Quickstart
@@ -54,26 +53,34 @@ This section provides a summary of the workflow for creating and submitting a bl
 For more details about any of these steps, please refer to the appropriate section.
 
 
-1. Fork or download our [staging repository](https://github.com/iclr-blogposts/staging). We stress that you work with the [staging repository](https://github.com/iclr-blogposts/staging), not the main repository.
+1. Fork or download our [staging repository](https://github.com/iclr-blogposts/staging). 
+    We stress that you work with the [staging repository](https://github.com/iclr-blogposts/staging), not the main repository.
     - If you do fork this repo, rename your fork. You probably should rename it
     using a personalized name inspired by the subject of your submission. This is a **project** website, not a **user** website.
-    - If you wish to deploy the website on your own account before submitting a pull request, follow the [`Deployment` instructions](https://github.com/iclr-blogposts/staging/blob/master/README.md#deployment) 
-    in the README **to the letter**. 
-    Pay particular attention to the instructions detailing how you must edit the `_config.yml`.
+    - If you wish to deploy the website on your own account before submitting a pull request, follow the [deployment instructions](https://github.com/iclr-blogposts/staging/blob/master/README.md#deployment) in the README **very carefully**. Pay particular attention to the instructions detailing how you must edit the `_config.yml`.
+
     Note that any pull request to our repo will only permit modifying certain files, so you may have to omit some changes during the pull request.
+
 2. Create your blog post content as detailed in the [Creating a Blog Post](#creating-a-blog-post) section.
-section. In summary, you will create a markdown file in the `_posts/` directory with the format
-`_posts/2022-12-01-[SUBMISSION NAME].md`. Any static image assets will be added to 
-`assets/img/2022-12-01-[SUBMISSION NAME]/`, any interactive HTML figures will be added 
-to `assets/html/2022-12-01-[SUBMISSION NAME]/`, and all of your citations will go into a bibtex file in `assets/bibliography/2022-12-01-[SUBMISSION NAME].bib`. Read the [relevant section](#creating-a-blog-post) for more details. 
-    - **Make sure to omit any identifying information for the review process.**
-3. To render your website locally, follow the instructions for ["Local setup using Docker (Recommended on Windows)"](https://github.com/iclr-blogposts/iclr-blogposts.github.io/blob/master/README.md#deployment).
-    Alternatively, follow their instructions for rendering the website via conventional `$ bundle exec jekyll serve` commands. 
-    More information can be found in the ["Local Serving"](#local-serving) section.
+    In summary, to create your post, you will: 
+    - Create a markdown file in the `_posts/` directory with the format `_posts/2022-12-01-[SUBMISSION NAME].md`. 
+    - Add any static image assets will be added to `assets/img/2022-12-01-[SUBMISSION NAME]/`.
+    - Add any interactive HTML figures will be added  to `assets/html/2022-12-01-[SUBMISSION NAME]/`. 
+    - Put your citations into a bibtex file in `assets/bibliography/2022-12-01-[SUBMISSION NAME].bib`. 
+
+    You **should not** touch anything else in the blog post.
+    Read the [relevant section](#creating-a-blog-post) for more details.
+    **Make sure to omit any identifying information for the review process.**
+
+3. To render your website locally, you can build a docker container via `$ ./bin/docker_build_image.sh` to serve your website locally. 
+    You can then run it with `$ ./bin/docker_run.sh`.
+    Alternatively, you can setup your loval environment to render the website via conventional `$ bundle exec jekyll serve` commands. 
+    More information for both of these configuratoins can be found in the [Local Serving](#local-serving) section.
+
 4. When ready to submit, open a pull request to our [staging repository](https://github.com/iclr-blogposts/staging). Your PR may only add files specified as specified in the [Creating a Blog Post](#creating-a-blog-post) section. Any modification to any other files will require you to undo or omit these changes.
 See the section on [submitting your blog post](#submitting-your-blog-post) for more details. 
-5. If accepted, we will then merge the accepted posts to our main repository. See the section on [merging an accepted blog post](#camera-ready)
-for more details.
+
+5. If accepted, we will then merge the accepted posts to our main repository. See the [camera ready](#camera-ready) section for more details on merging in an accepted blog post.
 
 **Should you edit ANY files other than `_config.yml`, your new post inside the `_posts` directory, and your new folder inside the `assets` directory,
 your pull requests will automatically be ignored.**
@@ -175,11 +182,14 @@ your_blogpost_repo/
 └── ...
 ```
 
-Your blogpost markdown file will go in `_posts/2022-12-01-[YOUR SUBMISSION].md`.
-Any static images should go in `assets/img/2022-12-01-[YOUR SUBMISSION]/`.
-Any interactive HTML figures should be saved in `assets/html/2022-12-01-[YOUR SUBMISSION]`.
-Your citations should be in a bibtex file saved in `assets/bibliography/2022-12-01-[YOUR SUBMISSION].bib`.
-You **should not** touch anything else in the blog post release; everything else will be set by the conference committee.
+In summary, to create your post, you will: 
+
+- Create a markdown file in the `_posts/` directory with the format `_posts/2022-12-01-[SUBMISSION NAME].md`. 
+- Add any static image assets will be added to `assets/img/2022-12-01-[SUBMISSION NAME]/`.
+- Add any interactive HTML figures will be added  to `assets/html/2022-12-01-[SUBMISSION NAME]/`. 
+- Put your citations into a bibtex file in `assets/bibliography/2022-12-01-[SUBMISSION NAME].bib`. 
+
+You **should not** touch anything else in the blog post.
 
 Note that `2022-12-01-[YOUR SUBMISSION]` serves as a tag to your submission, so it should be the
 same for all three items.
@@ -217,17 +227,34 @@ We will now discuss how you can *serve* your blog site locally, so you can visua
 
 #### Method 1: Using Docker 
 
-To render your website locally, follow the instructions for [Local setup using Docker (Recommended on Windows)](https://github.com/iclr-blogposts/iclr-blogposts.github.io/blob/master/README.md#deployment).
+To render your website locally, we follow the instructions for [Local setup using Docker (Recommended on Windows)](https://github.com/iclr-blogposts/iclr-blogposts.github.io/blob/master/README.md#local-setup-using-docker-recommended-on-windows), but specifically you will need to create your own docker container rather than pull it from Dockerhub (because we modified the Gemfile).
 
-**TODO: update this!!!**
+In summary, the steps are as follows:
+
+1. Create your Docker image:
+
+    ```
+    ./bin/docker_build_image.sh
+    ```
+
+    Remove the `Gemfile.lock` file if prompted.
+    This will create a docker image labeled as `al-folio:latest`. 
+
+2. Run the Docker image:
+
+    ```
+    ./bin/docker_run.sh
+    ```
+
+    Remove the `Gemfile.lock` file if prompted. 
+    Don't use `dockerhub_run.sh`; this may result in issues with missing jekyll dependencies.
+
 
 #### Method 2: Using Jekyll Manually
 
 For users wishing to not use a Docker container, you can install Jekyll directly to your computer and build the site using Jekyll directly.
 This is done at your own risk, as there are many potential points of error!
-Follow the instructions for rendering the website via conventional `$ bundle exec jekyll serve` commands.
-
-**TODO: update this!!!**
+Follow the instructions for rendering the website via the conventional method of `$ bundle exec jekyll serve`
 
 ##### Installation
 
@@ -237,18 +264,23 @@ The instructions here are only for convenience - you are responsible for making 
 **Ubuntu/Debian**
 
 1. Install Ruby
-```bash
-sudo apt install ruby-full
-```
+
+    ```bash
+    sudo apt install ruby-full
+    ```
+
 2. Once installed, add the following to your `.bashrc` or whatever terminal startup script you may use (this is important because otherwise gem may complain about needing sudo permission to install packages):
-```bash
-export GEM_HOME="$HOME/.gem"
-export PATH="$HOME/.gem/bin:$PATH"
-```
+
+    ```bash
+    export GEM_HOME="$HOME/.gem"
+    export PATH="$HOME/.gem/bin:$PATH"
+    ```
+
 3. Install Jekyll and Bundler:
-```bash
-gem install jekyll bundler
-```
+
+    ```bash
+    gem install jekyll bundler
+    ```
 
 **MacOS and Windows**
 
@@ -277,7 +309,7 @@ bundle exec jekyll serve
 You should see something along the lines of:
 
 ```
-> jekyll serve
+> bundle exec jekyll serve
 Configuration file: /home/$USER/blog_post_repo/_config.yml
             Source: /home/$USER/blog_post_repo
        Destination: /home/$USER/blog_post_repo/_site

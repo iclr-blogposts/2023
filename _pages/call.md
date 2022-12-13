@@ -35,7 +35,7 @@ We are slightly relaxing the double-blind constraints by assuming good faith fro
 
 ## Submission Guidelines
 
-See [the submission instructions]({{ '/submitting/' | relative_url }}) for more details.
+> See [the submission instructions]({{ '/submitting/' | relative_url }}) for more details.
 
 For this edition of the Blogposts Track, we will forgo the requirement for total anonymity. 
 The blog posts **must be anonymized for the review process**, but users will submit their anonymized blog posts via a pull request to a staging repository (in addition to a submission on OpenReview).
@@ -44,7 +44,7 @@ Reviewers will be able to access the posts directly through a public url on this
 Reviewers should refrain from looking at the git history for the post, which may reveal information about the authors.
 
 This still largely follows the Double-Blind reviewing principle; it is no less double-blind than when reviewers are asked to score papers that have previously been released to [arXiv](https://arxiv.org/), an overwhelmingly common practice in the ML community.
-This approach was chosen to lower the burden on both the organizers and the authors; last year, **many** submissions had to be reworked once deployed due to a variety of reasons.
+This approach was chosen to lower the burden on both the organizers and the authors; last year, many submissions had to be reworked once deployed due to a variety of reasons.
 By allowing the authors to render their websites to Github Pages prior to the review process, we hope to avoid this issue entirely. 
 We also avoid the issue of having to host the submissions on a separate server during the reviewing process.
 
