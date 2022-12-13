@@ -1,9 +1,14 @@
 ---
 layout: distill
-title: a distill-style blog post
-description: an example of a distill-style blog post and main elements
+title: Sample Blog Post
+description: Your blog post's abstract.
+  This is an example of a distill-style blog post and the main elements it supports.
 date: 2022-12-01
 htmlwidgets: true
+
+# Anonymize when submitting
+# authors:
+#   - name: Anonymous
 
 authors:
   - name: Albert Einstein
@@ -22,12 +27,9 @@ authors:
 # must be the exact same name as your blogpost
 bibliography: 2022-12-01-distill-example.bib  
 
-# Optionally, you can add a table of contents to your post.
-# NOTES:
+# Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
-#   - we may want to automate TOC generation in the future using
-#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
   - name: Equations
   - name: Images and Figures
@@ -38,25 +40,6 @@ toc:
   - name: Code Blocks
   - name: Layouts
   - name: Other Typography?
-
-# Below is an example of injecting additional post-specific styles.
-# If you use this post as a template, delete this _styles block.
-_styles: >
-  .fake-img {
-    background: #bbb;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-  }
-  .fake-img p {
-    font-family: monospace;
-    color: white;
-    text-align: left;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 16px;
-  }
-
 ---
 
 ## Equations
