@@ -2,7 +2,7 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: ICLR Blogposts 2023 # the website title (if blank, full name will be used instead)
+title: ICLR Blogposts 2023 (staging) # the website title (if blank, full name will be used instead)
 first_name: abc
 middle_name: b
 last_name: c
