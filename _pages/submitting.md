@@ -26,7 +26,7 @@ Authors that wish to have a fully double-blind process might consider creating n
 
 ### Template
 
-The workflow you will use to participate in this track should be relatively familiar to you if have used [Github Pages](https://pages.github.com/). Specifically, our website is uses the [Al-Folio](https://github.com/alshedivat/al-folio) template.
+The workflow you will use to participate in this track should be relatively familiar to you if have used [Github Pages](https://pages.github.com/). Specifically, our website uses the [Al-Folio](https://github.com/alshedivat/al-folio) template.
 This template uses Github Pages as part of its process, but it also utilizes a separate build step using [Github Actions](https://github.com/features/actions) and intermediary [Docker Images](https://www.docker.com/).
 
 **We stress that you must pay close attention to the steps presented in this guide. 
