@@ -87,22 +87,22 @@ discuss *previously published papers*.
 
 The format and process for this blog post track is as follows:
 
-- Write a post on a subject. A paper on the same subject must have been previously published at ICLR relatively recently, with the
-    constraint that one cannot write a blog post on work that they have
-    a conflict of interest with. This implies that one cannot review
-    their own work, or work originating from their institution or
-    company. We want to foster productive discussion about *ideas*, and
-    prevent posts that intentionally aim to help or hurt individuals or
-    institutions.
 
-- Blogs will be peer-reviewed, double-blind,
-    for quality and novelty of the content: clarity and pedagogy of the
-    exposition, new theoretical or practical insights,
-    reproduction/extension of experiments, etc. However, we are slightly relaxing the double-blind constraints by 
-    assuming good faith from both submitters and reviewers (see [the submission instructions]({{ '/2023/submissions/' | relative_url }}) for more details).
+- Write a post on a subject that has been published at ICLR relatively recently.
+    The authors of the blog posts will have to declare their conflicts of interest (positive nor negative) with the paper (and their authors) they write about. 
+    Conflicts of interest include:
+    - Recent collaborators (less than 3 years)
+    - Current institution.
 
-- The posts will be published under a unified template (see [the submission instructions]({{ '/2023/submissions/' | relative_url }})
-    and hosted on this very website, under [the "blog"]({{ '/2023/blog/' | relative_url }}) of this website.
+    Blog Posts must not be used to highlight or advertise past publications of the authors of of their lab. 
+    Previously, we did not accept submissions with a conflict of interest, however this year we will only ask the authors to report if they have such a conflict. 
+    If so, reviewers will be asked to judge if the submission is sufficiently critical and objective of the papers addressed in the blog post. 
+
+- The posts will be created and published under a unified template; see [the submission instructions]({{ '/submitting/' | relative_url }})
+    and the [sample post]({{ '/blog/2022/distill-example' | relative_url }}) hosted on the blog of this website.
+
+- Blogs will be peer-reviewed (double-blind) for quality and novelty of the content: clarity and pedagogy of the exposition, new theoretical or practical insights, reproduction/extension of experiments, etc.
+We are slightly relaxing the double-blind constraints by assuming good faith from both submitters and reviewers (see [the submission instructions]({{ '/submitting/' | relative_url }}) for more details).
 
 ## Submissions
 

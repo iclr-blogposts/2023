@@ -13,9 +13,15 @@ We invite all researchers and practicioners to submit a blogpost discussing work
 
 The format and process for this blog post track is as follows:
 
-- Write a post on a subject that has been published at ICLR relatively recently, with the constraint that one cannot write a blog post on work that they have a conflict of interest with.
-    This implies that one cannot review their own work, or work originating from their institution or company.
-    We want to foster productive discussion about ideas, and prevent posts that intentionally aim to help or hurt individuals or institutions.
+- Write a post on a subject that has been published at ICLR relatively recently.
+    The authors of the blog posts will have to declare their conflicts of interest (positive nor negative) with the paper (and their authors) they write about. 
+    Conflicts of interest include:
+    - Recent collaborators (less than 3 years)
+    - Current institution.
+
+    Blog Posts must not be used to highlight or advertise past publications of the authors of of their lab. 
+    Previously, we did not accept submissions with a conflict of interest, however this year we will only ask the authors to report if they have such a conflict. 
+    If so, reviewers will be asked to judge if the submission is sufficiently critical and objective of the papers addressed in the blog post. 
 
 - The posts will be created and published under a unified template; see [the submission instructions]({{ '/submitting/' | relative_url }})
     and the [sample post]({{ '/blog/2022/distill-example' | relative_url }}) hosted on the blog of this website.
@@ -50,3 +56,4 @@ We also avoid the issue of having to host the submissions on a separate server d
 
 However, we understand the desire for total anonymity. 
 Authors that wish to have a fully double-blind process might consider creating new GitHub accounts without identifying information which will only be used for this track.
+For an example of a submission in the past which used an anonymous account in this manner, you can check out the [World Models blog post (Ha and Schmidhuber, 2018)](https://worldmodels.github.io/) and the [accompanying repository](https://github.com/worldmodels/worldmodels.github.io).

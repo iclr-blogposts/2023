@@ -23,6 +23,7 @@ We also avoid the issue of having to host the submissions on a separate server d
 
 However, we understand the desire for total anonymity. 
 Authors that wish to have a fully double-blind process might consider creating new GitHub accounts without identifying information which will only be used for this track.
+For an example of a submission in the past which used an anonymous account in this manner, you can check out the [World Models blog post (Ha and Schmidhuber, 2018)](https://worldmodels.github.io/) and the [accompanying repository](https://github.com/worldmodels/worldmodels.github.io).
 
 ### Template
 
