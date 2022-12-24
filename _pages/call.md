@@ -19,7 +19,7 @@ The format and process for this blog post track is as follows:
     - Recent collaborators (less than 3 years)
     - Current institution.
 
-    Blog Posts must not be used to highlight or advertise past publications of the authors of of their lab. 
+    Blog Posts must not be used to highlight or advertise past publications of the authors or of their lab. 
     Previously, we did not accept submissions with a conflict of interest, however this year we will only ask the authors to report if they have such a conflict. 
     If so, reviewers will be asked to judge if the submission is sufficiently critical and objective of the papers addressed in the blog post. 
 
