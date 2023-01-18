@@ -23,11 +23,11 @@ The format and process for this blog post track is as follows:
     Previously, we did not accept submissions with a conflict of interest, however this year we will only ask the authors to report if they have such a conflict. 
     If so, reviewers will be asked to judge if the submission is sufficiently critical and objective of the papers addressed in the blog post. 
 
-- The posts will be created and published under a unified template; see [the submission instructions]({{ '/submitting/' | relative_url }})
+- The posts will be created and published under a unified template; see [the submission instructions]({{ '/submitting' | relative_url }})
     and the [sample post]({{ '/blog/2022/distill-example' | relative_url }}) hosted on the blog of this website.
 
 - Blogs will be peer-reviewed (double-blind) for quality and novelty of the content: clarity and pedagogy of the exposition, new theoretical or practical insights, reproduction/extension of experiments, etc.
-We are slightly relaxing the double-blind constraints by assuming good faith from both submitters and reviewers (see [the submission instructions]({{ '/submitting/' | relative_url }}) for more details).
+We are slightly relaxing the double-blind constraints by assuming good faith from both submitters and reviewers (see [the submission instructions]({{ '/submitting' | relative_url }}) for more details).
 
 ## Key Dates
 
@@ -41,7 +41,7 @@ We are slightly relaxing the double-blind constraints by assuming good faith fro
 
 ## Submission Guidelines
 
-> See [the submission instructions]({{ '/submitting/' | relative_url }}) for more details.
+> See [the submission instructions]({{ '/submitting' | relative_url }}) for more details.
 
 For this edition of the Blogposts Track, we will forgo the requirement for total anonymity. 
 The blog posts **must be anonymized for the review process**, but users will submit their anonymized blog posts via a pull request to a staging repository (in addition to a submission on OpenReview).
