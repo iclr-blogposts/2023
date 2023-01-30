@@ -17,6 +17,12 @@ subtitle:
 # social: false  # includes social icons at the bottom of the page
 ---
 
+> **Announcement**: the submission deadline has been slightly modified. 
+> - **February 2nd AOE** is now an *abstract deadline*; please submit this on [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F)).
+> - **February 10th AOE** is the deadline for any modifications to your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
+>
+> See the [submission instructions]({{ '/submitting#submitting-your-blog-post' | relative_url }}) for more details.
+
 
 # ICLR 2023 Blogposts Track
 
@@ -75,7 +81,10 @@ discuss *previously published papers*.
 
 ## Key Dates
 
-- **Submission deadline**: February 2nd, 2023
+- **Abstract  deadline**: February 2nd AOE, 2023 (submit to [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F))).
+&nbsp;
+
+- **Submission  deadline**: February 10th AOE, 2023 (any modifications to your blog post, via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
 &nbsp;
 
 - **Notification of acceptance**: March 31st, 2023
