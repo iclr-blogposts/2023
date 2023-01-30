@@ -8,6 +8,10 @@ nav_order: 3
 ---
 
 
+> **Announcement**: the submission deadline has been slightly modified. 
+> - **February 2nd AOE** is now an *abstract deadline*; please submit this on [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F)).
+> - **February 10th AOE** is the deadline for any modifications to your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
+
 ### A more open process
 
 For this edition of the Blogposts Track, we will forgo the requirement for total anonymity. 
