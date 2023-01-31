@@ -236,7 +236,7 @@ def compute_returns_and_advantages(
 
 > The discussed integration of the constraint into the reward function is implemented into the computation of the advantages and returns. When the lambda parameter is set to 0, the constraint is ignored and the reward function is the same as in the original PPO implementation.
 
-We customized the gym environments to return the constraint values in the inf o dictionary.
+We customized the gym environments to return the constraint values in the info dictionary.
 
 ### Updating the Lagrangian multiplier
 
@@ -266,27 +266,28 @@ The results of the experiments are shown in the following figures. We kept (almo
     </div>
 </div>
 <div class="caption">
-    Rewards and average torque of the experiments on the HalfCheetah environment. The maximum torque constraint is represented by the dashed line.
+    Rewards and average torque of the experiments on the HalfCheetah environment. The x-axis represents the time steps and the maximum torque constraint is illustrated by the dashed line.
 </div>
 
 The results demonstrate that the RCPPO trained an agent that successfully walked forward while
 respecting the safety constraint. 
 We achieved comparable results to the original experiments in the paper. \\
-Interestingly, low $$\lambda$$ values seem to be less stable than high $$\lambda$$ values. 
+Interestingly, low $$\lambda$$ values seem to be less stable than higher $$\lambda$$ values. 
 The guiding penalty appears to not only be enforcing the constraint but also improves the learning
-process overall.
-This might be due to the fact that the neural network architecture used in the paper is relatively small (i.e., 2 layers of 64 hidden units).
+process overall. By limiting the amount of torque the agent is allowed to apply, we hinder the exploration of unsafe and poor performing local minima and guide the policy to a safe and more optimal solution. \\
+Nevertheless, the poor performance of the unconstrained agents might as well be due to the fact that the neural network architecture used in the paper is relatively small (i.e., 2 layers of 64 hidden units).
 
-### Deviating hyperparameters
+### Deviations from the paper
 
 Furthermore, we had to select higher values for the Lagrangian multiplier itself when performing reward shaping, thus also having to increase its respective learning rate when training it as a parameter, so that it can grow quicker.
-This leads to $$lr_{\lambda}$$ being larger than $$lr_{\pi}$$ which ignores one of the assumption made in the paper, yet leads to coherent, and better results! \\
+This leads to $$lr_{\lambda}$$ being larger than $$lr_{\pi}$$ which __ignores one of the assumption made in the paper__, yet leads to coherent results! \\
 E.g. in the paper a $$\lambda$$ value of 0.1 is already very high as it leads to a reward of $$-0.4$$ and torque of $$0.1387$$, whereas in our case a $$\lambda$$ value of $$1.0$$ leads to a reward of about $$1 500$$ with an average torque of $$0.39$$.
 
-
-A reason for the slower and weaker impact of the constraint could be attributed to the clipping of the trust region. This is a technique to ensure that the policy does not change too much between updates and run the risk of landing in a bad local minimum it can not escape from.
+A possible reason for the slower and weaker impact of the constraint could be attributed to the clipping of the trust region. This is a technique to ensure that the policy does not change too much between updates and run the risk of landing in a bad local minimum it can not escape from.
 This is done by clipping the policy update to a certain range.
 Therefore, even with "high" values of lambda w.r.t. the original paper the policy will not change significantly to conform to the constraint.
+
+Not only did we have to select a higher learning rate for the Lagrangian, but we also did not include separate learning rates for the policy and the value function. Additionally, in the original paper the RCPPO algorithm updated their networks (actor and critic) after each episode, whilst in our implementation, we need to fill the rollout buffer with potentially multiple episodes, thus reducing the frequency of network parameter and Lagrangian updates. Nevertheless, the PPO algorithm implements a parameter update loop of n epochs after each rollout, which counteracts the discussed lower update frequency of all parameters.
 
 ### Qualitative observations
 
