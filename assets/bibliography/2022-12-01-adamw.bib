@@ -1,5 +1,4 @@
 
-
 @Article{Zhuang2022,
   author  = {Zhenxun Zhuang and Mingrui Liu and Ashok Cutkosky and Francesco Orabona},
   journal = {Transactions on Machine Learning Research},
@@ -122,4 +121,67 @@
   year = {2022},
   note = {https://iclr-blog-track.github.io/2022/03/25/unnormalized-resnets/},
   url  = {https://iclr-blog-track.github.io/2022/03/25/unnormalized-resnets/}
+}
+
+@Article{Defossez2022,
+  author  = {Alexandre Defossez and Leon Bottou and Francis Bach and Nicolas Usunier},
+  journal = {Transactions on Machine Learning Research},
+  title   = {A Simple Convergence Proof of Adam and Adagrad},
+  year    = {2022},
+  url     = {https://openreview.net/forum?id=ZPQhzTSWA7},
+}
+
+@InProceedings{Reddi2018,
+  author    = {Sashank J. Reddi and Satyen Kale and Sanjiv Kumar},
+  booktitle = {International Conference on Learning Representations},
+  title     = {On the Convergence of Adam and Beyond},
+  year      = {2018},
+  url       = {https://openreview.net/forum?id=ryQu7f-RZ},
+}
+
+@InProceedings{Anonymous2023,
+  author    = {Anonymous},
+  booktitle = {Submitted to The Eleventh International Conference on Learning Representations},
+  title     = {Towards Understanding Convergence and Generalization of AdamW},
+  year      = {2023},
+  note      = {under review},
+  url       = {https://openreview.net/forum?id=EfTN2tSGlF},
+}
+
+@InProceedings{Ioffe2015,
+  author    = {Ioffe, Sergey and Szegedy, Christian},
+  booktitle = {Proceedings of the 32nd International Conference on Machine Learning},
+  title     = {Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift},
+  year      = {2015},
+  address   = {Lille, France},
+  editor    = {Bach, Francis and Blei, David},
+  month     = {07--09 Jul},
+  pages     = {448--456},
+  publisher = {PMLR},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {37},
+  abstract  = {Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift, and address the problem by normalizing layer inputs. Our method draws its strength from making normalization a part of the model architecture and performing the normalization for each training mini-batch. Batch Normalization allows us to use much higher learning rates and be less careful about initialization, and in some cases eliminates the need for Dropout. Applied to a stateof-the-art image classification model, Batch Normalization achieves the same accuracy with 14 times fewer training steps, and beats the original model by a significant margin. Using an ensemble of batch-normalized networks, we improve upon the best published result on ImageNet classification: reaching 4.82% top-5 test error, exceeding the accuracy of human raters.},
+  pdf       = {http://proceedings.mlr.press/v37/ioffe15.pdf},
+  url       = {https://proceedings.mlr.press/v37/ioffe15.html},
+}
+
+@InProceedings{Bos1996,
+  author    = {Bos, S. and Chug, E.},
+  booktitle = {Proceedings of International Conference on Neural Networks (ICNN'96)},
+  title     = {Using weight decay to optimize the generalization ability of a perceptron},
+  year      = {1996},
+  pages     = {241-246 vol.1},
+  volume    = {1},
+  doi       = {10.1109/ICNN.1996.548898},
+}
+
+@InProceedings{Krogh1991,
+  author    = {Krogh, Anders and Hertz, John},
+  booktitle = {Advances in Neural Information Processing Systems},
+  title     = {A Simple Weight Decay Can Improve Generalization},
+  year      = {1991},
+  editor    = {J. Moody and S. Hanson and R.P. Lippmann},
+  publisher = {Morgan-Kaufmann},
+  volume    = {4},
+  url       = {https://proceedings.neurips.cc/paper/1991/file/8eefcfdf5990e441f0fb6f3fad709e21-Paper.pdf},
 }
