@@ -2,7 +2,6 @@
 layout: distill
 title: Adaptive Reward Penalty in Safe Reinforcement Learning
 description: In this blog, we dive into the ICLR 2019 paper "Reward Constrained Policy Optimization" by Tessler et al. and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing Reward Constrained Policy Optimization (RCPO) <d-cite key="Tessler2018RCPO"></d-cite> into Proximal Policy Optimization (PPO) <d-cite key="Schulman2017PPO"></d-cite>. The goal of this blog is to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of <a href="http://www.mit.edu/~dimitrib/Constrained-Opt.pdf"><b>constrained optimization</b></a>, and (2) how penalized reward fucntions can be effectively used to train a robust policy.
-
 date: 2023-01-31
 htmlwidgets: true
 
@@ -15,10 +14,6 @@ authors:
     url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
     affiliations:
       name: Anonymous
-  - name: Anonymous 
-    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
-    affiliations:
-      name: Anonymus
   - name: Anonymous
     url: "https://en.wikipedia.org/wiki/Marie_Curie"
     affiliations:
@@ -101,11 +96,11 @@ Moreover, this removes the need to manually extend and tune the reward function 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/RL_illustration.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/CMDP_Illustration.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Illustration of a Constrained Markov Decision Process (MDP) by <a href="https://lilianweng.github.io/posts/2018-02-19-rl-overview">Lilian Weng</a>. <br>
+    Illustration of a Constrained Markov Decision Process (MDP) adapted from <a href="https://lilianweng.github.io/posts/2018-02-19-rl-overview">Lilian Weng</a>. <br>
     Based on an observation (also called state) from the environment, the agent selects an action. This action is executed in an environment resulting in a new state and a reward that evaluates the action. Given the new state, the feedback loop repeats.
 </div>
 
@@ -203,52 +198,26 @@ Originally, the use of the critic was done to reduce the variance but it also en
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/RCPO_Algorithm.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/Algorithm.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
-If we look at the RCPO algorithm illustrated in the paper, we can see that integrating the constraint into the Actor-Critic approach is done in one line of code, line 13.
+If we look at the RCPO algorithm illustrated above, we can see that implementing the constraint into the Actor-Critic approach is done in a few lines of code.
+First we need to collect the constraint during the policy rollout.
+Then we can integrate the constraint values (the guiding penalty) into the reward during the computation of the policy and value gradients as demonstrated in line 7. \\
 This is possible, since we are able to formulate the constraint objective as the infinite horizon discounted total return, just as we have done with the normal maximization objective of each MDP.
 
 $$
 J^\pi_{C_\gamma}(s) \hat{=} \mathbb{E}^{\pi} \left[ \sum_{t=0}^{\infty} \gamma^t c(s_t, a_t) | s_0 = s \right]
 $$
 
-Now we can simply include the guiding penalty (constraint value) to the reward function via the Lagrange multiplier as it is done in line 13 of the algorithm above to arrive at the penalized reward function:
+Now we can simply include the guiding penalty to the reward function via the Lagrange multiplier to arrive at the penalized reward function:
 
 $$
   \hat{r} = r(s,a) - \lambda c(s,a)
 $$
 
-One further extension to the base Actor-Critic algorithm is that it is now also necessary to collect the constraint penalty values during the policy rollout.
-
-
-<!-- One way to integrate the constraint into the Actor-Critic approach is using an alternative, guiding penalty - the discounted penalty.
-The first step to integrate the constraint into the Actor-Critic approach is to use the constraint objective $$J^\pi_C$$ as the value function.
-This is simply done by reformulating it as the expected discounted sum of the constraint values:
-
-$$
-V^\pi_{C_\gamma}(s) \hat{=} \mathbb{E}^{\pi} \left[ \sum_{t=0}^{\infty} \gamma^t c(s_t, a_t) | s_0 = s \right]
-$$
-
-Now we can simply include the constraint value to the reward function via the Lagrange multiplier:
-
-$$
-  \hat{r} = r(s,a) - \lambda c(s,a)
-$$
-
-This is the guiding penalty. The constraint is now integrated into the reward function and the actor can learn to maximize the reward while considering the constraint.
-
-Updating the Lagrangian multiplier is done via the derivative of the global objective:
-
-$$
-  \lambda \gets max(\lambda -
-  lr_{\lambda}(-(\mathbb{E}^{\pi_\theta}_{s\sim\mu}
-  \left[C\right] - \alpha)), 0)
-$$
-
-Hereby is $$lr_\lambda$$ the learning rate for the Lagrangian multiplier. The max function is
-used to ensure that the Lagrangian multiplier is always positive. -->
+Finally, we can compute the gradient of the Lagrangian in line 11 and update $$\lambda$$ in line 14 as discussed in the previous section and repeat the whole process for $$K$$ times.
 
 # Implementation
 
@@ -325,7 +294,7 @@ Nevertheless, the poor performance of the unconstrained agents might as well be 
 
 ### Qualitative observations
 
-Finally, we want to see if we can qualitatively observe the effect of the constraint on the policy.
+Finally ,let's see how our HalfCheetah agents walk under the 
 To do so, we have recorded videos of the agents walking forward with different $$\lambda$$ values.
 The results can be seen below.
 
