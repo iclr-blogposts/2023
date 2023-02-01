@@ -20,7 +20,7 @@ authors:
     affiliations:
       name: Anonymus
   - name: Anonymous
-    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
+    url: "https://en.wikipedia.org/wiki/Marie_Curie"
     affiliations:
       name: Anonymous
   - name: Anonymous
