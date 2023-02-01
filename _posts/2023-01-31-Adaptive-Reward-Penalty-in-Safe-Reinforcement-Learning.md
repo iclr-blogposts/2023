@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Adaptive Reward Penalty in Safe Reinforcement Learning
-description: In this blog, we dive into the ICLR 2019 paper "Reward Constrained Policy Optimization" by Tessler et al. and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing Reward Constrained Policy Optimization (RCPO) <d-cite key="Tessler2018RCPO"></d-cite> into Proximal Policy Optimization (PPO) <d-cite key="Schulman2017PPO"></d-cite>. The goal of this blog is to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of <a href="http://www.mit.edu/~dimitrib/Constrained-Opt.pdf"><b>constrained optimization</b></a>, and (2) how penalized reward fucntions can be effectively used to train a robust policy.
+description: In this blog, we dive into the ICLR 2019 paper "Reward Constrained Policy Optimization" (RCPO) by Tessler et al. <d-cite key="Tessler2018RCPO"></d-cite> and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing RCPO into Proximal Policy Optimization (PPO) <d-cite key="Schulman2017PPO"></d-cite>. The goal of this blog is to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of <a href="http://www.mit.edu/~dimitrib/Constrained-Opt.pdf"><b>constrained optimization</b></a>, and (2) how penalized reward fucntions can be effectively used to train a robust policy.
 date: 2023-01-31
 htmlwidgets: true
 
@@ -35,10 +35,23 @@ toc:
     # subsections:
     # - name: Interactive Figures
   - name: Constrained Policy Optimization
+    subsections: 
+      - name: What exactly does the Lagrangian do?
+      - name: How can we learn an optimal Lagrangian?
   - name: Reward Constrained Policy Optimization
+    subsections:
+      - name: How to integrate the constraint into the Actor-Critic approach?
   - name: Implementation
+    subsections:
+      - name: Integrating the guiding penalty
+      - name: Updating the Lagrangian multiplier
   - name: Experiments
+    subsections:
+      - name: Qualitative observations
   - name: Discussion
+    subsections:
+      - name: Theoretical assumptions vs. empirical results
+      - name: Conclusion
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -142,7 +155,7 @@ $$
 
 We now have our new global objective function that is subject to optimization!
 
-### What exactly does the $$\lambda$$ do?
+### What exactly does the Lagrangian do?
 
 Intuitively, the Lagrangian multiplier $$\lambda$$ is used to determine how much weight is put onto the constraint.
 If $$\lambda$$ is set to 0, the constraint is ignored and the objective becomes the reward objective $$J^\pi_R$$.
@@ -174,7 +187,7 @@ Tuning the $$\lambda$$ through [reward shaping](https://gibberblot.github.io/rl-
 The Lagrangian is a scaling factor, i.e. if the constraint values are inherently larger than the reward values, you will need a substantially lower $$\lambda$$ than when the constraint values are significantly smaller than the achievable reward values.
 That means that the range of promising lambda values is not only large but also differs with every environment.
 
-### How can we learn an optimal $$\lambda$$?
+### How can we learn an optimal Lagrangian?
 
 Luckily, it is possible to __view the Lagrangian as a learnable parameter__ and update it through gradient descent since the global constrained optimization objective $$J^{\pi_{\theta}}$$ is differentiable. In short, we can simply use the derivative of the objective function w.r.t $$\lambda$$ and update the Lagrangian. 
 
