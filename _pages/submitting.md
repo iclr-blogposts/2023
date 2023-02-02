@@ -10,7 +10,8 @@ nav_order: 3
 
 > **Announcement**: the submission deadline has been slightly modified. 
 > - **February 2nd AOE** is now an *abstract deadline*; please submit this on [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F)).
-> - **February 10th AOE** is the deadline for any modifications to your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
+>   - *You do NOT need to open a pull request by this deadline.*
+> - **February 10th AOE**: deadline for any submissions/modifications of your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
 
 ### A more open process
 
