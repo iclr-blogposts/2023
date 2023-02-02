@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Adaptive Reward Penalty in Safe Reinforcement Learning
-description: In this blog, we dive into the ICLR 2019 paper "Reward Constrained Policy Optimization" (RCPO) by Tessler et al. <d-cite key="Tessler2018RCPO"></d-cite> and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing RCPO into Proximal Policy Optimization (PPO) <d-cite key="Schulman2017PPO"></d-cite>. This blog aims to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of <a href="http://www.mit.edu/~dimitrib/Constrained-Opt.pdf"><b>constrained optimization</b></a> and (2) how penalized reward functions can be effectively used to train a robust policy.
+description: In this blog, we dive into the ICLR 2019 paper "Reward Constrained Policy Optimization" (RCPO) by Tessler et al. and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing RCPO into Proximal Policy Optimization (PPO). This blog aims to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of constrained optimization and (2) how penalized reward functions can be effectively used to train a robust policy.
 date: 2023-01-31
 htmlwidgets: true
 
@@ -203,7 +203,7 @@ Hereby $$lr_{\lambda}$$ is the learning rate for the Lagrangian multiplier. The 
 
 # Reward Constrained Policy Optimization
 
-Actor-Critic based approaches such as [PPO](https://spinningup.openai.com/en/latest/algorithms/ppo.html) have empirically been shown to compete at the top of a plethora of quality benchmarks.
+Actor-Critic based approaches such as [PPO](https://spinningup.openai.com/en/latest/algorithms/ppo.html) <d-cite key="Schulman2017PPO"></d-cite> have empirically been shown to compete at the top of a plethora of quality benchmarks.
 In this class of algorithms, the actor learns a policy $$\pi$$, whereas the critic learns the value function using temporal difference learning.
 Intuitively, using the critic reduced the variance and enabled training using a finite number of samples.
 
