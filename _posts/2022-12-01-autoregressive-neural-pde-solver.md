@@ -1,30 +1,42 @@
 ---
 layout: distill
 title: Autoregressive Renaissance in Neural PDE Solvers
-description: Recent developments in the field of neural partial differential equation (PDE) solvers have placed a strong emphasis on neural operators. However, the paper "Message Passing Neural PDE Solver" by Brandstetter et al. published in ICLR 2022 revisits autoregressive models and designs a message passing graph neural network that is comparable with or outperforms both the state-of-the-art Fourier Neural Operator and traditional classical PDE solvers in its generalization capabilities and performance. This blog post delves into the key contributions of this work, exploring the strategies used to address the common problem of instability in autoregressive models and the design choices of the message passing graph neural network architecture.
+description: Your blog post's abstract.
+  Recent developments in the field of neural partial differential equation (PDE) solvers have placed a strong emphasis on neural operators. However, the paper "Message Passing Neural PDE Solver" by Brandstetter et al. published in ICLR 2022 revisits autoregressive models and designs a message passing graph neural network that is comparable with or outperforms both the state-of-the-art Fourier Neural Operator and traditional classical PDE solvers in its generalization capabilities and performance. This blog post delves into the key contributions of this work, exploring the strategies used to address the common problem of instability in autoregressive models and the design choices of the message passing graph neural network architecture.
 date: 2022-12-01
 htmlwidgets: true
 
 # Anonymize when submitting
- authors:
-   - name: Anonymous
+# authors:
+#   - name: Anonymous
+
+authors:
+  - name: Albert Einstein
+    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
+    affiliations:
+      name: IAS, Princeton
+  - name: Boris Podolsky
+    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
+    affiliations:
+      name: IAS, Princeton
+  - name: Nathan Rosen
+    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
+    affiliations:
+      name: IAS, Princeton
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-autoregressive-neural-pde-solver.bib  
+bibliography: 2022-12-01-distill-example.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
-#toc:
-#  - name: Equations
-#  - name: Images and Figures
-#    subsections:
-#    - name: Interactive Figures
-#  - name: Citations
-#  - name: Footnotes
-#  - name: Code Blocks
-#  - name: Layouts
-#  - name: Other Typography?
+toc:
+  - name: Introduction
+  - name: Background
+    subsections:
+    - name: Let\'s brush up on the basics...
+  - name: Message Passing Neural PDE Solver (MP-PDE)
+  - name: Conclusion
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -33,20 +45,19 @@ _styles: >
   .fake-img {
     background: #bbb;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 6px;
   }
   .fake-img p {
-    font-family: monospace;
+    font-family: sans-serif;
     color: white;
     text-align: left;
-    margin: 12px 0;
+    margin: 6px 6px;
     text-align: center;
-    font-size: 16px;
+    font-size: 12px;
+    line-height: 150%;
   }
 ---
-
-#	Autoregressive Renaissance in Neural PDE Solvers
 
 ## Introduction
 > Improving PDE solvers has trickle down benefits to a vast range of other fields.
@@ -65,20 +76,20 @@ The recent advances in machine learning and artificial intelligence have opened 
 
 Ordinary differential equations (ODEs) describe the change of a dependent variable with respect to a single independent variable. In contrast, PDEs are mathematical equations that describe the behavior of a dependent variable as it changes with respect to several independent variables over a region of space and time.
 
-Formally, for one time dimension and possibly multiple spatial dimensions denoted by $\textbf{x}=[x_{1},x_{2},x_{3},\text{...}]^{\top} \in \mathbb{X}$, a general (temporal) PDE may be written as
+Formally, for one time dimension and possibly multiple spatial dimensions denoted by $$\textbf{x}=[x_{1},x_{2},x_{3},\text{...}]^{\top} \in \mathbb{X}$$, a general (temporal) PDE may be written as
 
 $$\partial_{t}\textbf{u}= F\left(t, \textbf{x}, \textbf{u},\partial_{\textbf{x}}\textbf{u},\partial_{\textbf{xx}}\textbf{u},\text{...}\right) \qquad (t,\mathbf{x}) \in [0,T] \times \mathbb{X}$$
 
  - Initial condition:
- $\mathbf{u}(0,\mathbf{x})=\mathbf{u}^{0}(\mathbf{x})$ for $\mathbf{x} \in \mathbb{X}$
+ $$\mathbf{u}(0,\mathbf{x})=\mathbf{u}^{0}(\mathbf{x})$$ for $$\mathbf{x} \in \mathbb{X}$$
  
  - Boundary conditions:
- $B[ \mathbf{u}](t,x)=0$ for $(t,\mathbf{x}) \in [0,T] \times \partial \mathbb{X}$
+ $$B[ \mathbf{u}](t,x)=0$$ for $$(t,\mathbf{x}) \in [0,T] \times \partial \mathbb{X}$$
 
 <div class="fake-img l-gutter">
   <p>
 
-  Many equations are solutions to such PDEs alone. For example, the wave equation is given by $\partial_{tt}u = \partial_{xx}u$. You will find that any function in the form $u(x,t)=F(x-ct)+G(x+ct)$ is a potential solution. Initial conditions are used to specify how a PDE "starts" in time, and boundary conditions determine the value of the solution at the boundaries of the region where the PDE is defined.
+  Many equations are solutions to such PDEs alone. For example, the wave equation is given by $$\partial_{tt}u = \partial_{xx}u$$. You will find that any function in the form $$u(x,t)=F(x-ct)+G(x+ct)$$ is a potential solution. Initial conditions are used to specify how a PDE "starts" in time, and boundary conditions determine the value of the solution at the boundaries of the region where the PDE is defined.
 
   </p>
 </div>
@@ -106,9 +117,9 @@ Brandstetter et al. follow precedence set by Li et al. and Bar-Sinai et al. to f
 
 $$\partial_{t} \mathbf{u} + \nabla \cdot \mathbf{J}(\mathbf{u}) = 0$$
 
- - $J$ is the flux, or the amount of a physical quantity that is flowing through a particular surface or region at a given time
+ - $$J$$ is the flux, or the amount of a physical quantity that is flowing through a particular surface or region at a given time
 
- - $\nabla \cdot J$ is the divergence of the flux, which can be thought of as the amount of outflow of the flux at a given point
+ - $$\nabla \cdot J$$ is the divergence of the flux, which can be thought of as the amount of outflow of the flux at a given point
 
 Additionally, they consider Dirichlet and Neumann boundary conditions. Dirichlet boundary conditions prescribe a fixed value of the solution at a particular point on the boundary of the domain. Neumann boundary conditions, on the other hand, prescribe the rate of change of the solution at a particular point on the boundary. Not considered are mixed boundary conditions, which involve both Dirichlet and Neumann conditions, and Robin boundary conditions, which involve a linear combination of the solution and its derivatives at the boundary.
 
@@ -138,7 +149,7 @@ When the solution to a PDE cannot be found analytically, numerical approximation
 
 <details open><summary>1. Partitioning the problem onto a grid</summary><br/>
 
-The discretization process is a topic of continual discussion. In the most basic case, arbitrary spatial and temporal resolutions $\mathbf{n_{x}}$ and $n_{t}$ can be chosen and thus used to create a grid where $\mathbf{n_{x}}$ is a vector containing a resolution for each spatial dimension $\mathbf{x}$. The domain may also be irregularly sampled, resulting in a grid-free discretization. FDM or any other time discretization technique can be used to discretize the time domain. One direction of ongoing research seeks to determine discretization methods which can result in more efficient numerical solvers (for example, take larger steps in flatter regions and smaller steps in rapidly changing regions).
+The discretization process is a topic of continual discussion. In the most basic case, arbitrary spatial and temporal resolutions $$\mathbf{n_{x}}$$ and $$n_{t}$$ can be chosen and thus used to create a grid where $$\mathbf{n_{x}}$$ is a vector containing a resolution for each spatial dimension $$\mathbf{x}$$. The domain may also be irregularly sampled, resulting in a grid-free discretization. FDM or any other time discretization technique can be used to discretize the time domain. One direction of ongoing research seeks to determine discretization methods which can result in more efficient numerical solvers (for example, take larger steps in flatter regions and smaller steps in rapidly changing regions).
 
 </details><br/>
 
@@ -168,17 +179,32 @@ From the high level descriptions alone, certain methods are best suited for spec
 |--|--|--|
 | Computation efficiency, computational cost, accuracy, guarantees (or uncertainty estimates), generalization across PDEs | Spatial and temporal resolution, boundary conditions, domain sampling regularity, dimensionality | Stability over long rollouts, preservation of invariants |
 
+<div>
+<p>
 The countless combinations of requirements resulted in what Bartels defines as a *splitter field* in CITE. A specialized classical solver is developed for many sub-problems.
+</p>
 
+<p>
 These methods, while effective and reliable due often having error guarantees, often come at high computation costs. Taking into account that PDEs often exhibit chaotic behaviour and are sensitive to any changes in their parameters, re-running a solver every time a coefficient or boundary condition changes can be computationally expensive.
+</p>
 
+<p>
 Furthermore, classical schemes become intractable or run into computation walls for a variety of reasons including complex geometries, large systems, high dimensionality, nonlinearities, and coupled problems (in which some unknowns are interdependent).
+</p>
+
+</div>
 
 <div class="fake-img l-gutter">
   <p>
 
-A formalized example rises from Courant–Friedrichs–Lewy (CFL) condition, which states that the maximum time step size should be proportional to the minimum spatial grid size. According to this condition, as the number of dimensions increases, the size of the temporal step must decrease and therefore numerical solvers become very slow for complex PDEs.
+  Courant–Friedrichs–Lewy (CFL) condition
 
+  </p>
+  <p>
+  The maximum time step size should be proportional to the minimum spatial grid size.
+  </p>
+  <p>
+  According to this condition, as the number of dimensions increases, the size of the temporal step must decrease and therefore numerical solvers become very slow for complex PDEs.
   </p>
 </div>
 
@@ -189,7 +215,7 @@ Neural solvers offer some very desirable properties that may serve to unify some
 
 **PINN methods**
 
-Raissi et al. coined the physics-informed neural network (PINN) in 2017. The problem is set such that the network $\mathcal{N}$ satisfies $\mathcal{N}(t,\mathbf{u}^{0}) = \mathbf{u}(t)$ where $\mathbf{u}^{0}$ are the initial conditions. The main principle behind PINNs is to enforce the governing physical laws of the problem on the network's predictions by adding loss term(s) to the network's objective function. Since the model can still learn and make predictions that deviate from the constraint, this is a common method to impose a soft constraint in the form of a physics prior which encourages the model to converge to a more optimal solution.
+Raissi et al. coined the physics-informed neural network (PINN) in 2017. The problem is set such that the network $$\mathcal{N}$$ satisfies $$\mathcal{N}(t,\mathbf{u}^{0}) = \mathbf{u}(t)$$ where $$\mathbf{u}^{0}$$ are the initial conditions. The main principle behind PINNs is to enforce the governing physical laws of the problem on the network's predictions by adding loss term(s) to the network's objective function. Since the model can still learn and make predictions that deviate from the constraint, this is a common method to impose a soft constraint in the form of a physics prior which encourages the model to converge to a more optimal solution.
 
 For a typical loss function
 $$\theta = \text{argmin}_{\theta} \mathcal{L}(\theta)$$
@@ -202,8 +228,8 @@ the loss with a physics prior may be defined as follows.
 | Term | Definition | Effect |
 |--|--|--|
 | $$\mathcal{L}_{\mathcal{B}}$$ | Loss wrt. the initial and/or boundary conditions | Fits the known data over the network |
-| $$\mathcal{L}_{\mathcal{F}}$$ | Loss wrt. the PDE | Enforces DE $\mathcal{F}$ at collocation points;  Calculating using autodiff to compute derivatives of $\mathbf{\hat{u}_{\theta}(\mathbf{z})}$ |
-| $$\mathcal{L}_{\text{data}}$$ | Validation of known data points | Fits the known data over the NN and forces $\mathbf{\hat{u}}_{\theta}$ to match measurements of $\mathbf{u}$ over provided points |
+| $$\mathcal{L}_{\mathcal{F}}$$ | Loss wrt. the PDE | Enforces DE $$\mathcal{F}$$ at collocation points;  Calculating using autodiff to compute derivatives of $$\mathbf{\hat{u}_{\theta}(\mathbf{z})}$$ |
+| $$\mathcal{L}_{\text{data}}$$ | Validation of known data points | Fits the known data over the NN and forces $$\mathbf{\hat{u}}_{\theta}$$ to match measurements of $$\mathbf{u}$$ over provided points |
 
 In practice, each loss term could be implemented using a mean square error formulation. As a whole, solving a PDE becomes a loss function optimization problem and this approach can be applied in both forward and inverse problems and using both unsupervised and supervised learning methodologies (depending on whether the underlying PDE is known or not).
 
@@ -213,7 +239,7 @@ The success of this loss-based approach is apparent when considering the rapid g
 
 **Neural operator methods**
 
-Neural operator methods model the solution of a PDE as an operator that maps inputs to outputs. Much the same as above, the problem is set such that a neural operator $\mathcal{M}$ satisfies $\mathcal{M}(t,\mathbf{u}^{0}) = \mathbf{u}(t)$ where $\mathbf{u}^{0}$ are the initial conditions. While the PINN methods represent the solution as a set of parameters learned by a neural network, neural operator methods model the solution as an operator.
+Neural operator methods model the solution of a PDE as an operator that maps inputs to outputs. Much the same as above, the problem is set such that a neural operator $$\mathcal{M}$$ satisfies $$\mathcal{M}(t,\mathbf{u}^{0}) = \mathbf{u}(t)$$ where $$\mathbf{u}^{0}$$ are the initial conditions. While the PINN methods represent the solution as a set of parameters learned by a neural network, neural operator methods model the solution as an operator.
 
 > Intuitively, a neural operator can be thought of to map functions to other functions, both of which are infinite-dimensional (as opposed PINNs which input and output discretized data sampled from such functions).
 
@@ -221,17 +247,17 @@ The deep O-net architecture was the first of its kind and consisted of a branch 
 
 IMAGE, change/extend the caption
 
-CAPTION: Illustrations of the problem setup and architectures of DeepONets. (A) The network to learn an operator $G:u \mapsto G(u)$ takes two inputs $[u(x_{1}), u(x_{2}), . . . , u(x_{m})]$ and $y$. (B) Illustration of the training data. For each input function $u$, there must be the same number of evaluations at the same scattered sensors $x_{1}, x_{2}, . . . , x_{m}$. However, there are no constraints on the number or locations for the evaluation of output functions. (C) The stacked DeepONet has one trunk network and $p$ stacked branch networks. (D) The unstacked DeepONet has one trunk network and one branch network.
+CAPTION: Illustrations of the problem setup and architectures of DeepONets. (A) The network to learn an operator $$G:u \mapsto G(u)$$ takes two inputs $$[u(x_{1}), u(x_{2}), . . . , u(x_{m})]$$ and $$y$$. (B) Illustration of the training data. For each input function $$u$$, there must be the same number of evaluations at the same scattered sensors $$x_{1}, x_{2}, . . . , x_{m}$$. However, there are no constraints on the number or locations for the evaluation of output functions. (C) The stacked DeepONet has one trunk network and $$p$$ stacked branch networks. (D) The unstacked DeepONet has one trunk network and one branch network.
 
 One of the current state-of-the-art models is the FNO. It operates within Fourier space and takes advantage of the convolution theorem (The Fourier transform of the convolution of two signals is equal to the pointwise product of their individual Fourier transforms) to place the integral kernel in Fourier space as a convolutional operator. These global integral operators (implemented as Fourier space convolutional operators) are combined with local nonlinear activation functions, resulting in an architecture which is highly expressive yet computationally efficient, as well as being resolution-invariant. While the vanilla FNO required the input function to be defined on a grid due to its reliance on the FFT, further work developed mesh-independent variations as well.
 
 IMAGE
 
-Neural operators on the whole generalize better than PINN methods since they directly approximate operators. They are typically able to operate on multiple domains and can be implemented to be completely data-driven. However, these models do not tend to predict out-of-distribution $t$ and are therefore limited when dealing with temporal PDEs. A major barrier to both neural operator and PINN methods remains to be their relative lack of interpretability and guarantees compared to classical solvers. 
+Neural operators on the whole generalize better than PINN methods since they directly approximate operators. They are typically able to operate on multiple domains and can be implemented to be completely data-driven. However, these models do not tend to predict out-of-distribution $$t$$ and are therefore limited when dealing with temporal PDEs. A major barrier to both neural operator and PINN methods remains to be their relative lack of interpretability and guarantees compared to classical solvers. 
 
 **Autoregressive methods**
 
-While PINN and neural operator methods directly mapped inputs to outputs, autoregressive methods take an iterative approach instead. For example, iterating over time results in a problem such as $\mathbf{u}(t+\Delta t) = \mathcal{A}(\Delta t, \mathbf{u}(t))$ where $\mathcal{A}$ is some temporal update. Similarly to RNNs, autoregressive models take previous time steps to predict the next time step. However, autoregressive models are entirely feed-forward and take the previous predictions as inputs rather than storing them in some hidden state. These sequence models have been used for images (the first deep autoregressive model being PixelCNN CITE), audio (WaveNet), and text (Transformer). When applied to PDEs, one key benefit is their iterative nature which brings classical solvers back to mind: three autoregressive works mentioned by Brandstetter et al. are hybrid methods which use neural networks to predict certain parameters for finite volume, multigrid, and iterative finite elements methods. All three retain a (classical) computation grid which makes them somewhat interpretable.
+While PINN and neural operator methods directly mapped inputs to outputs, autoregressive methods take an iterative approach instead. For example, iterating over time results in a problem such as $$\mathbf{u}(t+\Delta t) = \mathcal{A}(\Delta t, \mathbf{u}(t))$$ where $$\mathcal{A}$$ is some temporal update. Similarly to RNNs, autoregressive models take previous time steps to predict the next time step. However, autoregressive models are entirely feed-forward and take the previous predictions as inputs rather than storing them in some hidden state. These sequence models have been used for images (the first deep autoregressive model being PixelCNN CITE), audio (WaveNet), and text (Transformer). When applied to PDEs, one key benefit is their iterative nature which brings classical solvers back to mind: three autoregressive works mentioned by Brandstetter et al. are hybrid methods which use neural networks to predict certain parameters for finite volume, multigrid, and iterative finite elements methods. All three retain a (classical) computation grid which makes them somewhat interpretable.
 
 Hsieh et al., for example, develops a neural network-accelerated iterative finite elements method. For any PDE with an existing linear iterative solver, a learned iterator can replace a handcrafted classical iterator resulting in faster convergence and better generalization to different geometries and boundary conditions. Most significantly, their approach offers theoretical guarantees of convergence and correctness.
 
@@ -257,9 +283,9 @@ $$L_{\text{stability}} = \mathbb{E}_{k}\mathbb{E}_{\mathbf{u^{k+1}|\mathbf{u^{k}
 
 $$L_{\text{total}} = L_{\text{one-step}} + L_{\text{stability}}$$
 
-where $k$ is the iteration, $\mathbf{u^{k}}$ is the solution at iteration $k$, $p_{k}$ is the distribution at $k$, $\mathcal{A}$ is the temporal update, and $\epsilon | \mathbf{u}^{k}$ is an adversarial perturbation. The pushforward trick lies in the choice of $\epsilon$ such that $\mathbf{u}^{k}+\epsilon = \mathcal{A}(\mathbf{u}^{k-1})$, similar to the test time distribution. Practically, $\epsilon$ is implemented to be noise from the network itself so that as the network improves, the loss decreases.
+where $$k$$ is the iteration, $$\mathbf{u^{k}}$$ is the solution at iteration $$k$$, $$p_{k}$$ is the distribution at $$k$$, $$\mathcal{A}$$ is the temporal update, and $$\epsilon \| \mathbf{u}^{k}$$ is an adversarial perturbation. The pushforward trick lies in the choice of $$\epsilon$$ such that $$\mathbf{u}^{k}+\epsilon = \mathcal{A}(\mathbf{u}^{k-1})$$, similar to the test time distribution. Practically, $$\epsilon$$ is implemented to be noise from the network itself so that as the network improves, the loss decreases.
 
-Necessarily, the noise of the network must be known or calculated to implement this loss term. So, the model is unrolled for 2 steps but only backpropagated over the most recent unroll step which already has the neural network noise.
+Necessarily, the noise of the network must be known or calculated to implement this loss term. So, the model is unrolled for 2 steps but only backpropagated over the most recent unroll step which already has the neural network noise. While the network could be unrolled during training, this not only slows the training down but also might result in the network learning shortcuts across unrolled steps.
 
 **Temporal bundling**
 
@@ -269,7 +295,7 @@ This trick complements the previous by reducing the amount of times the test tim
 
 ### Network Architecture
 
-Similarly to the hybrid autoregressive methods, the MP-PDE also draws inspiration from classical methods. The steps taken in classical numerical solvers can be related to the network architecture.
+Similarly to the hybrid autoregressive methods, the MP-PDE also draws inspiration from classical methods. GNNs have been used as PDE solvers; however, in this implementation, links can be drawn directly from the MOL to each component of the network architecture centering around the use of a message passing algorithm.
 
 IMAGE
 
@@ -281,12 +307,108 @@ IMAGE
 
 1. Encoder
 
-The encoder is implemented as a two-layer MLP which computes an embedding for each node $i$ using a vector of previous solutions (the length equaling the temporal bundle length), the node's position, the current timestep, and equation parameters.
+The encoder is implemented as a two-layer MLP which computes an embedding for each node $$i$$ to cast the data to a non-regular integration grid:
+
+$$\mathbf{f}_{i}^{0} = \epsilon^{v}([\mathbf{u}_{i}^{k-K:k},\mathbf{x}_{i},t_{k},\theta_{PDE}])$$
+
+where $$\mathbf{u}_{i}^{k-K:k}$$ is a vector of previous solutions (the length equaling the temporal bundle length), $$\mathbf{x}_{i}$$ is the node's position, $$t_{k}$$ is the current timestep, and $$\theta_{PDE}$$ holds equation parameters.
 
 2. Processor
 
-The node embeddings from the encoder are then used in a message passing GNN. Since there are no restrictions on the node positions, they form a potentially non-regular integration grid of sorts. The message passing algorithm is run $M$ steps using the following updates.
+The node embeddings from the encoder are then used in a message passing GNN. The message passing algorithm is run $$M$$ steps using the following updates.
 
-$\text{edge } j \to i \text{ message:} \qquad \mathbf{m}_{ij}^{m} = \phi (\mathbf{f}_{i}^{m}, \mathbf{f}_{j}^{m},$  <span style="color:steelblue;">$\mathbf{u}_{i}^{k-K:k}-\mathbf{u}_{j}^{k-K:k}$</span>, <span style="color:#6546b4;">$\mathbf{x}_{i}-\mathbf{x}_{j}$</span>, <span style="color:#46b49c;">$\theta_{PDE})$</span>
-$\text{node } i \text{ update:} \qquad \mathbf{f}_{i}^{m+1} = \psi (\mathbf{f}^{m}_{i}, \sum_{j \in \mathcal{N}(i)} \mathbf{m}_{ij}^{m}, \phi_{PDE}) \qquad \quad \:$
+<details><summary>
 
+\(\text{edge } j \to i \text{ message:} \qquad \mathbf{m}_{ij}^{m} =\) <span style="color:#ae46b4;">\(\phi\)</span> \((\) <span style="color:#b4a546;">\(\mathbf{f}_{i}^{m}, \mathbf{f}_{j}^{m},\)</span>  <span style="color:steelblue;">\(\mathbf{u}_{i}^{k-K:k}-\mathbf{u}_{j}^{k-K:k}\)</span>, <span style="color:#6546b4;">\(\mathbf{x}_{i}-\mathbf{x}_{j}\)</span>, <span style="color:#46b4af;">\(\theta_{PDE}\)</span> \())\)
+
+</summary>
+
+The <span style="color:#6546b4;">difference in spatial coordinates</span> helps enforce translational symmetry and, combined with the <span style="color:steelblue;">difference in node solutions</span>, relates the message passing to a local difference operator. The addition of the <span style="color:#46b4af;">PDE parameters</span> is motivated by considering what the MP-PDE should generalize over: by adding this information in multiple places, flexibility can potentially be learned since all this information (as well as the <span style="color:#b4a546;">node embeddings</span>) is fed through <span style="color:#ae46b4;">a two-layer MLP</span>.
+
+In addition, the solution of a PDE at any timestep must respect the boundary condition (the same as in classical methods for BVPs), so adding the <span style="color:#46b4af;">PDE parameters</span> in the edge update provides knowledge of the boundary conditions to the neural solver.
+
+</details>
+
+<details><summary>
+
+\(\text{node } i \text{ update:} \qquad\) <span style="color:#ff4f4b;">\)\mathbf{f}_{i}^{m+1}\)</span> \(=\)= <span style="color:#928b54;">\(\psi\)</span> \((\) <span style="color:#6168a6;">\(\mathbf{f}^{m}_{i}\)</span>, <span style="color:#722e4e;">\(\sum_{j \in \mathcal{N}(i)} \mathbf{m}_{ij}^{m}\)</span>, <span style="color:#46b4af;">\(\theta_{PDE}\)</span> \()\)
+
+</summary>
+
+The <span style="color:#ff4f4b;">future node embedding</span> is updated using <span style="color:#6168a6;">the current node embedding</span>, <span style="color:#722e4e;">the aggregation of all received messages</span>, and (again) the <span style="color:#46b4af;">PDE parameters</span>. This information is also fed through <span style="color:#928b54;">a two-layer MLP</span>.
+
+</details>
+
+Bar-Sinai et al. explores the relationship between FDM and FVM as used in the method of lines. In both methods, the $$n^{th}$$ order derivative at a point $$x$$ is approximated by
+
+$$\partial^{(n)}_{x}u \approx \sum_{i} a^{(n)}_{i} u_{i}$$
+
+for some precomputed coefficients $$a^{(n)}_{i}$$. The right hand side parallels the message passing scheme, which aggregates the local difference operator (recall the edge update function) and other (learned) embeddings over neighborhoods of nodes. 
+
+This relationship gives an intuitive understanding of the message passing GNN, which mimics FDM for a single layer, FVM for two layers, and WENO5 for three layers (WENO5, the fifth order finite difference WENO scheme, is a numerical interpolation scheme used to reconstruct the solution at cell interfaces in FVM).
+
+While the interpretation is desirable, how far this holds in the actual function of the MP-GNN is harder to address. The neighborhood contributing to a single layer includes nodes with a number of edges at most equal to the count the current layer (for example, the first layer is counted 1, the second layer is counted 2, and so on). This results in a very coarse and potentially underinformed approximation for the first layer which is then propagated to the next layers. However, both the node and edge updates use two layer MLPs which (although abstracting away from being interpreted as local difference operators as in the paper) may in effect learn optimal weightings to counterbalance this limitation. At a high level, the comparisons to classical methods provide valuable insight to how the network was designed, but it is unclear to what degree the MP-GNN "representationally [contains] some classical methods".
+
+### Results
+
+<details><summary>Quantitative measures: accumulated error, runtime</summary>
+
+Accumulated error:  $$\frac{1}{n_{x}} \sum_{x,t} MSE$$
+Runtime (s): Measured time taken to run for a given number of steps.
+
+</details>
+
+As a *general* neural PDE solver, the MP-GNN surpasses even the current state-of-the-art FNO.
+
+| Generalization to... | MP-GNN | FNO | Classical (MOL) |
+|--|--|--|--|
+| New PDEs | Yes | No | Yes (dependent on the PDE) |
+| Different resolutions| Yes | Yes | Yes (scales with computational cost) |
+| Changes in PDE parameters| Yes | Yes | Yes |
+| Non-regular grids| Yes | No<d-footnote>Per the description of neural operators, there is ongoing work for this which includes interpolating irregular data onto a grid, for example</d-footnote> | Yes (dependent on the PDE) |
+| Higher dimensions| Yes | No | Yes (scales with computational cost, see CFL condition) |
+
+IMAGE(SHOCK)
+
+This experiment exemplifies the MP-PDE's ability to model shocks (where both the FDM and PSM methods fail) across multiple resolutions.
+
+**ideal if rollout accuracy graph provided
+
+TABLE
+
+<details><summary>Abbreviations</summary>
+
+|Shorthand| Meaning |
+|--|--|
+| **E1** | Burgers\' equation without diffusion |
+| **E2** | Burgers\' equation with variable diffusion |
+| **E3** | Mixed equation, see below |
+| $$n_{t}$$ | Temporal resolution |
+| $$n_{x}$$ | Spatial resolution |
+| WENO5 | Weighted Essentially Non-Oscillatory (5th order) |
+| FNO-RNN | Recurrent variation of FNO from original paper |
+| FNO-PF | FNO with the pushforward trick added |
+| MP-PDE | Message passing neural PDE solver |
+
+The authors form a general PDE in the form
+
+$$[\partial_{t}u + \partial_{x}(\alpha u^{2} - \beta \partial_{x} u + \gamma \partial_{xx} u)](t,x) = \delta (t,x)$$
+$$u(0,x) = \delta(0,x)$$
+
+such that $$\theta_{PDE} = (\alpha, \beta, \gamma)$$ and different combinations of these result in the heat equation, Burgers\' equation, and the KdV equation. $$\delta$$ is a forcing term, allowing for greater variation in the equations being tested.
+
+</details>
+
+For this same experiment, the error and runtimes were recorded when solving using WENO5, the recurrent variant of the FNO (FNO-RNN), the FNO with the pushforward trick (FNO-PF), and the MP-PDE.
+
+Comparing the accumulated errors of FNO-RNN and the FNO-PF across all experiments clearly shows an improvement. While the MP-PDE outperforms all other tested methods in the two generalization experiments **E2** and **E3**, the FNO-PF is most accurate for **E1**. For single equation solving, the FNO likely performs better, though both FNO-PF and MP-PDE methods outperform WENO5.
+
+As $$n_{x}$$ is decreased, WENO5 performs increasingly worse whereas all the neural solvers remain relatively stable. Additionally, the runtimes of WENO5 decrease (likely proportionally) since fewer steps require fewer calculations, but the MP-PDE runtimes again appear relatively stable.
+
+## Conclusion
+
+In their paper "Message Passing Neural PDE Solver", Brandstetter at al. present a well-motivated neural solver based on the principle of message passing. The key contributions are the end-to-end network capable of one-shot generalization, and the mitigation of error accumulation via temporal bundling and the pushforward trick.
+
+Some potential applications include fields where parameters of a PDE change often, and fields where the underlying PDE is not fully known. Weather forecasting is a popular driving force for neural solvers due to the complexity and system size typically seen, but image processing, patient outcomes in hospitals, and financial systems can all benefit from a solver which bridges the training and testing data distributions, since problems tend to be underdetermined.
+
+The authors conclude by discussing some future directions such as using the MP-PDE for PDE *retrieval* (which they call parameter optimization). 
