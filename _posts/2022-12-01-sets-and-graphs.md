@@ -59,11 +59,11 @@ _styles: >
 
 ## Sets and Graphs
 
-Before we dive into<d-footnote>It is important to briefly focus on declaring the _conflict of interest_ we had while writing this blog. We are actively working on set and graph representation learning. Accordingly, several paragraphs of this writeup focus on papers that we have co-written. That being said, and in the context of ICLR, we declare that the majority of the ICLR papers referenced in this blog post do _not_ present a conflict of interest for us. Hence, we believe we have, to the best of our efforts, provided an objective and impartial view of learning universal representations over graphs and sets.</d-footnote> universal function approximation, let's start with the basics. What do we mean by learning on set- graphs-based data? In both cases, we assume no ordering, i.e. the task is permutation invariant (or equivariant). A graph is typically thought of as a set of nodes with edges between the nodes. A set doesn't have edges, it just has the nodes, although we often don't call them nodes, rather set elements. Both the nodes and the edges can have feature vectors attached to them. The figure below (originally from Wagstaff et al. 2021<d-cite key="wagstaff21"></d-cite>) visualises this relationship:
+Before we dive into<d-footnote>It is important to briefly focus on declaring the *conflict of interest* we had while writing this blog. We are actively working on set and graph representation learning. Accordingly, several paragraphs of this writeup focus on papers that we have co-written. That being said, and in the context of ICLR, we declare that the majority of the ICLR papers referenced in this blog post do _not_ present a conflict of interest for us. Hence, we believe we have, to the best of our efforts, provided an objective and impartial view of learning universal representations over graphs and sets.</d-footnote> universal function approximation, let's start with the basics. What do we mean by learning on set- graphs-based data? In both cases, we assume no ordering, i.e. the task is permutation invariant (or equivariant). A graph is typically thought of as a set of nodes with edges between the nodes. A set doesn't have edges, it just has the nodes, although we often don't call them nodes, rather set elements. Both the nodes and the edges can have feature vectors attached to them. The figure below (originally from Wagstaff et al. 2021<d-cite key="wagstaff21"></d-cite>) visualises this relationship:
 
 {% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_graphsandsets.png" class="img-fluid" %}
 
-
+Examples for machine learning tasks on this type of data include 3D point cloud classification (a function mapping a set of coordinates to an object class) and molecular property prediction (a function mapping a molecular graph to, e.g., a free energy value).
 
 
 
@@ -76,7 +76,7 @@ First of all, why do we need to be able to approximate all functions? After all,
 Graph Isomorphism Networks (GINs) by Xu et al.<d-cite key="GIN"></d-cite>) provide the quintessential example for the merit of universality research: the authors analysed Graph Convolutional Networks (a very popular class of graph neural networks by Kipf et al. 2016<d-cite key="GCN"></d-cite>), pointed out that GCNs are not universal, created a varation of the algorithm that *is* universal (or at least closer to), and achieved better results.
 <!-- So, in this case, the non-universality of the GCNs really did hurt their performance. -->
 
-However, this is not always the case. Sometimes, architecture changes motivated by universal function approximation arguments lead to *worse* results. Even in such unfortunate cases, however, we argue that thinking about universality is no waste of time. Firstly, it brings structure into the literature and into the wide range of models available. We need to group approaches together to see the differences. Universality research can and has served as a helpful tool for that.
+However, this is not always the case. Sometimes, architecture changes motivated by universal function approximation arguments lead to *worse* results. Even in such unfortunate cases, however, we argue that thinking about universality is no waste of time. Firstly, it brings structure into the literature and into the wide range of models available. We need to group approaches together to see the similarities and differences. Universality research can and has served as a helpful tool for that.
 
 Moreover, proving that a certain architecture is or is not universal is an inherently interesting task and teaches us mathematical thinking and argumentation. In a deep learning world, where there is a general sense of randomness and magic in building high-performing neural networks and where it’s hard to interpret what’s going on, one might argue that an additional mathematical analysis is probably good for the balance, even if it turns out to not always directly result in better performance. 
 
@@ -92,7 +92,7 @@ The first part says: any concrete implementation of a 'universal' network archit
 
 
 
-One of the seminal papers discussing both permutation invariant neural networks and universal function approximation was DeepSets by Zaheer et al. in 2017<d-cite key="Zaheer2017"></d-cite>. The idea is simple: apply the same neural network $\phi$ to several inputs, sum up their results, and apply a final neural network $\rho$.
+One of the seminal papers discussing both permutation invariant neural networks and universal function approximation was DeepSets by Zaheer et al. in 2017<d-cite key="Zaheer2017"></d-cite>. The idea is simple: apply the same neural network $\phi$ to several inputs, sum up their results, and apply a final neural network $\rho$.<d-footnote>Figure from Wagstaff et al. 2021.</d-footnote>
 
 {% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_deepsets.png" class="img-fluid" %}
 
