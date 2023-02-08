@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Adaptive Reward Penalty in Safe Reinforcement Learning
-description: In this blog, we dive into the ICLR 2019 paper "Reward Constrained Policy Optimization" (RCPO) by Tessler et al. and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing RCPO into Proximal Policy Optimization (PPO). This blog aims to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of constrained optimization and (2) how penalized reward functions can be effectively used to train a robust policy.
+description: In this blog, we dive into the ICLR 2019 paper Reward Constrained Policy Optimization (RCPO) by Tessler et al. and highlight the importance of adaptive reward shaping in safe reinforcement learning. We reproduce the paper's experimental results by implementing RCPO into Proximal Policy Optimization (PPO). This blog aims to provide researchers and practitioners with (1) a better understanding of safe reinforcement learning in terms of constrained optimization and (2) how penalized reward functions can be effectively used to train a robust policy.
 date: 2023-01-31
 htmlwidgets: true
 
