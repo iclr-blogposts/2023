@@ -73,9 +73,9 @@ $$
 
 Here, $\eta$ is the meta-learning rate. The differentiation through the inner loop involves calculating second-order derivatives, which mainly distinguishes MAML from simply optimizing for a $\theta$ that minimizes the average task loss.
 
-It is worth noting that in practical scenarios, this second-order differentiation is computationally expensive, and approximation methods such as first-order MAML (FOMAML) <d-cite key="DBLP:conf/icml/FinnAL17"></d-cite> or Reptile <d-cite key="DBLP:journals/corr/abs-1803-02999"></d-cite> are often used. In FOMAML, the outer loop update is simply: $\theta' = \theta - \eta\nabla_{\theta'} \sum_{\mathcal{T_{i}} \sim p(\mathcal{T})}^{}\mathcal{L_{\mathcal{T_{i}}}}(\theta_{i}', \mathcal{D^{test}})$, which avoids differentiating through the inner loop.
+It is worth noting that in practical scenarios, this second-order differentiation is computationally expensive, and approximation methods such as first-order MAML (FOMAML) <d-cite key="DBLP:conf/icml/FinnAL17"></d-cite> or Reptile <d-cite key="DBLP:journals/corr/abs-1803-02999"></d-cite> are often used. In FOMAML, the outer loop update is simply: $$ \theta' = \theta - \eta\nabla_{\theta'} \sum_{\mathcal{T_{i}} \sim p(\mathcal{T})}^{}\mathcal{L_{\mathcal{T_{i}}}}(\theta_{i}', \mathcal{D^{test}}) $$, which avoids differentiating through the inner loop.
 
-Before proceeding, let's prepare ourselves for the next sections by looking at the notation we can use when discussing MAML in the few-shot classification regime: The model's output prediction can be described as $\hat{y} = f_{\theta}(\mathbf{x}) = \underset{c\in[N]}{\mathrm{argmax}} ; h_{\mathbf{w}} (g_{\phi}(\mathbf{x}), c)$, where we divide our model $f_{\theta}(\mathbf{x})$ (which takes an input $\mathbf{x}$) into a feature extractor $g_{\phi}(\mathbf{x})$ and the classifier $h_\mathbf{w}(\mathbf{r}, c)$, parameterized by classification head weight vectors ${\mathbf{w}}_{c=1}^N$. $\mathbf{r}$ denotes an input's representation, and $c$ is the index of the class we want the output prediction for.
+Before proceeding, let's prepare ourselves for the next sections by looking at the notation we can use when discussing MAML in the few-shot classification regime: The model's output prediction can be described as $\hat{y} = f_{\theta}(\mathbf{x}) = \underset{c\in[N]}{\mathrm{argmax}} ; h_{\mathbf{w}} (g_{\phi}(\mathbf{x}), c)$, where we divide our model $f_{\theta}(\mathbf{x})$ (which takes an input $\mathbf{x}$) into a feature extractor $g_{\phi}(\mathbf{x})$ and a classifier $h_\mathbf{w}(\mathbf{r}, c)$, which is parameterized by classification head weight vectors ${\mathbf{w}}_{c=1}^N$. $\mathbf{r}$ denotes an input's representation, and $c$ is the index of the class we want the output prediction for.
 
 Finally, $\theta = {\mathbf{w_1}, \mathbf{w_1}, ..., \mathbf{w_N}, \phi}$, and we are consistent with our previous notation.
 
@@ -96,11 +96,11 @@ an approach called <strong>UnicornMAML</strong> is presented. It is explicitly m
 <em>Fig.1 Example of MAML and a class label permutation. We can see the randomness introduced, as $\mathbf{w_1}$ is supposed to interpret the input features as "unicorn" for the first task, and as "bee" for the second. For both tasks, the class outputted as a prediction should be the same, as in human perception, both tasks are identical. This, however, is obviously not the case.</em>
 </p>
 
-The solution proposed is fairly simple: Instead of meta-learning $N$ weight vectors for the final layer, only learn a <ins>single vector</ins> $\mathbf{w}$ is meta-learned and used to initialize all $ \\{ \mathbf{w} \\}_{c=1}^N $ before the fine-tuning stage.
+The solution proposed is fairly simple: Instead of meta-learning $N$ weight vectors for the final layer, only a <ins>single vector</ins> $\mathbf{w}$ is meta-learned and used to initialize all $ \\{ \mathbf{w} \\}_{c=1}^N $ before the fine-tuning stage.
 
 This forces the model to make random predictions before the inner loop, as $\hat{y_c}= h_{\mathbf{w}} (g_{\phi} (\mathbf{x}), c)$ will be the same for all $c \in [1,...,N ]$.
 
-After the inner loop, the updated parameters have been computed as usual: $ \theta' = \\{\mathbf{w_1}', \mathbf{w_2}', ..., \mathbf{w_N}', \phi'\\} $. The gradient for updating the single classification head meta weight vector $\mathbf{w}$, is just the aggregation of the gradients w.r.t. all the single $\mathbf{w_c}$:
+After the inner loop, the updated parameters have been computed as usual: $$ \theta' = \\{\mathbf{w_1}', \mathbf{w_2}', ..., \mathbf{w_N}', \phi'\\} $$. The gradient for updating the single classification head meta weight vector $\mathbf{w}$, is just the aggregation of the gradients w.r.t. all the single $\mathbf{w_c}$:
 
 $$
 \nabla_{\mathbf{w}} \mathcal{L_{\mathcal{T_i}}} (\mathcal{D^{test}}, \theta_i) = \sum_{c \in [N]} \nabla_{\mathbf{w_c}}
@@ -147,7 +147,8 @@ An overview of MAML with the zeroing trick is displayed below:
 
 Note that $S_n$ and $Q_n$ refer to $\mathcal{D_{i}^{tr}}$ and $\mathcal{D_{i}^{test}}$ in this notation.
 
-Through applying the zero initialization, three of the problems addressed by UnicornMAML are solved as well: - MAML with the zeroing trick applied leads to random predictions before fine-tuning. This solves the problem of class
+Through applying the zero initialization, three of the problems addressed by UnicornMAML are solved as well:
+- MAML with the zeroing trick applied leads to random predictions before fine-tuning. This solves the problem of class
 label assignment permutations during testing.
 - Through the random predictions before fine-tuning, memorization overfitting is prevented as well.
 - The zeroing trick makes MAML applicable for datasets with a varying number of classes per task.
