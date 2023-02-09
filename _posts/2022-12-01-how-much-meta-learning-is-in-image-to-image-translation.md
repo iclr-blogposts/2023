@@ -38,24 +38,24 @@ toc:
   - name: Conclusion
 ---
 
-At the last ICLR conference, Zhou et al. presented work showing that CNNs do not transfer information between classes of a classification task. 
+At the last ICLR conference, Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> presented work showing that CNNs do not transfer information between classes of a classification task. 
 
-- Allan Zhou, Fahim Tajwar, Alexander Robey, Tom Knowles, George J. Pappas, Hamed Hassani, Chelsea Finn [ICLR, 2022] Do Deep Networks Transfer Invariances Across Classes?<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite>.
+- Allan Zhou, Fahim Tajwar, Alexander Robey, Tom Knowles, George J. Pappas, Hamed Hassani, Chelsea Finn [ICLR, 2022] Do Deep Networks Transfer Invariances Across Classes?<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite>
 
 Here is a quick summary of their findings: 
-If I train a Convolutional Neural Net (CNN) to classify fruit on a set of randomly brightened and darkened images of apples and oranges, it will learn to ignore the scene's brightness. We say that the CNN learned that classification is **invariant** to the **nuisance transformation** of randomly changing the brightness of an image. I now add a set of plums to the training data, but fewer examples of them than I have apples and oranges. However, I keep using the same random transformations. The training set thus becomes **class-imbalanced**.
+If we train a Convolutional Neural Net (CNN) to classify fruit on a set of randomly brightened and darkened images of apples and oranges, it will learn to ignore the scene's brightness. We say that the CNN learned that classification is **invariant** to the **nuisance transformation** of randomly changing the brightness of an image. We now add a set of plums to the training data, but fewer examples of them than we have apples and oranges. However, we keep using the same random transformations. The training set thus becomes **class-imbalanced**.
 
 We might expect a sophisticated learner to look at the entire dataset, recognize the random brightness modifications across all types of fruit and henceforth ignore brightness when making predictions. If this applied to our fruit experiment, the CNN would be similarly good at ignoring lighting variations on all types of fruit. Furthermore, we would expect the CNN to become more competent at ignoring lighting variations in proportion to **the total amount of images**, irrespective of which fruit they depict. 
 
-Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite>. show that a CNN does not behave like this: When using a CNN on a **class-imbalanced** classification task with random nuisance transformations, the CNNs invariance to the transformation is proportional to the size of the training set **for each class**. This finding suggests CNNs don't **transfer invariance** between classes when learning such a classification task.
+Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> show that a CNN does not behave like this: When using a CNN on a **class-imbalanced** classification task with random nuisance transformations, the CNNs invariance to the transformation is proportional to the size of the training set **for each class**. This finding suggests CNNs don't **transfer invariance** between classes when learning such a classification task.
 
 However, there is a solution: Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> use an Image to Image translation architecture called MUNIT<d-cite key="DBLP:conf/eccv/HuangLBK18"></d-cite> to learn the transformations and generate additional data from which the CNN can learn the invariance separately for each class. Thus, the invariance to nuisance transformations is transferred **generatively**. They call this method **Generative Invariance Transfer (GIT)**.
 
-In this blog post I am going to argue that:
+In this blog post, we are going to argue that:
 - The experiment described above is a meta-learning experiment.
 - MUNIT is related to meta-learning methods.
 
-Before we proceed to the main post, let's clarify some definitions. If you are already familiar with the subject you may skip this part:
+Before we proceed to the main post, let's clarify some definitions. If you are already familiar with the subject, you may skip this part:
 
 <details>
   <summary><b> Definition: Class-Imbalanced Classification</b></summary>
@@ -64,7 +64,7 @@ Before we proceed to the main post, let's clarify some definitions. If you are a
      In many real-world classification datasets, the number of examples for each class varies. Class-imbalanced classification refers to classification on datasets where the frequencies of class labels vary significantly. 
   </p>
   <p>
-    It is generally more difficult for a neural network to learn to classify classes with fewer examples. However, it is often important to perform well on all classes, regardless of their frequency in the dataset. If I train a model to classify a dataset of different skin tumors, most examples may be benign. Still, it is crucial to identify the rare, malignant ones. Experiment design, including training and evaluation methods must therefore be adjusted when using class-imbalanced data.
+    It is generally more difficult for a neural network to learn to classify classes with fewer examples. However, it is often important to perform well on all classes, regardless of their frequency in the dataset. If we train a model to classify a dataset of different skin tumors, most examples may be benign. Still, it is crucial to identify the rare, malignant ones. Experiment design, including training and evaluation methods must therefore be adjusted when using class-imbalanced data.
     </p>
     <br/>
 </details>
@@ -120,7 +120,7 @@ Let's look at one of the original papers on meta-learning. In the 1998 book "Lea
 
 Now how does this apply to the experiment just outlined? In the introduction, we thought about how a sophisticated learner might handle a dataset like the one described in the last section. We said that a sophisticated learner would learn that the nuisance transformations are applied uniformly **to all classes**. Therefore, if we added more classes to the dataset, the learner would become **more invariant** to the transformations because we expose it to more examples of them. Since this is part of the classification task **for each class**, the learner should, everything else being equal, become better at classification, especially on classes with few training examples. To see this, we must think of the multi-classification task not as a single task but as multiple mappings from image features to activations that must be learned, as a set of binary classification tasks. Thrun and Pratt continue:
 
->For an algorithm to fit this definition some kind of *transfer* must occur between multiple tasks that must have a positive impact on expected task-performance <d-cite key="DBLP:books/sp/98/ThrunP98"></d-cite>.
+>For an algorithm to fit this definition, some kind of *transfer* must occur between multiple tasks that must have a positive impact on expected task-performance <d-cite key="DBLP:books/sp/98/ThrunP98"></d-cite>.
 
 This transfer is what Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> tried to measure. There is some meta-information learnable across several tasks, in our case, the transformation distribution across many binary classification tasks. If a learner can learn this meta-information and transfer it to each new task it has "learned to learn"; it is a meta-learner. The goal of Zhou et al.'s <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> experiment was to see whether this transfer takes place. Thus, arguably, it is a meta-learning experiment.
 
@@ -200,7 +200,7 @@ It turns out that the loss functions of MUNIT can be similarly decomposed:
 {% include figure.html path="assets/img/2022-12-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_LOSS.svg" class="img-fluid" %}
 
 
-MUNIT's loss function consists of two adversarial (GAN) <d-cite key="DBLP:conf/nips/GoodfellowPMXWOCB14"></d-cite> loss terms (see figure above) with several auxiliary reconstruction loss terms. To keep the notation simple, we combine all reconstruction terms into a joined reconstruction loss $ \mathcal{L}_{recon}(\theta_c, \theta_s) $, where $ \theta_c $ are the parameters of the *content* encoding/decoding networks and $ \theta_s $ are the parameters of the *style* encoding/decoding networks. We will only look at one of the two GAN losses in detail since they are symmetric and one is discarded entirely when MUNIT is used on a single domain in the fashion of Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite>.
+MUNIT's loss function consists of two adversarial (GAN) <d-cite key="DBLP:conf/nips/GoodfellowPMXWOCB14"></d-cite> loss terms (see figure above) with several auxiliary reconstruction loss terms. To keep the notation simple, we combine all reconstruction terms into a joined reconstruction loss $ \mathcal{L}_{recon}(\theta_c, \theta_s) $, where $ \theta_c $ are the parameters of the *content* encoding/decoding networks and $ \theta_s $ are the parameters of the *style* encoding/decoding networks. We will only look at one of the two GAN losses in detail since they are symmetric, and one is discarded entirely when MUNIT is used on a single domain in the fashion of Zhou et al. [2022] <d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite>.
 
 MUNIT's GAN loss term is
 
@@ -270,7 +270,7 @@ Interestingly, this bi-level view does not only resemble a meta-learning procedu
 
 The two procedures also share "indirect" parameter updates. During GAN training, the discriminator's parameters are updated through the changes in the generator's parameters, which derive from the discriminator's previous parameters, and so forth; The training of the discriminator and generator are separate but dependent processes. Similarly, in a meta-learner, the outer loop impacts the inner loop by determining its initial learner. The results of the inner loop, meanwhile, impact the outer loop via the meta-validation loss. While often overlapping in practice, the inner and outer loop parameter sets could, in principle, be completely disjunct, as they are in GAN training.
 
-Concluding, we discern between MUNIT applied to two domains versus a single domain. When applied to two domains MUNIT is a *binary* image-to-image translation architecture, i.e., we cannot add domains. For multi-domain translation, we need to train many MUNIT networks to translate between pairs of domains. Thus, although it uses mechanisms similar to a meta-learner, it is *not* a meta-learner in an image-to-image translation context. 
+Concluding, we discern between MUNIT applied to two domains versus a single domain. When applied to two domains, MUNIT is a *binary* image-to-image translation architecture, i.e., we cannot add domains. For multi-domain translation, we need to train many MUNIT networks to translate between pairs of domains. Thus, although it uses mechanisms similar to a meta-learner, it is *not* a meta-learner in an image-to-image translation context. 
 
 However, when applied to a single domain MUNIT *does* "learn to learn" (if you agree with the conclusion of the previous chapter) as it combines information from all classes to extract the transformation distribution. While it does not *perform* classification, the class information of an image is encoded in MUNIT's content space. Since MUNIT is trained unsupervised, it is probably closer to a distance metric than an actual class label. We might thus classify single-domain MUNIT as an unsupervised, generative meta-learner. It performs meta-learning in a general sense of "discerning the general from the task-specific" using a related two-loop training approach with two sets of parameters and a similar loss function. Thus MUNIT is related to meta-learning methods.
 
