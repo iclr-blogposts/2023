@@ -756,8 +756,8 @@ In practice, this survival time should be empirically found (as seen here) to de
     \(\quad (n_{t},n_{x})\)
     </td>
     <td style="border-left:1px solid lightgrey;">WENO5</td>
-    <td><abbr title="Fourier neural operator">FNO</abbr>-<abbr title="recurrent neural networks">RNN</abbr></td>
-    <td style="border-left:1px solid lightgrey;"><abbr title="Fourier neural operator">FNO</abbr>-PF</td>
+    <td>FNO-RNN</td>
+    <td style="border-left:1px solid lightgrey;">FNO-PF</td>
     <td>MP-PDE</td>
     <td style="border-left:1px solid lightgrey;">WENO5</td>
     <td>MP-PDE</td>
