@@ -143,7 +143,11 @@ Another factor that influences inductive bias is **model initialization++. For n
 The figures below show that CNNs have better generalization capability than FCNs. However, it is important to note that the experiments primarily aim to compare different neural networks **within their architecture type**, so a comparison between FCNs and CNNs cannot be considered fair. CNNs have natural advantages due to sparser networks and structural biases, such as local receptive fields and parameter sharing, that are consistent with the identity task. Additionally, CNNs have more parameters, as seen in the underlying figure: a 6-layer FCN contains 3.6M parameters, while a 5-layer CNN (with 5x5 filters of 1024 channels) has 78M parameters. These differences should be taken into account when evaluating the results of the experiments.
 
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Num_param.gif" class="img-fluid" %}
+
+<div class="l-page" style="width: 704px; margin: auto;">
+
+  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/plot.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="480px"></iframe>
+</div>
 
 To conclude, CNNs generalize better than FCNs, even though they have more parameters. This is consistent with the observed phenomenon that neural networks do not follow the statistical learning theory.
 
