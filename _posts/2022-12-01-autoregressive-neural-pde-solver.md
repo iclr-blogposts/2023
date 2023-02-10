@@ -740,7 +740,7 @@ Demonstration of shock formation using MP-PDE from different training data resol
 
 The same data is displayed in 2D to show the time evolution. After about 7.5s, the error accumulation is large enough to visibly diverge from the ground truth. The predictions become unreliable due to error accumulation.
 
-In practice, this survival time should be empirically found (as seen here) to determine for how long the solution is reliable. However, you would need to have the ground truth for comparison, rendering this as another chicken-egg problem.
+In practice, this survival time should be empirically found (as seen here) to determine for how long the solution is reliable. However, the ground truth would be needed for comparison, rendering this as another chicken-egg problem.
 
 <table>
 <thead>
@@ -753,7 +753,7 @@ In practice, this survival time should be empirically found (as seen here) to de
 <tbody>
   <tr>
     <td colspan="2">
-    \(\quad n_{t},n_{x})\)
+    \(\quad (n_{t},n_{x})\)
     </td>
     <td style="border-left:1px solid lightgrey;">WENO5</td>
     <td><abbr title="Fourier neural operator">FNO</abbr>-<abbr title="recurrent neural networks">RNN</abbr></td>
