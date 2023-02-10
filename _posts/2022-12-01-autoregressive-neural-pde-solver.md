@@ -78,12 +78,11 @@ _styles: >
     height: 2px;
   }
 
-  abbr[data-title] {
-  position: relative;
-  text-decoration: underline dotted; 
+  l-body-outset {
+    display: flex;
+    justify-content: center;
   }
 ---
-<!-- <abbr title=""></abbr> -->
 ## Introduction
 <blockquote>
 Improving PDE solvers has trickle down benefits to a vast range of other fields.
@@ -92,7 +91,6 @@ Improving PDE solvers has trickle down benefits to a vast range of other fields.
 Partial differential equations (PDEs) play a crucial role in modeling complex systems and understanding how they change over time and in space.
 
 They are used across physics and engineering, modeling a wide range of physical phenomena like heat transfer, sound waves, electromagnetism, and fluid dynamics, but they can also be used in finance to model the behavior of financial markets, in biology to model the spread of diseases, and in computer vision to model the processing of images.
-<!-- including heat transfer, sound waves, electromagnetism, and fluid dynamics -->
 
 They are particularly interesting in deep learning!
 
@@ -106,9 +104,6 @@ They are particularly interesting in deep learning!
 
 
 Despite their long history, dating back to equations first formalized by Euler over 250 years ago, finding numerical solutions to PDEs continues to be a challenging problem.
-<!-- Solving PDEs involves finding the solution for the unknown variables that describe the system, which can be challenging because of the complexity of the equations and the large amount of data that must be processed. -->
-
-<!-- Classical numeric solvers, such as the finite difference method (<abbr title="finite difference method">FDM</abbr>) and spectral methods, have proven to be effective in solving PDEs when analytical solutions are not possible, but they can become computationally complex, particularly in the face of nonlinear, high-dimensional, and/or multiscale systems. -->
 
 The recent advances in machine learning and artificial intelligence have opened up new possibilities for solving PDEs in a more efficient and accurate manner. These developments have the potential to revolutionize many fields, leading to a better understanding of complex systems and the ability to make more informed predictions about their behavior.
 
@@ -213,7 +208,7 @@ A brief search in a library will find numerous books detailing how to solve vari
 
 </details><br/>
 
-<details><summary>Semi-analytical methods: an analytical solution is combined with numerical approximations to find a solution to a PDE <d-cite key="bartelsNumericalApproximationPartial"></d-cite>.</summary><br/>
+<details><summary>Semi-analytical methods: an analytical solution is combined with numerical approximations to find a solution <d-cite key="bartelsNumericalApproximationPartial"></d-cite>.</summary><br/>
 
 <ul>
 <li>Perturbation methods<ul>
@@ -274,9 +269,6 @@ Credits: Augusto Peres, Inductiva <d-cite key="HeatHeatEquation"></d-cite>.
 The <span style="color:#9444e2;">finite volume method (FVM)</span> is another approach which works for irregular geometries. Rather than requiring a grid, the computation domain can be divided into discrete, non-overlapping control volumes used to compute the solution for that portion <d-cite key="bartelsNumericalApproximationPartial"></d-cite>.
 </p>
 
-<!-- <p>
-For every control volume, a set of equations describing the balance of some physical quantities (in essence, estimating the flux at control volume boundaries) can be solved which results in the approximated spatial derivative.
-</p> -->
 <p>
 While this method <span style="color:#9444e2;">only works for conservation form equations</span>, it can handle complex problems with irregular geometries and fluxes that are difficult to handle with other numerical techniques such as the <abbr title="finite difference method">FDM</abbr>.
 </p>
@@ -284,12 +276,9 @@ While this method <span style="color:#9444e2;">only works for conservation form 
 <p>
 In the <span style="color:#9444e2;">pseudospectral method (PSM)</span>, PDEs are solved pointwise in physical space by using basis functions to approximate the spatial derivatives <d-cite key="brandstetterMessagePassingNeural2022a"></d-cite>. 
 </p>
-<!-- <p>
-Transforming the problem from the physical space to a spectral space helps since derivatives can be easily evaluated using fast Fourier transform algorithms.
-</p> -->
+
 <p>
 It is well-suited for solving problems with <span style="color:#9444e2;">smooth solutions and periodic boundary conditions</span>, but its performance drops for irregular or non-smooth solutions.
-<!-- The basic idea behind the pseudospectral method (PSM) is to represent the solution as a sum of basis functions, typically in Fourier space. The coefficients of the basis functions are determined by using a set of collocation points, which are chosen to enforce the solution at these points. The partial differential equation (PDE) is transformed into a discrete form by integrating the PDE over the control volume and substituting the basis function representation of the solution into the PDE. The solution (i.e. the approximated spatial derivatives) is then calculated by evaluating the basis function representation at the collocation points. The pseudo-spectral method is well-suited for solving problems with smooth solutions and periodic boundary conditions, but its performance drops for irregular or non-smooth solutions. -->
 </p>
 </details><br/>
 
@@ -306,7 +295,6 @@ The properties of a PDE, such as its order, linearity, homogeneity, and boundary
 <div>
 
 <table>
-<!-- <caption>PDE Solver Requirements</caption> -->
 <thead>
 <tr>
 <th>User</th>
@@ -331,10 +319,6 @@ The countless combinations of requirements resulted in what Bartels defines as a
 These methods, while effective and mathematically proven, often come at high computation costs. Taking into account that PDEs often exhibit chaotic behaviour and are sensitive to any changes in their parameters, <span style="color:#ff4f4b;">re-running a solver every time a coefficient or boundary condition changes in a single PDE can be computationally expensive</span>.
 </p>
 
-<!-- <p>
-Furthermore, classical schemes become intractable or run into computation walls for a variety of reasons including complex geometries, large systems, high dimensionality, nonlinearities, and coupled problems (in which some unknowns are interdependent).
-</p> -->
-
 </div>
 
 <div class="fake-img l-gutter">
@@ -356,51 +340,10 @@ Furthermore, classical schemes become intractable or run into computation walls 
 <p>
 Neural solvers offer some very desirable properties that may serve to unify some of this splitter field. Neural networks can <span style="color:#9444e2;">learn and generalize to new contexts</span> such as different initial/boundary conditions, coefficients, or even different PDEs entirely <d-cite key="brandstetterMessagePassingNeural2022a"></d-cite>. They can also circumvent the CFL condition, making them a promising avenue for solving highly complex PDEs such as those found in weather prediction.
 </p>
-<p>
-<!-- Brandstetter et al. categorizes neural solvers into two categories, neural operator methods and autoregressive methods -->
-<!-- ; one more called "PINN methods" is added to address the large family of PINNs. -->
-</p>
-<!-- <p>
-<i>These are not mutually exclusive - a key example being that PINNs can be considered a finite dimensional neural operator.</i>
-</p> -->
 
-<!-- #### PINN methods
-
-Raissi et al. coined the physics-informed neural network (PINN) in 2017. The problem is set such that the network $$\mathcal{N}$$ satisfies $$\mathcal{N}(t,\mathbf{u}^{0}) = \mathbf{u}(t)$$ where $$\mathbf{u}^{0}$$ are the initial conditions. The main principle behind PINNs is to enforce the governing physical laws of the problem on the network's predictions by adding loss term(s) to the network's objective function. -->
-<!-- Since the model can still learn and make predictions that deviate from the constraint, this is a common method to impose a soft constraint in the form of a physics prior which encourages the model to converge to a more optimal solution. -->
-<!-- 
-For a typical loss function
-$$\theta = \text{argmin}_{\theta} \mathcal{L}(\theta)$$
-
-the loss with a physics prior may be defined as follows.
-
- $$\mathcal{L}(\theta) = \omega_{\mathcal{F}} \mathcal{L}_{\mathcal{F}}(\theta) + \omega_{\mathcal{B}} \mathcal{L}_{\mathcal{B}}(\theta) + \omega_{d} \mathcal{L}_{\text{data}}(\theta)$$
- 
- 
-| Term | Definition | Effect |
-|--|--|--|
-| $$\mathcal{L}_{\mathcal{B}}$$ | Loss wrt. the initial and/or boundary conditions | Fits the known data over the network |
-| $$\mathcal{L}_{\mathcal{F}}$$ | Loss wrt. the PDE | Enforces DE $$\mathcal{F}$$ at collocation points;  Calculating using autodiff to compute derivatives of $$\mathbf{\hat{u}_{\theta}(\mathbf{z})}$$ |
-| $$\mathcal{L}_{\text{data}}$$ | Validation of known data points | Fits the known data over the NN and forces $$\mathbf{\hat{u}}_{\theta}$$ to match measurements of $$\mathbf{u}$$ over provided points | -->
-
-<!-- In practice, each loss term could be implemented using a mean square error formulation. As a whole, solving a PDE becomes a loss function optimization problem and this approach can be applied in both forward and inverse problems and using both unsupervised and supervised learning methodologies (depending on whether the underlying PDE is known or not). -->
-
-<!-- PINNs were first introduced using a standard multilayer perceptron architecture, but the methodology has now been applied to CNNs, <abbr title="recurrent neural networks">RNN</abbr>s, Bayesian neural networks, and even GANs. Some interesting developments aside from architectural changes include the Deep Ritz Method CITE, where the loss is defined as the energy of a problem's solution, and the Deep Galerkin Method CITE, where the loss is given by multiplying the residual by a test function. -->
-
-<!-- The success of this loss-based approach is apparent when considering the rapid growth of papers which extend the original iteration of the PINN. However, Krishnapriyan et al. [10] has shown that even though standard fully-connected neural networks are theoretically capable of representing any function given enough neurons and layers, a PINN may still fail to approximate a solution due to the complex loss landscapes arising from soft PDE constraints. -->
-<!-- Even when extended to other simple cases such as advection, a fully connected neural network with the physics prior fails to solve the problem [10]. While the soft penalty is relatively quick to implement and can incorporate multiple rules to a model, it often results in complex and non-convex loss functions which are challenging to optimize. Another major barrier is that PINNs are trained for specific parameters and do not tend to generalize well to new instances of even the same PDE. -->
-
-**Neural operator methods**
+#### Neural operator methods
 
 Neural operator methods <span style="color:#9444e2;">model the solution of a PDE as an operator that maps inputs to outputs</span>. The problem is set such that a neural operator $$\mathcal{M}$$ satisfies $$\mathcal{M}(t,\mathbf{u}^{0}) = \mathbf{u}(t)$$ where $$\mathbf{u}^{0}$$ are the initial conditions <d-cite key="luDeepONetLearningNonlinear2021, brandstetterMessagePassingNeural2022a"></d-cite>.
-
-<!-- > Intuitively, a neural operator maps functions to other functions -->
-
-<!-- The deep O-net architecture was the first of its kind and consisted of a branch net which encodes discrete inputs to an input function space, and a single trunk net which encodes the locations to evaluate the output function.
-
-IMAGE, change/extend the caption
-
-CAPTION: Illustrations of the problem setup and architectures of DeepONets. (A) The network to learn an operator $$G:u \mapsto G(u)$$ takes two inputs $$[u(x_{1}), u(x_{2}), . . . , u(x_{m})]$$ and $$y$$. (B) Illustration of the training data. For each input function $$u$$, there must be the same number of evaluations at the same scattered sensors $$x_{1}, x_{2}, . . . , x_{m}$$. However, there are no constraints on the number or locations for the evaluation of output functions. (C) The stacked DeepONet has one trunk network and $$p$$ stacked branch networks. (D) The unstacked DeepONet has one trunk network and one branch network. -->
 
 <p>
 One of the current state-of-the-art models is the <span style="color:#9444e2;">Fourier Neural Operator (FNO)</span> <d-cite key="liFourierNeuralOperator2021"></d-cite>. It operates within Fourier space and takes advantage of the convolution theorem to place the integral kernel in Fourier space as a convolutional operator.
@@ -465,8 +408,6 @@ Three autoregressive works mentioned by Brandstetter et al. are hybrid methods w
   </p>
 </div>
 
-<!-- Hsieh et al., for example, develops a neural network-accelerated iterative finite elements method. For any PDE with an existing linear iterative solver, a learned iterator can replace a handcrafted classical iterator resulting in faster convergence and better generalization to different geometries and boundary conditions. Most significantly, their approach offers theoretical guarantees of convergence and correctness. -->
-
 However, autoregressive models have not gained the acclaim seen by neural operators as a whole.
 
 This is on one hand due to their <span style="color:#ff4f4b;">limitations in generalization</span>. In Hsieh et al.'s case, an existing numerical method must be used to craft a complementary neural iterator <d-cite key="hsiehLearningNeuralPDE2019"></d-cite>.
@@ -505,7 +446,6 @@ An adversarial-style stability loss is added to the one-step loss so that the tr
 \(L_{\text{one-step}} =\) <span style="color:#23a15c;">\(\mathbb{E}_{k}\)</span> <span style="color:#928b54;">\(\mathbb{E}_{\mathbf{u^{k+1}|\mathbf{u^{k},\mathbf{u^{k} \sim p_{k}}}}}\)</span> \([\) <span style="color:#5588e0;">\(\mathcal{L}\)</span> \((\) <span style="color:#9444e2;">\(\mathcal{A}(\mathbf{u}^{k})\)</span> \(,\) <span style="color:#46b4af;">\(\mathbf{u}^{k+1}]\)</span>
 </summary>
 
-<!-- The one-step loss is calculated using the <span style="color:#ff4f4b;">expectation over all time-steps</span>, weighted by the <span style="color:#928b54;">expected next solution given the current solution and the distribution of possible next solutions</span>. -->
 <p>
 The <span style="color:#5588e0;">loss function</span> is used to evaluate the difference between the <span style="color:#9444e2;">temporal update</span> and the <span style="color:#46b4af;">expected next state</span>, and the overall one-step loss is calculated as the expected value of this loss over <span style="color:#23a15c;">all time-steps</span> and <span style="color:#928b54;">all possible next states</span>.
 </p>
@@ -537,7 +477,6 @@ While the network could be unrolled during training, this not only slows the tra
 
 **Temporal bundling**
 
-<!-- <div class="l-body-outset"> -->
 <div class="row mt-3">
     <div class="col-8">
         {% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/NN-AR.jpg" class="img-fluid rounded" %}
@@ -641,7 +580,6 @@ This relationship gives an intuitive understanding of the message passing <abbr 
 
 <p>
 While the interpretation is desirable, how far this holds in the actual function of the <abbr title="message passing graph neural network">MP-GNN</abbr> is harder to address. The concepts of the nodes as integration points and messages as local differences break down as the nodes and edges update. In addition, the furthest node that contributes a message from for any point is at \(n\) edges away for the \(n^{th}\) layer (or a specified limit). This results in a very coarse and potentially underinformed approximation for the first layer which is then propagated to the next layers. However, both the updates use two layer <abbr title="multilayer perceptron">MLP</abbr>s which (although abstracting away from their respective interpretations) may in effect learn optimal weightings to counterbalance this.
-<!-- At a high level, the comparisons to classical methods provide valuable insight to how the network was designed, but it is unclear to what degree the <abbr title="message passing graph neural network">MP-GNN</abbr> "representationally [contains] some classical methods" CITE. -->
 </p>
 </li>
 <li>
@@ -870,22 +808,22 @@ Table of experiment results adapted from paper. Credits: Brandstetter et al. <d-
 <tbody>
 <tr>
 <td><strong>E1</strong></td>
-<td>Burgers\&#39; equation without diffusion</td>
+<td>Burgers&#39; equation without diffusion</td>
 </tr>
 <tr>
 <td><strong>E2</strong></td>
-<td>Burgers\&#39; equation with variable diffusion</td>
+<td>Burgers&#39; equation with variable diffusion</td>
 </tr>
 <tr>
 <td><strong>E3</strong></td>
 <td>Mixed equation, see below</td>
 </tr>
 <tr>
-<td>$$n_{t}$$</td>
+<td>\(n_{t}\)</td>
 <td>Temporal resolution</td>
 </tr>
 <tr>
-<td>$$n_{x}$$</td>
+<td>\(n_{x}\)</td>
 <td>Spatial resolution</td>
 </tr>
 <tr>
@@ -943,10 +881,6 @@ Neural solver runtimes are constant to resolution.
 </blockquote>
 Additionally, the runtimes of <abbr title="Weighted Essentially Non-Oscillatory (5th order)">WENO5</abbr> decrease (likely proportionally) since fewer steps require fewer calculations, but the MP-PDE runtimes again appear relatively stable.
 
-<!-- #### Applications
-
-Some potential applications include fields where parameters of a PDE change often, and fields where the underlying PDE is not fully known. Weather forecasting is a popular driving force for neural solvers due to the complexity and system size typically seen, but image processing, patient outcomes in hospitals, and financial systems can all benefit from a solver which bridges the training and testing data distributions, since problems tend to be underdetermined. -->
-
 ## Conclusion
 
 #### Future Directions
@@ -960,8 +894,6 @@ For example, the MP-PDE can be modified for <span style="color:#9444e2;">PDE *re
 The one-step loss which is the basis of the <span style="color:#9444e2;">adversarial-style loss</span> is also used in reinforcement learning, which frequently uses deep autoregressive models. Other formulations which borrow from reinforcement learning (where distribution shifts are quite common) and other fields could prove successful as well. Transformer-based natural language processing are now capable of capturing extremely long sequence dependencies and generating coherent long-form text. Since [Transformers are GNNs](https://graphdeeplearning.github.io/post/transformers-are-gnns/) which use attention to aggregate neighborhoods, this may be a viable avenue to explore.
 
 **One more potential direction is inspired by the recent GRAND paper.**
-
-<!-- An important link to graph theory shows the MP-GNNs are equivalent to the Weisfeiler-Lehman graph isomorphism test and provides some theory about their expressive power <d-cite key="morrisWeisfeilerLemanGo2022"></d-cite>. However, the Weisfeiler-Lehman algorithm has its limitations such as not being able to distinguish simple geometries like triangles. In addition, the graph structure itself can pose challenges like bottlenecks where information struggles to pass through certain sections if (for example) there is a single node between two larger subnets. -->
 
 Brandstetter et al. emphasizes the value of relationships to classical solvers - in fact, this is one of the key benefits of hybrid autoregressive models. However, modeling continuous functions as in neural operator models typically outperforms their competitors. Even the MP-PDE is fully neural, making it less explanable than the hybrid autoregressive models introduced earlier.
 
