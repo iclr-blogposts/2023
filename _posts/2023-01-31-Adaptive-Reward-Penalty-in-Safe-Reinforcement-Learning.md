@@ -77,14 +77,15 @@ _styles: >
 
 Safe RL can be defined as the process of learning policies that maximize the expectation of the return in problems in which it is important to ensure reasonable system performance and/or respect safety constraints during the learning and/or the deployment processes <d-cite key="garcia_comprehensive_2015"></d-cite>.
 
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/video/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/RL_boat_racing.mp4" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Open AIs CoastRunners agent from their blog post <a href="https://openai.com/blog/faulty-reward-functions">"Faulty Reward Functions in the Wild"</a> in Dec 2016.
-</div>
+
+<center>
+<video autoplay muted loop controls src="{{ site.url }}{{ site.baseurl }}/assets/video/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/RL_boat_racing.mp4"
+    style="width:500px"
+    type="video/mp4">
+</video>
+<figcaption>
+    Open AIs CoastRunners agent from their blog post <a href="https://openai.com/blog/faulty-reward-functions">"Faulty Reward Functions in the Wild"</a> in Dec 2016.</figcaption>
+</center>
 
 Defining a reward function is crucial in [Reinforcement Learning](https://lilianweng.github.io/posts/2018-02-19-rl-overview/) for solving many problems of interest in AI.
 It is often based on the designers' intuition of the goal of the system.
@@ -170,18 +171,18 @@ We, therefore, define the constraint value as the x-position of the cart and the
 
 Let's see how with different lambda values, the constraint is enforced.
 
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/video/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/cart_pole_lambda.mp4" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
+<center>
+<video autoplay muted loop controls src="{{ site.url }}{{ site.baseurl }}/assets/video/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/cart_pole_lambda.mp4"
+    style="width:500px"
+    type="video/mp4">
+</video>
+<figcaption>
     The green area represents the "safe zone", where the x-position is smaller than -2, and the red area is the "unsafe zone". <br>
     The lower the lambda, the more the constraint is ignored.
     The higher the lambda, the more the constraint is enforced, and the main reward objective is ignored.
     At λ = 1,000,000 the cart shoots to the right to tilt the pole to the left but does
-    so ignoring the following balancing act, which is observable at λ ∈ {10, 100}.
-</div>
+    so ignoring the following balancing act, which is observable at λ ∈ {10, 100}.</figcaption>
+</center>
 
 Tuning the $$\lambda$$ through [reward shaping](https://gibberblot.github.io/rl-notes/single-agent/reward-shaping.html) is no easy feat.
 The Lagrangian is a scaling factor, i.e., if the constraint values are inherently larger than the reward values, we will need a substantially lower $$\lambda$$ than when the constraint values are significantly smaller than the possible reward values.
@@ -310,14 +311,14 @@ Finally ,let's see how our HalfCheetah agents walk under the
 To do so, we have recorded videos of the agents walking forward with different $$\lambda$$ values.
 The results can be seen below.
 
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/video/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/HalfCheetah_Experiments.mp4" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Visualization of the HalfCheetah agents learned through RCPPO and with different selected Lagrangian multipliers.
-</div>
+<center>
+<video autoplay muted loop controls src="{{ site.url }}{{ site.baseurl }}/assets/video/2023-01-31-Adaptive-Reward-Penalty-in-Safe-Reinforcement-Learning/HalfCheetah_Experiments.mp4"
+    style="width:500px"
+    type="video/mp4">
+</video>
+<figcaption>Visualization of the HalfCheetah agents learned through RCPPO and with different selected Lagrangian multipliers.</figcaption>
+</center>
+
 
 We can again observe that the lower the lambda is, the more the constraint is ignored and the higher the lambda, the more the constraint is enforced and the main reward objective is ignored.\\
 At λ ∈ {10, 100}, the robot applies 0 torque to ultimately oblige to the constraint ignoring the main reward objective to walk forward, which is observable at λ ∈ {RCPPO, 0, 0.00001}.
