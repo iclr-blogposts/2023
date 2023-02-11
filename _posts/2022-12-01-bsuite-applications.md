@@ -320,14 +320,14 @@ Known to every RL practitioner, testing and debugging during the development cyc
 ### 4.1 Incorrect Hyperparameter
 As discussed in the previous section, hyperparameters are of major importance to the performance of a RL algorithm. A missing or incorrect hyperparameter will not necessarily prevent a program from running, but most such bugs will severely degrade performance. Using bsuite can quickly expose poor performance of an algorithm at a low cost to the practitioner.
 
-Example: Figure 11 shows the default PPO implementation against a PPO implementation with an erroneous learning rate of $1\mathrm{e}{-3}$. Many hyperparameters such as total training steps and maximum buffer size are usually coded using scientific notation since they are so large; consequently, it is easy to forget the 'minus sign' when coding the learning rate and instead code the learning rate as $1e3$. The results on *msuite* show that performance has degraded severely from an OTS implementation, and more investigation into the code is required. One of the authors of this blog post would have saved roughly a day of training a PPO agent in their own work had they realized this mistake.  
+Example: Figure 11 shows the default PPO implementation against a PPO implementation with an erroneous learning rate of $1\mathrm{e}{-3}$. Many hyperparameters such as total training steps and maximum buffer size are usually coded using scientific notation since they are so large; consequently, it is easy to forget the 'minus sign' when coding the learning rate and instead code the learning rate as $1e3$. The results on msuite show that performance has degraded severely from an OTS implementation, and more investigation into the code is required. One of the authors of this blog post would have saved roughly a day of training a PPO agent in their own work had they realized this exact mistake.  
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar41.png" class="img-fluid" %}
 
 <div class="caption">
-    Figure 11. Comparison of default DQN with varying learning rates.
+    Figure 11. Comparison of default PPO with miscoded PPO.
 </div>
 
 </div>
