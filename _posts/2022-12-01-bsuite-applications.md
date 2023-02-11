@@ -334,20 +334,22 @@ Example: Figure 11 shows the default PPO implementation against a PPO implementa
 </div>
 
 ### 4.2 Off-the-Shelf Algorithm Testing
-While the previous example used an OTS algorithm for comparison to illuminate silent bugs, it may be the case that the OTS algorithm could have a silent bug. Whether due to an incorrect library being used or a misunderstanding of the OTS algorithm, any silent bug in an OTS algorithm can be difficult to detect due to the codebase being written by another practitioner. Again, *bsuite* can be used to diagnose poor performance and elucidate a coding problem.
+While the previous example used an OTS algorithm for comparison to illuminate silent bugs, it may be the case that the OTS algorithm itself could have a silent bug. Whether due to an incorrect library being used or a misunderstanding of the OTS algorithm, any silent bug in an OTS algorithm can be difficult to detect due to the codebase being written by another practitioner. Again, bsuite can be used to diagnose poor performance and elucidate a coding problem.
 
-*Example*: Figure X shows the results of the SB3 DQN with our default experimental hyperparameters and with the default SB3 hyperparameters on *msuite*. A core difference between the hyperparameters is the burn rate: the default SB3 hyperparameters perform 10K steps before learning takes place (e.g. backprop), while our hyperparameters start the learning much more quickly (Nathan). Since many of the 'easier' *msuite* environments only last 10K time steps, failure to learn anything during that time severely degrades performance, as shown. Noticing the default value of this hyperparameter in SB3 would have saved the authors roughly 10 hours of training time.
+Example: Figure 12 shows the results of the SB3 DQN with our default experimental hyperparameters and with the default SB3 hyperparameters on msuite. A core difference between the hyperparameters is the burn rate: the default SB3 hyperparameters perform $10K$ steps before learning takes place (e.g. backprop), while our default experimental hyperparameters start the learning much more quickly (Nathan). Since many of the easier msuite environments only last $10K$ time steps, failure to learn anything during that time severely degrades performance, as shown. Noticing the default value of this hyperparameter in SB3 would have saved the authors roughly 10 hours of training time.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar42.png" class="img-fluid" %}
 
-*Figure X. Comparison of DQN and DQN with Reward Scaling.*
+<div class="caption">
+    Figure 12. Comparison of DQN with small and large burn-in.
+</div>
 
 </div>
 
 ### 4.3 Future Work
-The training time for a complete run of *bsuite* can take an hour on even the most basic algorithms. Considering that a few of the easiest *bsuite* environments could have shown poor performance in the above examples within mere minutes, one research avenue is to create a fast debugging system for reinforcement learning algorithms. In the spirit of *bsuite*, it should implement targeted experiments to provide actionable solutions for eliminating silent bugs. Such work would primarily act as a public good, but it could also help bridge the gap between RL theory and practice if it could embody the targeted nature of *bsuite*.
+The training time for a complete run of bsuite can take an hour for even the most basic algorithms. Considering that a few of the easiest bsuite environments could have shown poor performance in the above examples within mere minutes, one research avenue is to create a fast debugging system for reinforcement learning algorithms. In the spirit of bsuite, it should implement targeted experiments to provide actionable solutions for eliminating silent bugs. Such work would primarily act as a public good, but it could also help bridge the gap between RL theory and practice if it embodies the targeted nature of bsuite.
 
 ## 5. Model Improvement
 A natural milestone in the RL development cycle is getting an algorithm running bug-free with notable signs of learning. A common follow-up question to ask is "*How can I improve my model to yield better performance?*" The practitioner may consider choosing an entirely new model and repeating some of the above steps; a more enticing option is usually to improve the existing model by reusing its core structure and only making minor additions or modifications, an approach taken in the baseline RAINBOW DQN algorithm <d-cite key="hessel_rainbow_2018"></d-cite>. In this section, discuss how *bsuite* can be used to provide targeted improvements of  existing models and increase performance while mitigating compute time.
