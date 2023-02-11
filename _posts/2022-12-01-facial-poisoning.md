@@ -23,6 +23,8 @@ authors:
     url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
     affiliations:
       name: IAS, Princeton
+ 
+bibliography: 2022-12-01-facial-poisoning.bib  
 
 # Data Poisoning is Hitting a Wall
 
