@@ -23,10 +23,9 @@ authors:
     url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
     affiliations:
       name: IAS, Princeton
- 
-bibliography: 2022-12-01-facial-poisoning.bib  
 
 # Data Poisoning is Hitting a Wall
+bibliography: 2022-12-01-facial-poisoning.bib
 
 In this post, we look at the paper "Data Poisoning Won't Save You From Facial Recognition," discuss the impact of the work, and additionally look at how this work fares in the current state of adversarial machine learning.
 
@@ -59,10 +58,9 @@ Facial recognition systems have been known to pose a severe threat to society. W
 
 Keeping this in mind, a growing body of work has emerged that allows users to fight back using principles from adversarial machine learning. Primary among these is the technique of data poisoning - where users can perturb pictures that they post online so that models that train on these become _poisoned_. In other words, once a model has been introduced to a perturbed image of a user, it misidentifies any future instances of that person.
 
-Services like Fawkes popularized this approach by offering a service promising "strong protection against unauthorized [facial recognition] models." Users could pass their images through Fawkes and receive poisoned photos - virtually identical to the naked eye, which were then posted to social media, alleviating any worries that they might be used to identify them in the future. It quickly gained popularity, was covered by the New York Times and received over 500,000 downloads. Following Fawkes' success, similar systems were proposed in academic and commercial settings.
+Services like _Fawkes_ popularized this approach by offering a service promising "strong protection against unauthorized {facial recognition} models." Users could pass their images through Fawkes and receive poisoned photos - virtually identical to the naked eye, which were then posted to social media, alleviating any worries that they might be used to identify them in the future. It quickly gained popularity, was covered by the New York Times <d-footnote>[This tool could protect your photos from Facial Recognition](https://www.nytimes.com/2020/08/03/technology/fawkes-tool-protects-photos-from-facial-recognition.html)</d-footnote> and received over 500,000 downloads. Following Fawkes' success, similar systems were proposed in academic and commercial settings.
 
 {% include figure.html path="assets/img/2022-12-01-facial-poisoning/facial_poisoning.png" class="img-fluid" %}
-
 
 *** 
 The authors of the paper, however, look at these systems from a different perspective. They argue that services like Fawkes (and poisoning strategies in general) cannot protect users' privacy when it comes to facial recognition systems. In fact, it usually exacerbates the situation by providing them with a false sense of security.
@@ -104,9 +102,8 @@ The authors use various models as feature extractors from _FaceNet_<d-cite key="
 This section describes how the model trainer can adaptively train a generic feature extractor that can resist poisoning attacks.
 
 The model trainer begins by collecting a public dataset of unperturbed images. In this case, that would be a canonical dataset of celebrities that are a part of the _FaceScrub_ dataset. With black-box access to the poisoning tool, the trainer calls it to obtain perturbed samples of the same images.
-```markdown
-gif 
-```
+
+{% include figure.html path="assets/img/2022-12-01-facial-poisoning/adaptive-attack.gif" class="img-fluid" %}
 
 With access to both unperturbed images and their corresponding poisoned counterparts, the trainer can teach a model to produce similar embeddings for both sets of pictures, encouraging the model to adaptively learn robust features. This is done hoping that this robustness would eventually generalize to perturbations' applied to other images.
 
@@ -130,7 +127,7 @@ Rather than creating poisoned counterparts to clean images and adaptively traini
 
 To bypass this _oblivious_ defense strategy, an attack must not only be able to fool all present models but also be effective against future iterations without changing its perturbation. Asymetrically (to the benefit of the model trainer) newer techniques need not be robust to all attacks; instead, they just have to resist the specific method used in previous pictures.
 
-{% include figure.html path="assets/img/2022-12-01-facial-poisoning/error_rate.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-facial-poisoning/oblivious-attack.gif" class="img-fluid" %}
 
 
 To confirm this, the paper included a study where Fawkes was pitted against various feature extractors ordered chronologically. While the original _Fawkes v0.3_ was utterly ineffective against any model apart from WebFace, the updated v1.0 could transfer its attack to other extractors like _VGGFace_, _FaceNet_, and _ArcFace_. However, while _Fawkes v1.0_ provided a perfect (100%) error rate on the _Celeb1M_ model (the one it was trained to target), it failed miserably against more recent extractors like _MagFace_<d-cite key="meng2021magface"></d-cite> or _CLIP_. A similar trend was also observed when using _LowKey_. While it fared better than Fawkes and could transfer its attack to MagSafe, LowKey failed to break the fine-tuned _CLIP_ model trained by the authors.
