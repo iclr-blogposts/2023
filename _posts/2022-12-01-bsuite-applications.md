@@ -126,9 +126,11 @@ The bsuite evaluation of an agent yields a radar chart (Fig. 1) that displays th
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar01.png" class="img-fluid" %}
 
 </div>
+<div class="caption">
+    Figure 1. Example radar chart of DQN on all 7 bsuite core capabilities.
+</div>
 
-
-An example environment is *deep sea* that targets exploration power. As shown in Figure 2, *deep sea* is an $N \times N$ grid with starting state at cell $(1, 1)$ and treasure at $(N, N)$, with $N$ ranging from 10 to 100. The agent has two actions, move downward left and downward right; the goal is to reach the treasure and receive a reward of $1$ by always moving downward right. A reward of $0$ is given to the agent for moving downward left at a timestep, while a penalizing reward of $-0.01/N$ is given for moving downward right. The evaluation protocol of *deep sea* only allows for $10K$ episodes of $N-1$ time steps each, which prevents an algorithm with unlimited time from casually exploring the entire state space and stumbling upon the treasure. Note that superhuman performance is nonexistent in *deep sea* (and more precisely in the entire *bsuite* gamut) since a human can spot the optimal policy nearly instantaneously. Surprisingly, we will show later that baseline DRL agents fail miserably at this task. 
+An example environment is *deep sea* that targets exploration power. As shown in Figure 2, *deep sea* is an $N \times N$ grid with starting state at cell $(1, 1)$ and treasure at $(N, N)$, with $N$ ranging from 10 to 100. The agent has two actions, move downward left and downward right; the goal is to reach the treasure and receive a reward of $1$ by always moving downward right. A reward of $0$ is given to the agent for moving downward left at a timestep, while a penalizing reward of $-0.01/N$ is given for moving downward right. The evaluation protocol of *deep sea* only allows for $10K$ episodes of $N-1$ time steps each, which prevents an algorithm with unlimited time from casually exploring the entire state space and stumbling upon the treasure. Note that superhuman performance is nonexistent in *deep sea* (and more precisely in the entire bsuite gamut) since a human can spot the optimal policy nearly instantaneously. Surprisingly, we will show later that baseline DRL agents fail miserably at this task. 
 
 <div style="text-align: center;">
 
@@ -140,7 +142,7 @@ An example environment is *deep sea* that targets exploration power. As shown in
 
 </div>
 
-The **challenge** of *deep sea* is the necessity of exploration in an environment that presents an irreversible, suboptimal greedy action (moving downward left) at every time step. This environment **targets** exploration power by ensuring that a successful agent must deliberately choose to explore the state space by neglecting the greedy action. The **simplistic** implementation removes confounding goals, such as learning to see from pixels while completing other tasks ([Mnih et al. 2015](https://www.nature.com/articles/nature14236)). Furthermore, this environment provides a granular exploration score through **scaling** the environment size by $N$ and determining when an agent starts to fail. Finally, the implementation of the environment yields **fast** computation, allowing multiple, quick runs with minimal overhead and compute cost. These 5 aforementioned key qualities are encompassed by all *bsuite* environments, and we contrast such environments against traditional benchmark environments in the below table.
+The **challenge** of *deep sea* is the necessity of exploration in an environment that presents an irreversible, suboptimal greedy action (moving downward left) at every time step. This environment **targets** exploration power by ensuring that a successful agent must deliberately choose to explore the state space by neglecting the greedy action. The **simplistic** implementation removes confounding goals, such as learning to see from pixels while completing other tasks ([Mnih et al. 2015](https://www.nature.com/articles/nature14236)). Furthermore, this environment provides a granular exploration score through **scaling** the environment size by $N$ and determining when an agent starts to fail. Finally, the implementation of the environment yields **fast** computation, allowing multiple, quick runs with minimal overhead and compute cost. These 5 aforementioned key qualities are encompassed by all bsuite environments, and we contrast such environments against traditional benchmark environments in the below table.
 
 | Key Quality     | Traditional Benchmark Environment                                                                      | *bsuite* Environment                                                                            |
 |-----------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
@@ -153,9 +155,9 @@ The **challenge** of *deep sea* is the necessity of exploration in an environmen
 
 ### 0.3 Motivation
 
-The authors of *bsuite* stated, "Our aim is that these experiments can help provide a bridge between theory and practice, with benefits to both sides" ([Osband et al. , 2020](https://iclr.cc/virtual_2020/poster_rygf-kSYwH.html)).  As discussed in ([0.1](#01-background)), establishing clear benchmarks can yield applied progress, which in turn can accelerate theoretical progress. The use of *bsuite* in this manner seems highly fruitful since its environments are targeted, which allows for hypothesis testing and eventual formalization into provable guarantees. As such, <span style="color: red;">it is instrumental that the applied aspect of *bsuite* is emphasized through the adoption and diverse application of reinforcement learning practitioners</span>. 
+The authors of bsuite stated, "Our aim is that these experiments can help provide a bridge between theory and practice, with benefits to both sides" ([Osband et al. , 2020](https://iclr.cc/virtual_2020/poster_rygf-kSYwH.html)).  As discussed in the background section, establishing clear benchmarks can yield applied progress, which in turn can accelerate theoretical progress. The use of bsuite in this manner seems highly fruitful since its environments are targeted, which allows for hypothesis testing and eventual formalization into provable guarantees. As such, <span style="color: red;">it is instrumental that the applied aspect of bsuite is emphasized through the adoption and diverse application of reinforcement learning practitioners</span>. 
 
-The applied examples in the published paper are rather meagre: there are two examples of algorithm comparison on two specific environments and three example comparisons of algorithms, optimizers, and ensemble sizes across the entire *bsuite* gamut in the appendix. The two examples on the specific environments showcase how *bsuite* can be used for directed algorithm improvement, but the experiments in the appendices only discuss the general notion of agent comparison using *bsuite* scores. In addition to the examples, the authors supply some comments throughout the paper that provide hints regarding the applied usage of *bsuite*. Looking at the [paper reviews](https://openreview.net/forum?id=rygf-kSYwH), [reviewer #1](https://openreview.net/forum?id=rygf-kSYwH&noteId=rkxk2BR3YH) mentioned how there was no explicit conclusion from the evaluation, and [reviewer #3](https://openreview.net/forum?id=rygf-kSYwH&noteId=rJxjmH6otS) mentioned that examples of diagnostic use and concrete examples would help support the paper. Furthermore, [reviewer #2](https://openreview.net/forum?id=rygf-kSYwH&noteId=SJgEVpbAFr) encouraged publication of *bsuite* at a top venue to see traction within with the RL research community, and the [program chairs](https://openreview.net/forum?id=rygf-kSYwH&noteId=7x_6G9OVWG) mentioned how success or failure can rely on community acceptance. Considering that *bsuite* received a spotlight presentation at ICLR 2020 and has amassed over 100 citations in the relatively small field of RL reproducibility during the past few years, *bsuite* has all intellectual merit and some community momentum to reach the level of timeless benchmark in RL research. <span style="color: red;">To elevate *bsuite* to the status of a timeless reinforcement learning benchmark and to help bridge the theoretical and applied sides of reinforcement learning, we believe that it is necessary to develop and document concrete *bsuite* examples that help answer difficult and prevailing questions throughout the reinforcement learning development process</span>.   
+The applied examples in the published paper are rather meagre: there are two examples of algorithm comparison on two specific environments and three example comparisons of algorithms, optimizers, and ensemble sizes across the entire *bsuite* gamut in the appendix. The two examples on the specific environments showcase how bsuite can be used for directed algorithm improvement, but the experiments in the appendices only discuss the general notion of agent comparison using bsuite scores. In addition to the examples, the authors supply some comments throughout the paper that provide hints regarding the applied usage of *bsuite*. Looking at the [paper reviews](https://openreview.net/forum?id=rygf-kSYwH), [reviewer #1](https://openreview.net/forum?id=rygf-kSYwH&noteId=rkxk2BR3YH) mentioned how there was no explicit conclusion from the evaluation, and [reviewer #3](https://openreview.net/forum?id=rygf-kSYwH&noteId=rJxjmH6otS) mentioned that examples of diagnostic use and concrete examples would help support the paper. Furthermore, [reviewer #2](https://openreview.net/forum?id=rygf-kSYwH&noteId=SJgEVpbAFr) encouraged publication of bsuite at a top venue to see traction within with the RL research community, and the [program chairs](https://openreview.net/forum?id=rygf-kSYwH&noteId=7x_6G9OVWG) mentioned how success or failure can rely on community acceptance. Considering that *bsuite* received a spotlight presentation at ICLR 2020 and has amassed over 100 citations in the relatively small field of RL reproducibility during the past few years, bsuite has all intellectual merit and some community momentum to reach the level of timeless benchmark in RL research. <span style="color: red;">To elevate bsuite to the status of a timeless reinforcement learning benchmark and to help bridge the theoretical and applied sides of reinforcement learning, we believe that it is necessary to develop and document concrete *bsuite* examples that help answer difficult and prevailing questions throughout the reinforcement learning development process</span>.   
 
 ### 0.4 Contribution Statement
 
@@ -229,7 +231,7 @@ Preprocessing techniques usually targeted to ease some aspect of the agent's tra
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar22.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar21.png" class="img-fluid" %}
 
 *Figure X. Comparison of DQN and DQN with Reward Scaling.*
 
@@ -243,7 +245,7 @@ Instead of choosing to preprocess the environment, a more sophisticated algorith
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar21.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar22.png" class="img-fluid" %}
 
 *Figure X. Comparison of DQN and DQN with Reward Scaling.*
 
@@ -308,7 +310,7 @@ As discussed in the previous section, hyperparameters are of major importance to
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar42.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar41.png" class="img-fluid" %}
 
 *Figure X. Comparison of DQN and DQN with Reward Scaling.*
 
@@ -321,7 +323,7 @@ While the previous example used an OTS algorithm for comparison to illuminate si
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar43.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar42.png" class="img-fluid" %}
 
 *Figure X. Comparison of DQN and DQN with Reward Scaling.*
 
