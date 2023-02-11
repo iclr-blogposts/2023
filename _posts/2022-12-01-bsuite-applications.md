@@ -172,53 +172,58 @@ Although running a bsuite environment is orders of magnitude faster than most be
 We stress that the below examples are not meant to amaze the reader or exhibit state-of-the-art research. <span style="color: red;">The main products of this work are the practicality and diversity of ideas in the examples</span>, while the experiments are primarily for basic validation and illustrative purposes. Moreover, these experiments use modest compute power and showcase the effectiveness of bsuite in the low-compute regime. Each example has tangible benefits such as saving development time, shortening compute time, increasing performance, and lessening frustration of the practitioner, among others. To maintain any sense of brevity in this post, we now begin discussion of the examples.
 
 ## 1. Initial Model Selection
-The reinforcement learining development cycle typically begins with an underlying environment. A natural question usually follows: "*Which underlying RL model should I choose to best tackle this environment, given my resources*?". Resources can range from the hardware (e.g model size on the GPU), to temporal constraints, to availability of off-the-shelf algorithms ([Liang et al., 2018](https://proceedings.mlr.press/v80/liang18b); [Raffin et al., 2021](https://dl.acm.org/doi/abs/10.5555/3546258.3546526)), to programming efficiency of the practitioner. Initially selecting an effective model can save a great amount of development time due to the potentially greater performance baseline of the agent. In this section, we illustrate how *bsuite* can be used to effectively answer the question of initial model selection.
+The reinforcement learning development cycle typically begins with an environment to solve. A natural question usually follows: "*Which underlying RL model should I choose to best tackle this environment, given my resources*?". Resources can range from the hardware (e.g. model size on the GPU), to temporal constraints, to availability of off-the-shelf algorithms ([Liang et al., 2018](https://proceedings.mlr.press/v80/liang18b); [Raffin et al., 2021](https://dl.acm.org/doi/abs/10.5555/3546258.3546526)), to programming efficiency of the practitioner. Initially selecting an effective model can save a great amount of development time due to the potentially greater performance baseline of the agent. In this section, we illustrate how bsuite can be used to effectively answer the question of initial model selection.
 
-### 1.1 Comparing Baseline Agents
+### 1.1 Comparing Baseline Algorithms
 
-Perhaps the first choice in the RL developement cycle is choosing the algorithm. A considerable amount of RL research is focused on the corresponding algorithms, which presents many possibilities for the researcher. The No Free Lunch Theorem ([Wolpert & Macready](https://ieeexplore.ieee.org/abstract/document/585893/)) tailored to reinforcement learning would state that no algorithm will prove better than any other unless the characteristics of the underlying environment are known. Using *bsuite* provides a quantitative assessment of agent performance on capabilities that are prevalent in many or even most reinforcement learning environments of interest.
+Perhaps the first choice in the RL development cycle is choosing the algorithm. A considerable amount of RL research is focused on the corresponding algorithms, which presents many possibilities for the researcher. The No Free Lunch Theorem ([Wolpert & Macready](https://ieeexplore.ieee.org/abstract/document/585893/)) tailored to reinforcement learning would state that no algorithm will prove better than any other unless the characteristics of the underlying environment are known. Using bsuite provides a quantitative assessment of algorithm performance on capabilities that are prevalent in many or even most reinforcement learning environments of interest.
 
-*Example*: Figure X shows the performance of the Stable-Baselines3 (SB3) implementations of DQN, A2C, and PPO on *mbsuite* with our default hyperparameters. Recent research ([Andrychowicz et al. 2020](https://arxiv.org/abs/2006.05990)) suggests that PPO is the most commonly used algorithm, and it was a successor to DQN and A2C. The results show that PPO is superior on *msuite* in most categories, providing credibility for its use as a premiere baseline DRL algorithm.
+Example: Figure 3 shows the performance of the Stable-Baselines3 (SB3) implementations of DQN, A2C, and PPO on msuite with our default hyperparameters. Recent research ([Andrychowicz et al. 2020](https://arxiv.org/abs/2006.05990)) suggests that PPO is the most commonly used RL algorithm, and it was a successor to DQN and A2C. The results indeed show that PPO is superior on msuite in most categories, providing credibility for its use as the premiere baseline DRL algorithm.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar11.png" class="img-fluid" %}
 
-*Figure 1.1. Comparison of default DQN, A2C, and PPO baseline algorithms.*
-
+<div class="caption">
+    Figure 3. Comparison of SB3 default DQN, A2C, and PPO baseline algorithms.
+</div>
 </div>
 
 ### 1.2 Comparing Off-the-Shelf Implementations
 
-Due to the vast number of reinforcement learning paradigms (e.g. model-based, heirarchical), there are many off-the-shelf (OTS) libraries that provide a select number of thoroughly tested reinforcement learning algorithms. Often, temporal resources or coding capabilities do not allow for practitioners to implement every algorithm by hand. Fortunately, running an algorithm on *bsuite* can provide a quick glance of an OTS algorithm's abilities at low cost to the practitioner.
+Due to the vast number of reinforcement learning paradigms (e.g. model-based, hierarchical), there are many off-the-shelf (OTS) libraries that provide a select number of thoroughly tested reinforcement learning algorithms. Often, temporal resources or coding capabilities do not allow for practitioners to implement every algorithm by hand. Fortunately, running an algorithm on bsuite can provide a quick glance of an OTS algorithm's abilities at low cost to the practitioner.
 
-*Example*: Figure X compares the DQN implementation of SB3 against the example DQN implementation in the *bsuite* codebase (Nathan check). There is a significant difference between the performance of each implementation on *msuite*, with the *bsuite* implementation displaying its superiority. Note that the hyperparameters of *bsuite* DQN were most likely chosen with the evaluation on *bsuite* in mind, which would explain its increased performance. As a side note, this example also encourages the practitioner to consider the association of algorithms and their implementations with certain environments (e.g. DQN with the ATARI suite) during the initial selection phase.
+Example: Figure 4 compares our default DQN implementation against the example DQN implementation in the bsuite codebase (Nathan check). There is a significant difference between the performance of each implementation on msuite, with the bsuite implementation displaying its superiority. Note that the hyperparameters of bsuite DQN were most likely chosen with the evaluation on bsuite in mind, which could explain its increased performance.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar12.png" class="img-fluid" %}
 
-*Figure 1.2. Comparison of default DQN, A2C, and PPO baselines.*
+<div class="caption">
+    Figure 4. Comparison of SB3 DQN and bsuite DQN.
+</div>
 
 </div>
 
 ### 1.3 Gauging Hardware Necessities
 
-Even after an initial algorithm is selected, hardware limitations such as network size and data storage can prevent the agent from being deployed. Using *bsuite* provides a low-cost comparison among possible hardware choices that can be used to argue for their necessity. This is especially important for small development teams since there can likely be a major disparity between their own hardware resources and those discussed in corresponding research publications. 
+Even after an initial algorithm is selected, hardware limitations such as network size and data storage can prevent the agent from being deployed. Using bsuite provides a low-cost comparison among possible hardware choices that can be used to argue for their necessity. This is especially important for small development teams since there can likely be a major disparity between their own hardware resources and those discussed in corresponding research publications. 
 
-*Example*: Figure X compares the SB3 DQN implementation when varying replay buffer sizes, from 1e2 to 1e5. The original DQN paper (cite) used a replay buffer of size 1e6, which is too large for the RAM constraints of many personal computers. The results show that increasing the buffer size to at least 1e4 yields significant returns on *msuite*. Note that since the experiment lengths (total timesteps for all episodes) of *msuite* were sometimes less than 1e5, the larger buffer size of 1e5 did not always push out experiences from long forgotten episodes, which most likely worsened performance.
+Example: Figure 5 compares the default DQN implementation when varying replay buffer sizes, from $1e2$ to $1e5$, with the default having size $1e4$. The original DQN implementation (cite) used a replay buffer of size $1e6$, which is too large for the RAM constraints of many personal computers. The results show that increasing the buffer size to at least $1e4$ yields significant returns on msuite. Note that since the experiment lengths (total time steps for all episodes) of msuite were sometimes less than $1e5$, the larger buffer size of $1e5$ did not always push out experiences from very old episodes, which most likely worsened performance.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar13.png" class="img-fluid" %}
 
-*Figure 1.3. Comparison of default DQN, A2C, and PPO baselines.*
+<div class="caption">
+    Figure 5. Comparison of DQN with varying buffer sizes.
+</div>
 
 </div>
 
 ### 1.4 Future Work
 
-Due to the diversity of OTS libraries, one possible research direction in reproducible RL is to test algorithms from different OTS libraries using the same hyperparameters on *bsuite* and create a directory of *bsuite* radar charts. This provides practitioners a comparison with their own implmentation or a starting point when selecting an OTS library and algorithm. Another direction is to test various aspects related to hardware constraints and attempt to show the tradeoff between constraints and performance on *bsuite* and other benchmarks. This would especially help practitioners with low compute resources to budget resource use on a single or multiple projects.
+Due to the diversity of OTS libraries, one possible research direction in reproducible RL is to test algorithms from different OTS libraries using the same hyperparameters on bsuite and create a directory of bsuite radar charts. This provides practitioners a comparison with their own implementation or a starting point when selecting an OTS library and algorithm. Another direction is to test various aspects related to hardware constraints and attempt to show the tradeoff between constraints and performance on bsuite and other benchmarks. This would especially help practitioners with low compute resources to budget resource use on multiple projects.
 
 ## 2. Preprocessing Choice
 Most benchmark environments present prevailing difficulties such as high-dimensional observations, unscaled rewards, unnecessary actions, and partially-observable Markov Decision Process (POMDP) dynamics. Some of these difficulties are curbed using environment preprocessing techniques. While certain environments such as *ATARI* have formalized standards for preprocessing, there are some aspects such as frame skipping that are considered part of the underlying algorithm, and therefore, a choice of the practitioner ([Machado et al., 2018](https://www.jair.org/index.php/jair/article/view/11182)). A natural question to ask is, "*What environment preprocessing techniques will best help my agent attain its goal in this environment*?".  In this section, we show how *bsuite* can provide insight to the choice of preprocessing, with benefits of increased performance and shortened training time.
