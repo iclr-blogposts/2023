@@ -231,7 +231,7 @@ Most benchmark environments present complexities such as high-dimensional observ
 ### 2.1 Verification of Preprocessing
 Preprocessing techniques usually targeted to ease some aspect of the agent's training. For example, removing unnecessary actions (e.g. in a joystick action space) prevents the agent from having to learn which actions are useless. While a new preprocessing technique can provide improvements, there is always the chance that it fails to make a substantial improvement, or worse yet, generally decreases performance. Invoking bsuite can help provide verification that the preprocessing provided the planned improvement.
 
-Example: Figure 5 shows the performance of the default DQN agent versus an agent that received normalized rewards from the environment. Normalizing the rewards increases the speed of training a neural network, since the parameters are usually initialized to expect target values in a range from $-1$ to $1$. Our results show that the normalization preprocessing indeed increases the capability of navigating varying reward scales while not suffering drastically in any other capability.
+Example: Figure 6 shows the performance of the default DQN agent versus an agent that received normalized rewards from the environment. Normalizing the rewards increases the speed of training a neural network, since the parameters are usually initialized to expect target values in a range from $-1$ to $1$. Our results show that the normalization preprocessing indeed increases the capability of navigating varying reward scales while not suffering drastically in any other capability.
 
 
 <div style="text-align: center;">
@@ -239,7 +239,7 @@ Example: Figure 5 shows the performance of the default DQN agent versus an agent
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar21.png" class="img-fluid" %}
 
 <div class="caption">
-    Figure 5. Comparison of DQN with and without reward normalization.
+    Figure 6. Comparison of DQN with and without reward normalization.
 </div>
 
 </div>
@@ -248,14 +248,14 @@ Example: Figure 5 shows the performance of the default DQN agent versus an agent
 
 Instead of choosing to preprocess the environment, a more sophisticated algorithm may better achieve the preprocessing goals. For example, many improvements on the original DQN algorithm have been directed towards accomplishing goals such as improving stability, reducing overestimation, and bolstering exploration. Comparing preprocessing against an algorithmic improvement provides a quantitative reason for deciding between the two options, especially since development time of many common preprocessing wrappers is quite short.
 
-Example: Figure 6 shows the results of PPO with a recurrent network versus PPO having its observation as the last 4 stacked frames from the environment. Frame stacking is common on *ATARI* since it converts the POMDP dynamics to an MDP, which is necessary to determine velocity of any element on the screen. An improvement to DQN, Deep Recurrent Q-networks ([Hausknecht & Stone 2015](https://arxiv.org/abs/1507.06527)), uses a recurrent LSTM to aid in memory and achieve the same effects of frame stacking. The  msuite results show that memory is considerably improved with PPO RNN and therefore may be worth the extra development time.
+Example: Figure 7 shows the results of PPO with a recurrent network versus PPO having its observation as the last 4 stacked frames from the environment. Frame stacking is common on *ATARI* since it converts the POMDP dynamics to an MDP, which is necessary to determine velocity of any element on the screen. An improvement to DQN, Deep Recurrent Q-networks ([Hausknecht & Stone 2015](https://arxiv.org/abs/1507.06527)), uses a recurrent LSTM to aid in memory and achieve the same effects of frame stacking. The  msuite results show that memory is considerably improved with PPO RNN and therefore may be worth the extra development time.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar22.png" class="img-fluid" %}
 
 <div class="caption">
-    Figure 6. Comparison of PPO with framestacking and PPO with RNN.
+    Figure 7. Comparison of PPO with framestacking and PPO with RNN.
 </div>
 
 </div>
@@ -265,67 +265,74 @@ Example: Figure 6 shows the results of PPO with a recurrent network versus PPO h
 One research direction is to document common preprocessing techniques and determine their scores on bsuite. This would provide practitioners a summary of directed strengths for each preprocessing technique while possibly uncovering unexpected behavior. Another direction is to determine the extent to which preprocessing techniques aided previous results in the literature, which could illuminate strengths or weaknesses in the corresponding algorithms.
 
 ## 3. Hyperparameter Tuning
-After selecting a model and determining any preprocessing of the environment, an agent must eventually be trained on the environment to gauge its performance. During the training process, initial choices of hyperparameters can heavily influence the agent's performance ([Andrychowicz et al., 2021](https://arxiv.org/abs/2006.05990)), including how to explore and how quickly the model should learn from past experience. The corresponding question to ask is, "*How can I choose hyperparameters to yield the best performance, given a model?*" In this section, we show how *bsuite* can be used to tune hyperparameters, thereby increasing performance and shortening compute time.
+After selecting a model and determining any preprocessing of the environment, an agent must eventually be trained on the environment to gauge its performance. During the training process, initial choices of hyperparameters can heavily influence the agent's performance ([Andrychowicz et al., 2021](https://arxiv.org/abs/2006.05990)), including how to explore and how quickly the model should learn from past experience. The corresponding question to ask is, "*How can I choose hyperparameters to yield the best performance, given a model?*" In this section, we show how bsuite can be used to tune hyperparameters, thereby increasing performance and shortening compute time.
 
 ### 3.1 Unintuitive Hyperparameters
-Some hyperparameters such as exploration percentage and batch size are more concrete, while others such as discounting factor and learning rate are a little less intuitive. Determining a starting value of an unintuitive hyperparameter can be challenging and require a few trials before honing in on a successful value. Instead of having to run experiments on a costly environment, using *bsuite* can provide a thoughtful initial guess of the value at a low compute cost.
+Some hyperparameters such as exploration percentage and batch size are more concrete, while others such as discounting factor and learning rate are a little less intuitive. Determining a starting value of an unintuitive hyperparameter can be challenging and require a few trials before honing in on a successful value. Instead of having to run experiments on a costly environment, using bsuite can provide a thoughtful initial guess of the value with minimal compute.
 
-*Example*: Figure X shows the results of running PPO with various entropy bonus coefficients across *msuite*. The entropy bonus affects the action distribution of the agent, and the value of 1e-2 presented in the original paper ([Schulman et al. 2017](https://arxiv.org/pdf/1707.06347.pdf)) is fairly unintuitive. The results show that the value of 1e-2 is indeed superior on *msuite* by a small margin. Since SB3 has the entropy bonus initialized to 0, this example also shows how hyperparameter tuning with *msuite* can improve performance even with OTS implementations.
+Example: Figure 8 shows the results of running PPO with various entropy bonus coefficients across msuite (default is 0.01). The entropy bonus affects the action distribution of the agent, and the value of $1\mathrm{e}{-2}$ presented in the original paper ([Schulman et al. 2017](https://arxiv.org/pdf/1707.06347.pdf)) is fairly unintuitive. The results show that the value of $1\mathrm{e}{-2}$ is indeed superior on msuite by a small margin. Since SB3 has the entropy bonus initialized to 0, this example also shows how hyperparameter tuning with msuite can improve performance even on OTS implementations.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar31.png" class="img-fluid" %}
 
-*Figure X. Comparison of DQN and DQN with Reward Scaling.*
+<div class="caption">
+    Figure 8. Comparison of default PPO with varying entropy bonuses.
+</div>
 
 </div>
 
 ### 3.2 Promising Ranges of Hyperparameters
-Instead of determining a single value of a hyperparameter, gauging an acceptable range may be required. Since hyperparameters can have confounding effects, knowing approximate soft boundaries of hyperparameters at which agents start to fail at basic tasks can provide useful information during a more general hyperparameter tuning process. For example, smaller learning rates generally take longer for algorithm convergence, and a practitioner may want to know a promising range of learning rates if the computing budget is flexible. The scaling nature of *bsuite* presents knowledge of the extent to which different hyperparameter choices effect performance, greatly aiding in ascertaining a promising hyperparameter range.
+Instead of determining a single value of a hyperparameter, gauging an acceptable range may be required. Since hyperparameters can have confounding effects, knowing approximate soft boundaries of hyperparameters at which agents start to fail basic tasks can provide useful information during a more general hyperparameter tuning process. For example, smaller learning rates generally take longer for algorithm convergence, and a practitioner may want to know a promising range of learning rates if the computing budget is flexible. The scaling nature of bsuite presents knowledge of the extent to which different hyperparameter choices effect performance, greatly aiding in ascertaining a promising hyperparameter range.
 
-*Example*: Figure X shows the results of testing the aforementioned experiment with various learning rates using DQN as the underlying algorithm on *msuite*. The results show that leraning rates above 1e-2 start to yield diminishing returns. Since some experiment lengths in *msuite* only run for 10K episodes, the lowest learning rate of 1e-6 may never converge in time even with high-quality training data, necessitating a modification to *msuite* to learn a lower bound.
+Example: Figure 9 shows the results of default DQN with varying learning rates on msuite (default $7\mathrm{e}{-4}$). The results suggest that learning rates above $1\mathrm{e}{-2}$ start to yield diminishing returns. Since some experiment lengths in msuite only run for $10K$ episodes, the lowest learning rate of $1\mathrm{e}{-6}$ may never converge in time even with high-quality training data, necessitating a modification to msuite to learn a lower bound.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar32.png" class="img-fluid" %}
 
-*Figure X. Comparison of DQN and DQN with Reward Scaling.*
-
+<div class="caption">
+    Figure 9. Comparison of default DQN with varying learning rates.
+</div>
 </div>
 
 ### 3.3 Pace of Annealing Hyperparameters
-While some hyperparameters stay fixed, others must change throughout the course of training. Typically, these include hyperparameters that control the exploration vs. exploitation dilemma, including entropy bonus and epsilon-greedy exploration. These hyperparameters are often dependent on the entire experiment; for example, SB3 anneals epsilon-greedy exploration for a fixed fraction of the experiment. Therefore, entire experiments, some consisting of millions of episodes, need to be run to determine successful values of these hyperparameters. Using *bsuite* can provide a quick confirmation that the annealing of these parameters happens at an acceptable rate.
+While some hyperparameters stay fixed, others must change throughout the course of training. Typically, these include hyperparameters that control the exploration vs. exploitation dilemma, such as entropy bonus and epsilon-greedy exploration. These hyperparameters are often dependent on the entire experiment; for example, SB3 anneals epsilon-greedy exploration for a fixed fraction of the experiment. Therefore, entire experiments, some consisting of millions of episodes, need to be run to determine successful values of these hyperparameters. Using bsuite can provide a quick confirmation that the annealing of these parameters happens at an acceptable rate.
 
-*Example*: Figure X shows the performance of DQN with various epsilon-greedy exploration annealing lengths, based on a fixed fraction of the entire experiment. The annealing fraction of 0.1 performs best on *msuite*, which is the same choice of parameter in the original DQN paper (cite). Furthermore, performance decreases with greater annealing lengths. Since *bsuite* environments are generally scored with regret, we acknowledge that the longer annealing lengths may have better relative performance if *bsuite* were scored with a training versus testing split.
+Example: Figure 10 shows the performance of DQN with various epsilon-greedy exploration annealing lengths, based on a fixed fraction of the entire experiment (default $0.1$). The annealing fraction of $0.1$ performs best on msuite, which is the same choice of parameter in the original DQN paper (cite). Furthermore, performance decreases with greater annealing lengths. Since bsuite environments are generally scored with regret, we acknowledge that the longer annealing lengths may have better relative performance if bsuite were scored with a training versus testing split.
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar33.png" class="img-fluid" %}
 
-*Figure X. Comparison of DQN and DQN with Reward Scaling.*
+<div class="caption">
+    Figure 10. Comparison of default DQN with varying epsilon annealing lengths.
+</div>
 
 </div>
 
 ### 3.4 Future Work
-The three experiments above can be extended by documenting the affect of varying hyperparameters on performance, especially in OTS implementations. This would help practitioners understand the effects of certain hyperparameters on the *bsuite* core  capabilities, allowing for a better initial hyperparameter choice when certain capabilities are necessary for the environment at hand. Another research direction is to determine if integrating a fast hyperparameter tuner on general environments such as *bsuite* into a hyperparameter tuner for single, complex environments would increase the speed of tuning on the fixed environment. Since the *bsuite* core capabilities are necessary in many complex environments, and initial pass to determine competency on *bsuite* would act as a first pass of the tuning algorithm.
+The three experiments above can be extended by documenting the effect of varying hyperparameters on performance, especially in OTS implementations. This would help practitioners understand the effects of certain hyperparameters on the bsuite core capabilities, allowing for a better initial hyperparameter choice when certain capabilities are necessary for the environment at hand. Another research direction is to determine if integrating a fast hyperparameter tuner on general environments such as bsuite into a hyperparameter tuner for single, complex environments would increase the speed of tuning on the fixed environment. Since the bsuite core capabilities are necessary in many complex environments, initially determining competency on bsuite would act as a first pass of the tuning algorithm.
 
 ## 4. Testing and Debugging
-Known to every RL practitioner, testing and debugging during the development cycle is nearly unavoidable. It is common to encounter silent bugs in RL code, where the program runs but the agent fails to learn because of an implementation error. Examples include incorrect preprocessing, incorrect hyperparameters, or missing algorithm additions. Quick unit tests can be invaluable for the RL practitioner, as shown in successor work to *bsuite* ([Rajan & Hutter, 2019](https://ml.informatik.uni-freiburg.de/wp-content/uploads/papers/19-NeurIPS-Workshop-MDP_Playground.pdf)). A corresponding question to ask during the testing and debugging phase is, "*What tests can I perform to verify that my agent is running as intended?*" In this section, we show how *bsuite* can be used as a sanity check the expectations and assumptions of the implementation, saving compute time and lessening the frustration of the practitioner (a very existential and limited quantity). In an effort to refrain from contrived examples, the two examples below highlight real-life scenarios where using *bsuite* could have saved the authors of this blog post hours of frustration in their own work.
+Known to every RL practitioner, testing and debugging during the development cycle is nearly unavoidable. It is common to encounter silent bugs in RL code, where the program runs but the agent fails to learn because of an implementation error. Examples include incorrect preprocessing, incorrect hyperparameters, or missing algorithm additions. Quick unit tests can be invaluable for the RL practitioner, as shown in successor work to bsuite ([Rajan & Hutter, 2019](https://ml.informatik.uni-freiburg.de/wp-content/uploads/papers/19-NeurIPS-Workshop-MDP_Playground.pdf)). A corresponding question to ask during the testing and debugging phase is, "*What tests can I perform to verify that my agent is running as intended?*" In this section, we show how bsuite can be used as a sanity check for the implementation, saving compute time and lessening the frustration of the practitioner. In an effort to refrain from contrived examples, the two examples below highlight real-life scenarios where using bsuite could have saved the authors of this blog post hours of frustration in their own work.
 
 ### 4.1 Incorrect Hyperparameter
-As discussed in the previous section, hyperparameters are of major importance to the performance of a RL algorithm. A missing or incorrect hyperparameter will not necessarily prevent a program from running, but most such bugs will severely degrade performance. Using *bsuite* can quickly expose poor performance of an algorithm at a low cost to the practitioner.
+As discussed in the previous section, hyperparameters are of major importance to the performance of a RL algorithm. A missing or incorrect hyperparameter will not necessarily prevent a program from running, but most such bugs will severely degrade performance. Using bsuite can quickly expose poor performance of an algorithm at a low cost to the practitioner.
 
-*Example*: Figure X shows the default PPO implementation against a PPO implementation with an erroneous learning rate of 1e-3. Many hyperparameters such as total training steps, minimum buffer size before training, steps until epsilon is fully annealed, and maximum buffer size are usually coded using scientific notation since they are so large; consequently, it is easy to forget the 'minus sign' in the coding of the learning rate and instead code the learning rate as 1e3. The results on *msuite* show that performance has degraded severely from an OTS implementation, and more investigation into the code is required. One of the authors of this blog post would have saved roughly a day of training a PPO agent in their own work had they realized this mistake.  
+Example: Figure 11 shows the default PPO implementation against a PPO implementation with an erroneous learning rate of $1\mathrm{e}{-3}$. Many hyperparameters such as total training steps and maximum buffer size are usually coded using scientific notation since they are so large; consequently, it is easy to forget the 'minus sign' when coding the learning rate and instead code the learning rate as $1e3$. The results on *msuite* show that performance has degraded severely from an OTS implementation, and more investigation into the code is required. One of the authors of this blog post would have saved roughly a day of training a PPO agent in their own work had they realized this mistake.  
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar41.png" class="img-fluid" %}
 
-*Figure X. Comparison of DQN and DQN with Reward Scaling.*
+<div class="caption">
+    Figure 11. Comparison of default DQN with varying learning rates.
+</div>
 
 </div>
 
-### 4.2 OTS Algorithm Testing
+### 4.2 Off-the-Shelf Algorithm Testing
 While the previous example used an OTS algorithm for comparison to illuminate silent bugs, it may be the case that the OTS algorithm could have a silent bug. Whether due to an incorrect library being used or a misunderstanding of the OTS algorithm, any silent bug in an OTS algorithm can be difficult to detect due to the codebase being written by another practitioner. Again, *bsuite* can be used to diagnose poor performance and elucidate a coding problem.
 
 *Example*: Figure X shows the results of the SB3 DQN with our default experimental hyperparameters and with the default SB3 hyperparameters on *msuite*. A core difference between the hyperparameters is the burn rate: the default SB3 hyperparameters perform 10K steps before learning takes place (e.g. backprop), while our hyperparameters start the learning much more quickly (Nathan). Since many of the 'easier' *msuite* environments only last 10K time steps, failure to learn anything during that time severely degrades performance, as shown. Noticing the default value of this hyperparameter in SB3 would have saved the authors roughly 10 hours of training time.
@@ -358,7 +365,7 @@ In DRL, the neural network usually encodes the policy, and its architecture dire
 
 </div>
 
-### 5.2 OTS Improvements
+### 5.2 Off-the-Shelf Improvements
 While previous examples discussed comparison, verification, and debugging OTS implementations, many OTS libraries provide support for well-known algorithm improvements. For example, some DQN implementations have boolean values to signify the use of noisy networks, double Q-learning, and more. Using *bsuite* provides the necessary targeted analysis to help determine if certain improvements are fruitful for the environment at hand.
 
 *Example*: Figure X shows the results of our default DQN compared against the SB3 QRDQN algorithm with default hyperparameters and the SBE QRDQN algorithm with hyperparameters matching our default DQN implementation. The QRDQN algorithm is an improvement over DQN that aims to capture the distribution over returns instead of a point estimate of the expected return. This implementation is more complex but allows for a precise estimate that aids in stability. The results show that this improvement was rather negligible on *msuite*, and unless credit assignment is the major concern in the environment at hand, a different improvement may prove more useful.
