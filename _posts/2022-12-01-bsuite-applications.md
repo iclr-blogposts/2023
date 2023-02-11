@@ -126,17 +126,17 @@ The bsuite evaluation of an agent yields a radar chart (Fig. 1) that displays th
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar01.png" class="img-fluid" %}
 
 </div>
-<div class="caption">
-    Figure 1. Radar chart of DQN with 7 core capabilities of bsuite.
-</div>
 
-An example environment is *deep sea* that targets exploration power. As shown in the picture, *deep sea* is and $N \times N$ grid with starting state at cell $(1, 1)$ and treasure at $(N, N)$, with $N$ ranging from 10 to 100. The agent has two actions, move downward left and downward right; the goal is to reach the treasure and receive a reward of $1$ by always moving downward right. A reward of $0$ is given to the agent for moving downward left at a timestep; a penalizing reward of $-0.01/N$ is given for moving downward right. The evaluation protocol of *deep sea* only allows for 10K episodes of $N-1$ time steps each, which prevents an algorithm with unlimited time from casually exploring the entire state space and stumbling upon the treasure. Note that superhuman performance is nonexistent in *deep sea* (and more precisely in the entire *bsuite* gamut) since a human can spot the optimal policy nearly instantaneously. Surprisingly, we will show in ([1.1](#11-comparing-baseline-algorithms)) that baseline DRL agents fail miserably at this task. 
+
+An example environment is *deep sea* that targets exploration power. As shown in Figure 2, *deep sea* is an $N \times N$ grid with starting state at cell $(1, 1)$ and treasure at $(N, N)$, with $N$ ranging from 10 to 100. The agent has two actions, move downward left and downward right; the goal is to reach the treasure and receive a reward of $1$ by always moving downward right. A reward of $0$ is given to the agent for moving downward left at a timestep, while a penalizing reward of $-0.01/N$ is given for moving downward right. The evaluation protocol of *deep sea* only allows for $10K$ episodes of $N-1$ time steps each, which prevents an algorithm with unlimited time from casually exploring the entire state space and stumbling upon the treasure. Note that superhuman performance is nonexistent in *deep sea* (and more precisely in the entire *bsuite* gamut) since a human can spot the optimal policy nearly instantaneously. Surprisingly, we will show later that baseline DRL agents fail miserably at this task. 
 
 <div style="text-align: center;">
 
 {% include figure.html path="assets/img/2022-12-01-bsuite-applications/diagram02.png" class="img-fluid" %}
 
-*Figure 2. Illustration of Deep Sea environment taken from [Osband et al. , 2020](https://iclr.cc/virtual_2020/poster_rygf-kSYwH.html).*
+<div class="caption">
+    Figure 2. Illustration of deep sea environment taken from ([Osband et al. , 2020](https://iclr.cc/virtual_2020/poster_rygf-kSYwH.html)).
+</div>
 
 </div>
 
