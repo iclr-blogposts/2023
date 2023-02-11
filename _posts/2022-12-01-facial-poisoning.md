@@ -24,8 +24,10 @@ authors:
     affiliations:
       name: IAS, Princeton
 
-# Data Poisoning is Hitting a Wall
 bibliography: 2022-12-01-facial-poisoning.bib
+
+# Data Poisoning is Hitting a Wall
+
 
 In this post, we look at the paper "Data Poisoning Won't Save You From Facial Recognition," discuss the impact of the work, and additionally look at how this work fares in the current state of adversarial machine learning.
 
@@ -116,9 +118,9 @@ While the above strategy works in theory, it requires direct intervention from m
 
 #### Attack Detection
 
-Since the model trainers have black-box access to the facial poisoning tools (Fawkes and LowKey), they can also turn the tables and build a detector to determine whether a specific image has been perturbed. Such a detector can dynamically filter out perturbed photos, allowing the model to retain only unperturbed pictures of a user. Moreover, detecting an attack could be a privacy concern (for instance, law enforcement might actively target users whose attack attempts are detected).
+Since the model trainers have black-box access to the facial poisoning tools (_Fawkes_ and _LowKey_), they can also turn the tables and build a detector to determine whether a specific image has been perturbed. Such a detector can dynamically filter out perturbed photos, allowing the model to retain only unperturbed pictures of a user. Moreover, detecting an attack could be a privacy concern (for instance, law enforcement might actively target users whose attack attempts are detected).
 
-To verify this, the authors were able to fine-tune a standard pre-trained ImageNet model to distinguish between perturbed and clean images of 25 random celebrities in the dataset. The model detected the poisoned images with near-perfect precision (99.8%) and recall (99.8%).
+To verify this, the authors were able to fine-tune a standard pre-trained _ImageNet_ model to distinguish between perturbed and clean images of 25 random celebrities in the dataset. The model detected the poisoned images with near-perfect precision (99.8%) and recall (99.8%).
 ***
 
 #### Time is all you need
@@ -129,13 +131,12 @@ To bypass this _oblivious_ defense strategy, an attack must not only be able to 
 
 {% include figure.html path="assets/img/2022-12-01-facial-poisoning/oblivious-attack.gif" class="img-fluid" %}
 
-
-To confirm this, the paper included a study where Fawkes was pitted against various feature extractors ordered chronologically. While the original _Fawkes v0.3_ was utterly ineffective against any model apart from WebFace, the updated v1.0 could transfer its attack to other extractors like _VGGFace_, _FaceNet_, and _ArcFace_. However, while _Fawkes v1.0_ provided a perfect (100%) error rate on the _Celeb1M_ model (the one it was trained to target), it failed miserably against more recent extractors like _MagFace_<d-cite key="meng2021magface"></d-cite> or _CLIP_. A similar trend was also observed when using _LowKey_. While it fared better than Fawkes and could transfer its attack to MagSafe, LowKey failed to break the fine-tuned _CLIP_ model trained by the authors.
+To confirm this, the paper included a study where _Fawkes_ was pitted against various feature extractors ordered chronologically. While the original _Fawkes v0.3_ was utterly ineffective against any model apart from _WebFace_, the updated v1.0 could transfer its attack to other extractors like _VGGFace_, _FaceNet_, and _ArcFace_. However, while _Fawkes v1.0_ provided a perfect (100%) error rate on the _Celeb1M_ model (the one it was trained to target), it failed miserably against more recent extractors like _MagFace_<d-cite key="meng2021magface"></d-cite> or _CLIP_. A similar trend was also observed when using _LowKey_. While it fared better than _Fawkes_ and could transfer its attack to MagSafe, LowKey failed to break the fine-tuned _CLIP_ model trained by the authors.
 
 To provide more credence to their findings, the authors also illustrated how users who downloaded an older model (_Fawkes v0.3_, for example) could not 'regain' their privacy by switching to an updated attack. For brevity, this post does not go into the specifics, but we encourage interested readers to look at the paper and additional supplementary material.
 ***
 
-#### Robustness doesn't come at the cost of accuracy
+#### Robustness shouldn't come at the cost of accuracy
 
 A potential caveat for the _adaptive_ and _oblivious_ defenses is that increased robustness may come at the cost of decreased accuracy. For example, the CLIP model is much more robust than all the other feature extractors, but its clean accuracy falls slightly below the best models. In most cases, a trainer might be hesitant to deploy a _CLIP_-based model if only a small minority of users try to attack the system.
 
@@ -162,7 +163,7 @@ This blog post provides a better understanding of the techniques used to neutral
 We now look to provide some clarifications and how we think this work would fit in the current age of machine learning.
 
 **The work is a net positive** 
-This paper takes a gloomy stance on the current state of protection against facial recognition models. By stating that model trainers would always have the upper hand in the race by simply switching to a more advanced framework, the authors quash any possibility of a technological solution. Instead, they argue that a legislative approach might hold the key to solving the problem. Looking at the discussion between the authors and the reviewers before the acceptance of the paper, it was clear that the reviewers were reluctant to accept the finality of the solution - a sentiment we're sure would be shared by many others. However, if nothing else, this paper warns users against the futility of using commercial products like Fawkes to protect their identities. In alleviating the false sense of security provided by data poisoning attacks, this paper - and, by extension, this post - serves as a net positive for users' privacy. 
+This paper takes a gloomy stance on the current state of protection against facial recognition models. By stating that model trainers would always have the upper hand in the race by simply switching to a more advanced framework, the authors quash any possibility of a technological solution. Instead, they argue that a legislative approach might hold the key to solving the problem. Looking at the discussion between the authors and the reviewers before the acceptance of the paper <d-footnote>[ICLR OpenReview](https://openreview.net/forum?id=B5XahNLmna)</d-footnote>, it was clear that the reviewers were reluctant to accept the finality of the solution - a sentiment we're sure would be shared by many others. However, if nothing else, this paper warns users against the futility of using commercial products like Fawkes to protect their identities. In alleviating the false sense of security provided by data poisoning attacks, this paper - and, by extension, this post - serves as a net positive for users' privacy. 
 
 **Is legislation the answer?**
 With artificial intelligence embedding itself into society at an unprecedented rate, it is clear that a complete overhaul of legislative frameworks is urgently required. As AI becomes more mainstream, privacy-invasive systems could graduate from storing information to using them for financial incentives. While we have seen this happen with users' browsing data, the repercussions of using biometrics would be much more severe. In fact, there have already been cases where facial recognition has been used by companies on users without their prior explicit consent. <d-footnote> [Madison Square Garden has put lawyers who represent people suing it on an 'exclusion list' to keep them out of concerts and sporting events](https://www.nytimes.com/2022/12/22/nyregion/madison-square-garden-facial-recognition.html)</d-footnote>
