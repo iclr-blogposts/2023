@@ -24,13 +24,11 @@ authors:
     affiliations:
       name: IAS, Princeton
 
-# must be the exact same name as your blogpost
-bibliography: 2022-12-01-distill-example.bib  
+# Data Poisoning is Hitting a Wall
 
-# Add a table of contents to your post.
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
 In this post, we look at the paper "Data Poisoning Won't Save You From Facial Recognition," discuss the impact of the work, and additionally look at how this work fares in the current state of adversarial machine learning.
+
+Being a blog post as opposed to a traditional paper, we try to avoid inundating the reader with mathematical equations and complex terminologies. Instead, we aim to put forth this work's primary concept and implications, along with our observations, in a clear, concise manner.
 
 Don't want to go through the entire post? Check out the TL;DR at the end for a quick summary.
 
@@ -61,6 +59,9 @@ Keeping this in mind, a growing body of work has emerged that allows users to fi
 
 Services like Fawkes popularized this approach by offering a service promising "strong protection against unauthorized [facial recognition] models." Users could pass their images through Fawkes and receive poisoned photos - virtually identical to the naked eye, which were then posted to social media, alleviating any worries that they might be used to identify them in the future. It quickly gained popularity, was covered by the New York Times and received over 500,000 downloads. Following Fawkes' success, similar systems were proposed in academic and commercial settings.
 
+{% include figure.html path="assets/img/2022-12-01-facial-poisoning/facial_poisoning.png" class="img-fluid" %}
+
+
 *** 
 The authors of the paper, however, look at these systems from a different perspective. They argue that services like Fawkes (and poisoning strategies in general) cannot protect users' privacy when it comes to facial recognition systems. In fact, it usually exacerbates the situation by providing them with a false sense of security.
 For instance, there might have previously been a privacy-focused user who would have refrained from uploading their photos to the Internet. However, they might do so now under the false belief that their poisoned photos would work towards protecting their privacy. Thus, these users are now _less private_ than they were before.
@@ -88,12 +89,12 @@ Let us take a closer look and deconstruct how the authors arrived at these concl
 
 For clarity, before we arrive at the individual conclusions, we look at the setup used by the authors to carry out their experiments.
 
-The authors evaluate three distinct poisoning attacks: **Fawkes v0.3**, **Fawkes v1.0**, and a separate attack published in January 2021 called **LowKey**. All of these function on the same underlying principle of data poisoning. Their goal is to force the facial recognition model to associate an image with spurious features absent in unperturbed images.
+The authors evaluate three distinct poisoning attacks: **Fawkes v0.3**, **Fawkes v1.0**<d-cite key="shan2020fawkes"></d-cite>, and a separate attack published at ICLR 2021 called **LowKey**<d-cite key="cherepanova2021lowkey"></d-cite>. All of these function on the same underlying principle of data poisoning. Their goal is to force the facial recognition model to associate an image with spurious features absent in unperturbed images.
 
-The experiments are performed with the _FaceScrub_ dataset, which contains over 50,000 pictures of 530 celebrities. A sample run of an experimental procedure can be described as follows:
+The experiments are performed with the _FaceScrub_ dataset<d-cite key="ng2014data"></d-cite>, which contains over 50,000 pictures of 530 celebrities. A sample run of an experimental procedure can be described as follows:
 A user, in this case, one of the celebrities in the _FaceScrub_ dataset, perturbs all of their images with _Fawkes_ or _LowKey_ in their strongest settings. These images then end up as the training data used by the model trainer. The model trainer uses the standard approach for training their facial recognition system by employing a pre-trained feature extractor to convert pictures into embeddings. Given a test image, the model tries to find a training example that minimizes the distance between them in the embedding space and returns the identity associated with the training example.
 
-The authors use various models as feature extractors from _FaceNet_ to OpenAI's _CLIP_. This is an important step that helps quantify the effectiveness of the **oblivious defense** strategy.
+The authors use various models as feature extractors from _FaceNet_<d-cite key="schroff2015facenet"></d-cite> to OpenAI's _CLIP_<d-cite key="radford2021learning"></d-cite>. This is an important step that helps quantify the effectiveness of the **oblivious defense** strategy.
 ***
 
 #### Adaptive defenses break facial poisoning attacks
@@ -107,9 +108,9 @@ gif
 
 With access to both unperturbed images and their corresponding poisoned counterparts, the trainer can teach a model to produce similar embeddings for both sets of pictures, encouraging the model to adaptively learn robust features. This is done hoping that this robustness would eventually generalize to perturbations' applied to other images.
 
-<docstring>
+<blockquote>
 While the above strategy works in theory, it requires direct intervention from model trainers by using the 'clean' images provided by them. This would not scale well, especially for large-scale facial recognition systems that look at millions of photographs. However, this attack could also occur without the trainers' explicit involvement. There is a high possibility that some users already have unperturbed images of themselves on the Web; either they forgot to perturb some pictures, or they were uploaded by someone else. Feature extractors trained on these pictures would then be encouraged to learn robust features.
-</docstring>
+</blockquote>
 
 **Results:** All three attacks were evaluated against a non-robust _WebFace_ model to establish a baseline. They were found to have a misclassification rate of 55-77% for users who poisoned their pictures online. This compares starkly to a rate of 8% for unprotected users. However, when trained adaptively, the misclassification rate for all users - protected or unprotected - dropped to 5-8%, and all poisoning attacks were rendered ineffective.
 ***
@@ -127,7 +128,10 @@ Rather than creating poisoned counterparts to clean images and adaptively traini
 
 To bypass this _oblivious_ defense strategy, an attack must not only be able to fool all present models but also be effective against future iterations without changing its perturbation. Asymetrically (to the benefit of the model trainer) newer techniques need not be robust to all attacks; instead, they just have to resist the specific method used in previous pictures.
 
-To confirm this, the paper included a study where Fawkes was pitted against various feature extractors ordered chronologically. While the original _Fawkes v0.3_ was utterly ineffective against any model apart from WebFace, the updated v1.0 could transfer its attack to other extractors like _VGGFace_, _FaceNet_, and _ArcFace_. However, while _Fawkes v1.0_ provided a perfect (100%) error rate on the _Celeb1M_ model (the one it was trained to target), it failed miserably against more recent extractors like _MagFace_ or _CLIP_. A similar trend was also observed when using _LowKey_. While it fared better than Fawkes and could transfer its attack to MagSafe, LowKey failed to break the fine-tuned _CLIP_ model trained by the authors.
+{% include figure.html path="assets/img/2022-12-01-facial-poisoning/error_rate.png" class="img-fluid" %}
+
+
+To confirm this, the paper included a study where Fawkes was pitted against various feature extractors ordered chronologically. While the original _Fawkes v0.3_ was utterly ineffective against any model apart from WebFace, the updated v1.0 could transfer its attack to other extractors like _VGGFace_, _FaceNet_, and _ArcFace_. However, while _Fawkes v1.0_ provided a perfect (100%) error rate on the _Celeb1M_ model (the one it was trained to target), it failed miserably against more recent extractors like _MagFace_<d-cite key="meng2021magface"></d-cite> or _CLIP_. A similar trend was also observed when using _LowKey_. While it fared better than Fawkes and could transfer its attack to MagSafe, LowKey failed to break the fine-tuned _CLIP_ model trained by the authors.
 
 To provide more credence to their findings, the authors also illustrated how users who downloaded an older model (_Fawkes v0.3_, for example) could not 'regain' their privacy by switching to an updated attack. For brevity, this post does not go into the specifics, but we encourage interested readers to look at the paper and additional supplementary material.
 ***
@@ -142,7 +146,7 @@ Keeping this in mind, the authors demonstrated two approaches that allow model t
 
 **Confidence Thresholding:** To automate the above process, the system could begin by passing the image through the most accurate model and checking the prediction's confidence. This can be quantitatively defined as the distance between the target picture and its nearest neighbor in the embedding space. If the system finds the confidence below a certain threshold, the image is passed through the robust model instead.
 
-The paper demonstrates a facial recognition system that uses MagFace for an accurate model and combines that with a more robust model like the fine-tuned _CLIP_ or an adaptively trained model. In both cases, the clean accuracy of the system matches or exceeds that of _MagFace_, while retaining high robustness to attacks.
+The paper demonstrates a facial recognition system that uses _MagFace_ for an accurate model and combines that with a more robust model like the fine-tuned _CLIP_ or an adaptively trained model. In both cases, the clean accuracy of the system matches or exceeds that of _MagFace_, while retaining high robustness to attacks.
 
 ***
 
@@ -162,9 +166,9 @@ We now look to provide some clarifications and how we think this work would fit 
 This paper takes a gloomy stance on the current state of protection against facial recognition models. By stating that model trainers would always have the upper hand in the race by simply switching to a more advanced framework, the authors quash any possibility of a technological solution. Instead, they argue that a legislative approach might hold the key to solving the problem. Looking at the discussion between the authors and the reviewers before the acceptance of the paper, it was clear that the reviewers were reluctant to accept the finality of the solution - a sentiment we're sure would be shared by many others. However, if nothing else, this paper warns users against the futility of using commercial products like Fawkes to protect their identities. In alleviating the false sense of security provided by data poisoning attacks, this paper - and, by extension, this post - serves as a net positive for users' privacy. 
 
 **Is legislation the answer?**
-With artificial intelligence embedding itself into society at an unprecedented rate, it is clear that a complete overhaul of legislative frameworks is urgently required. As AI becomes more mainstream, privacy-invasive systems could graduate from storing information to using them for financial incentives. While we have seen this happen with users' browsing data, the repercussions of using biometrics would be much more severe. In fact, there have already been cases where facial recognition has been used by companies on users without their prior explicit consent.
+With artificial intelligence embedding itself into society at an unprecedented rate, it is clear that a complete overhaul of legislative frameworks is urgently required. As AI becomes more mainstream, privacy-invasive systems could graduate from storing information to using them for financial incentives. While we have seen this happen with users' browsing data, the repercussions of using biometrics would be much more severe. In fact, there have already been cases where facial recognition has been used by companies on users without their prior explicit consent. <d-footnote> [Madison Square Garden has put lawyers who represent people suing it on an 'exclusion list' to keep them out of concerts and sporting events](https://www.nytimes.com/2022/12/22/nyregion/madison-square-garden-facial-recognition.html)</d-footnote>
 
-While we agree with the authors for a push towards proper legislation, given the rate of progress, we believe the community can do more. Legislation is a process that moves slowly and usually needs uniform implementation. Literature on the subject has shown that each country has its own views on the emerging landscape of AI and bases its rules on those views. These may or may not always work. We believe a temporary stopgap in the form of a technological solution would be helpful, while a legislative solution holds maximum promise in the long run.
+While we agree with the authors for a push towards proper legislation, given the rate of progress, we believe the community can do more. Legislation is a process that moves slowly and usually needs uniform implementation. Literature on the subject has shown that each country has its own views on the emerging landscape of AI <d-footnote>[How different countries view artificial intelligence](https://www.brookings.edu/research/how-different-countries-view-artificial-intelligence/)</d-footnote> and bases its rules on those views. These may or may not always work. We believe a temporary stopgap in the form of a technological solution would be helpful, while a legislative solution holds maximum promise in the long run.
 
 ***
 
