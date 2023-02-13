@@ -232,7 +232,7 @@ Everything you have done so far has been in Markdown, but this is not the same f
 You'll now need to build your static web site (which is done using Jekyll), and then *serve* it on some local webserver in order to view it properly.
 We will now discuss how you can *serve* your blog site locally, so you can visualize your work before you open a pull request on the staging website so you can submit it to the ICLR venue.
 
-#### Method 1: Using Docker 
+#### Method 1: Using Docker
 
 To render your website locally, we follow the instructions for [Local setup using Docker (Recommended on Windows)](https://github.com/iclr-blogposts/iclr-blogposts.github.io/blob/master/README.md#local-setup-using-docker-recommended-on-windows), but specifically you will need to create your own docker container rather than pull it from Dockerhub (because we modified the Gemfile).
 
@@ -385,21 +385,6 @@ The submission steps are as follows:
 > Note that if you render your post locally, you will be able to see how the URL of your post is formatted (but please use the correct base url of `https://iclr-blogposts.github.io/staging`).
 > We will be fairly accomodating about this if any issues arise once your submission is merged.
 
-### Reviewing Process
-
-Reviewers will be required to only view the live content of the blog. 
-We ask that they act in good faith, and refrain from digging into the repository's logs and closed Pull Requests to find any identifying information on the authors.
-   
-Reviewers should motivate their final decision based on the following points:
-   
-- Is there a significant added value in comparison to the cited papers? (BlogPosts have to be about a paper previously published at ICLR)
-- Is this added value supported by accurate, convincing, and clear arguments?
-- In case the field *Conflict Of Interest* is marked as *YES* the reviewers are asked to pay specific attention to how the related work mentioned in the field *ICLR Papers*: is the blogpost *too positive* (self advertisement) or *too negative* (unfair assessment of this related work)?
-   
-In order to access them please follow the following steps:
-
-1. Go to the OpenReview submission page.
-2. To see the blogpost submission, go to the blogpost url specified in the field 'Blogpost Url'. Example: In this submission [https://openreview.net/forum?id=djS_CaOq2F](https://openreview.net/forum?id=djS_CaOq2F) is this link: [https://iclr-blogposts.github.io/blog/2022/raspy/](https://iclr-blogposts.github.io/blog/2022/raspy/). This link is broken because it links to the main website. Instead, add the `staging` URI: [https://iclr-blogposts.github.io/staging/blog/2022/raspy/](https://iclr-blogposts.github.io/staging/blog/2022/raspy/).
 
 ### Camera-ready
 
