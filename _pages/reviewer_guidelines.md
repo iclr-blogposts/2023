@@ -1,7 +1,7 @@
 ---
 layout: page
-title: reviewer guidelines
-permalink: /submitting
+title: reviewing
+permalink: /reviewing
 description:
 nav: true
 nav_order: 4
