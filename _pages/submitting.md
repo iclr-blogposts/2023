@@ -393,7 +393,8 @@ We ask that they act in good faith, and refrain from digging into the repository
 Reviewers should motivate their final decision based on the following points:
    
 - Is there a significant added value in comparison to the cited papers? (BlogPosts have to be about a paper previously published at ICLR)
-- Is this added value supported by accurate, convincing, and clear arguments?In case the field Conflict Of Interest is marked as YES the reviewers are asked to pay specific attention to how the related work mentioned in the field ICLR Papers: is the blogpost too positive (self advertisement) or too negative (unfair assessment of this related work)?
+- Is this added value supported by accurate, convincing, and clear arguments?
+- In case the field *Conflict Of Interest* is marked as *YES* the reviewers are asked to pay specific attention to how the related work mentioned in the field *ICLR Papers*: is the blogpost *too positive* (self advertisement) or *too negative* (unfair assessment of this related work)?
    
 In order to access them please follow the following steps:
 
