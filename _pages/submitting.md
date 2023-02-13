@@ -402,4 +402,4 @@ In order to access them please follow the following steps:
 
 ### Camera-ready
 
-**TBD** - instructions will be provided closer to the submission deadline.
+**TBD** - instructions will be provided at a later date.
