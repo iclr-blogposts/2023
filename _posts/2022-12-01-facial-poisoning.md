@@ -7,41 +7,28 @@ date: 2022-12-01
 htmlwidgets: true
 
 # Anonymize when submitting
-# authors:
-#   - name: Anonymous
-
 authors:
-  - name: Albert Einstein
-    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
-    affiliations:
-      name: IAS, Princeton
-  - name: Boris Podolsky
-    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
-    affiliations:
-      name: IAS, Princeton
-  - name: Nathan Rosen
-    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
-    affiliations:
-      name: IAS, Princeton
+  - name: Anonymous
 
 bibliography: 2022-12-01-facial-poisoning.bib
+
+toc:
+  - name: Overview and Motivation
+    subsections:
+    - name: What is Data Poisoning?
+  - name: Why doesn't Data Poisoning work?
+  - name: High Level Idea
+  - name: Experiments
+    subsections:
+    - name: Adaptive defenses break facial poisoning attacks
+    - name: Attack Detection
+    - name: Time is all you need
+    - name: Robustness shouldn’t come at the cost of accuracy
+  - name: Conclusion
+  - name: Outlook
+  - name: TL;DR
+
 ---
-
-
-## Overview
-This blog is organized in the following way:
-  - [Overview and Motivation](#overview-and-motivation)
-	  - [What is Data Poisoning?](#what-is-data-poisoning)
-  - [Why doesn't Data Poisoning work?](#why-doesnt-data-poisoning-work)
-  - [High Level Idea](#high-level-idea)
-  - [Experiments](#experiments)
-	  - [Adaptive defenses break poisoning attacks](#adaptive-defenses-break-poisoning-attacks)
-	  - [Attack detection](#attack-detection)
-	  - [Time is all you need](#time-is-all-you-need)
-	  - [Don't sacrifice robustness for accuracy](#dont-sacrifice-robustness-for-accuracy)
-  - [Conclusion](#conclusion)
-  - [Outlook](#outlook)
-  - [TL;DR](#tldr)
 
 ## Overview and Motivation
 
