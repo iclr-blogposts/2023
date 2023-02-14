@@ -23,10 +23,10 @@ toc:
     - name: Adaptive defenses break facial poisoning attacks
     - name: Attack Detection
     - name: Time is all you need
-    - name: Robustness shouldn’t come at the cost of accuracy
+    - name: Robustness shouldnt come at the cost of accuracy
   - name: Conclusion
   - name: Outlook
-  - name: TL;DR
+  - name: TLDR
 
 ---
 
