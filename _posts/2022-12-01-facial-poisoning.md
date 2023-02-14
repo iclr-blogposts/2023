@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Data Poisoning is Hitting a Wall
-description: In this post, we look at the paper "Data Poisoning Won't Save You From Facial Recognition," discuss the impact of the work, and additionally look at how this work fares in the current state of adversarial machine learning. Being a blog post as opposed to a traditional paper, we try to avoid inundating the reader with mathematical equations and complex terminologies. Instead, we aim to put forth this work's primary concept and implications, along with our observations, in a clear, concise manner. Don't want to go through the entire post? Check out the TL;DR at the end for a quick summary.
+description: In this post, we look at the paper 'Data Poisoning Won't Save You From Facial Recognition', discuss the impact of the work, and additionally look at how this work fares in the current state of adversarial machine learning. Being a blog post as opposed to a traditional paper, we try to avoid inundating the reader with mathematical equations and complex terminologies. Instead, we aim to put forth this work's primary concept and implications, along with our observations, in a clear, concise manner. Don't want to go through the entire post? Check out the TL;DR at the end for a quick summary.
 
 date: 2022-12-01
 htmlwidgets: true
