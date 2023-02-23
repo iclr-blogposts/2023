@@ -72,15 +72,15 @@ In the context of molecular conformations, we have to achieve the special case o
 
 ## Decomposing GeoDiff
 
-{% include figure.html path="assets/img/2022-12-01-diffusion-is-all-you-need/geodiff_main.png/sketch_robust_region.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2022-12-01-diffusion-is-all-you-need/geodiff_main.png" class="img-fluid" %}
 The diffusion model of GeoDiff, adapted from <d-cite key="xu2022geodiff"></d-cite>
 
 
  **Legend**:
 - $$C^{0}$$ denotes the ground truth conformations
 - $$C^{t}$$, where $$t = 1,···, T$$ is the index for diffusion steps and $$C^{t}$$, is the sequence of latent variables with the same dimension
-- $$q(C^{t}|C^{t-1})$$ is the fixed posterior distribution
-- $$p_\theta(C^{t-1}|G, C^{t})$$ are the Markov kernels through which the conformations are refined
+- $$q(C^{t} \mid C^{t-1})$$ is the fixed posterior distribution
+- $$p_\theta(C^{t-1} \mid G, C^{t})$$ are the Markov kernels through which the conformations are refined
 
 ### A primer on Diffusion Models
 A diffusion probabilistic model <d-cite key="sohl2015deep"></d-cite>  can be described as a latent variable model with two processes: the forward and the reverse generative processes. Intuitively, the diffusion process progressively injects small noises into $$C^{0}$$, while the generative process learns to revert the diffusion process by gradually eliminating the noise to recover the ground truth. Diffusion models are trained by adding noise to the input, which the model then learns how to remove. 
@@ -132,7 +132,7 @@ where $$\quad p_\theta\left(\mathcal{C}^{t-1} \mid \mathcal{G}, \mathcal{C}^t\ri
 
 Hence, the neural network in the reverse process needs to learn/represent the mean and variance. However, just like the DDPM paper, GeoDiff also lets the variance be user-defined and fixed, and $$\mu_\theta$$ is the neural network that estimates means.
 
-GeoDiff uses a parametrisation trick inspired by the diffusion model implementation from the DDPM paper such that this parametrisation resembles Langevin dynamics and simplifies the diffusion model's variational bound to an objective that resembles denoising score matching. Moreover, in the context of molecular conformation generation, this parametrisation trick is analogous to the physical force fields <d-cite key="schutt2017schnet", "zhang2018deep", "hu2021forcenet", "shuaibi2021rotation" ></d-cite>, which also gradually push particles towards convergence around the equilibrium states, and is defined by the following equation:
+GeoDiff uses a parametrisation trick inspired by the diffusion model implementation from the DDPM paper such that this parametrisation resembles Langevin dynamics and simplifies the diffusion model's variational bound to an objective that resembles denoising score matching. Moreover, in the context of molecular conformation generation, this parametrisation trick is analogous to the physical force fields <d-cite key="schutt2017schnet, zhang2018deep, hu2021forcenet, shuaibi2021rotation" ></d-cite>, which also gradually push particles towards convergence around the equilibrium states, and is defined by the following equation:
 
 $$
 \begin{align*}\tag{4}
@@ -148,7 +148,7 @@ Now, we need to make $$\epsilon_\theta$$ roto-translational equivariant which we
 
 Firstly, we need to assume the prior distribution of the conformations and the intermediary conformations generated during the forward process are systems with zero centre of mass (CoM) or CoM-free systems <d-cite key="kohler2020equivariant"></d-cite>. By considering CoM-free systems, moving the particles to zero CoM can always ensure translational invariance in the Markov kernels.
 
-GeoDiff employs the use of an equivariant convolutional layer, named graph field network (GFN) inspired by <d-cite key="thomas2018tensor", "satorras2021n"></d-cite>. In the $$l$$-th layer, GFN takes node embeddings $$h_l \in \mathbb{R}^{n \times b}$$ ($$b$$ denotes the feature dimension) and corresponding coordinate embeddings $$x_l \in \mathbb{R}^{n \times 3}$$ as inputs, and outputs $$h_{l+1}$$ and $$x_{l+1}$$ as follows:
+GeoDiff employs the use of an equivariant convolutional layer, named graph field network (GFN) inspired by <d-cite key="thomas2018tensor, satorras2021n"></d-cite>. In the $$l$$-th layer, GFN takes node embeddings $$h_l \in \mathbb{R}^{n \times b}$$ ($$b$$ denotes the feature dimension) and corresponding coordinate embeddings $$x_l \in \mathbb{R}^{n \times 3}$$ as inputs, and outputs $$h_{l+1}$$ and $$x_{l+1}$$ as follows:
 
 $$
 \begin{align} \tag{5}
@@ -226,7 +226,7 @@ It must be noted that the experiments described in the study are done on benchma
 GeoDiff as a framework sets a precedent for future work that could marry the concepts of geometric deep learning and diffusion models across various domains. In the context of drug discovery, it would be interesting to extend this framework to more challenging structures, such as proteins, which may enable more accurate prediction of protein folding, protein-protein interactions and protein-ligand binding positions which would facilitate the design of new drugs and treatments. Additionally, this framework could potentially be applied to other complex systems beyond proteins, such as RNA molecules, to enable more efficient and accurate prediction of their behaviour and properties. Continued research in this area has the potential to revolutionize drug discovery and development, as well as advance our understanding of the fundamental principles governing the behaviour of complex biological systems. 
 
 
-Research on the application of diffusion models in the life and natural sciences is still in its infancy, with great potential for improvement in terms of both theory as well as empirical testing. The GeoDiff model could be improved in terms of more efficient sampling and improved likelihood maximization methods. Traditionally, generating samples from diffusion models demand iterative approaches that involve a large number of evaluation steps. Recent work, such as the paper on Torsional Diffusion <d-cite key="jing2022torsional", "satorras2021n"></d-cite> was able to speed up the sampling process, while also enhancing the quality of the resulting samples. Experimentally, Torsional Diffusion only takes 5 to 20 steps in comparison to GeoDiff which takes around 5000 steps <d-cite key="galkin_2022"></d-cite>.
+Research on the application of diffusion models in the life and natural sciences is still in its infancy, with great potential for improvement in terms of both theory as well as empirical testing. The GeoDiff model could be improved in terms of more efficient sampling and improved likelihood maximization methods. Traditionally, generating samples from diffusion models demand iterative approaches that involve a large number of evaluation steps. Recent work, such as the paper on Torsional Diffusion <d-cite key="jing2022torsional, satorras2021n"></d-cite> was able to speed up the sampling process, while also enhancing the quality of the resulting samples. Experimentally, Torsional Diffusion only takes 5 to 20 steps in comparison to GeoDiff which takes around 5000 steps <d-cite key="galkin_2022"></d-cite>.
 
 Looking ahead, GeoDiff has set a clear example for the use of diffusion models on geometric representations which could be extended to several problems, especially in the field of drug discovery. The novel contributions made by 
 <d-cite key="xu2022geodiff"></d-cite> are motivated by the physical characteristics of the molecular conformation generation problem, which has resulted in a strong candidate method for conformation generation that could act as a springboard for even more effective and efficient methods that would eventually benefit the field of drug discovery as a whole.
