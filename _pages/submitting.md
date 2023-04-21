@@ -11,6 +11,7 @@ nav_order: 3
 > **Announcement**: the submission deadline has been slightly modified. 
 > - **February 2nd AOE** is now an *abstract deadline*; please submit this on [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F)).
 > - **February 10th AOE** is the deadline for any modifications to your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
+> - **April 28th AOE** is the deadline for the camera-ready submission. Please follow the instructions [here]({{ '/submitting#camera-ready-instructions' | relative_url }}).
 
 ### A more open process
 
@@ -49,7 +50,7 @@ Small mistakes here can have very hard-to-debug consequences.**
       - [Manual Serving](#manual-serving)
 - [Submitting Your Blog Post](#submitting-your-blog-post)
 - [Reviewing Process](#reviewing-process)
-- [Camera Ready (TBD)](#camera-ready)
+- [Camera Ready](#camera-ready-instructions)
 
 
 ### Quickstart
@@ -389,6 +390,55 @@ The submission steps are as follows:
 Reviewers will be required to only view the live content of the blog. 
 We ask that they act in good faith, and refrain from digging into the repository's logs and closed Pull Requests to find any identifying information on the authors.
 
-### Camera-ready
+### Camera-ready instructions 
 
-**TBD** - instructions will be provided closer to the submission deadline.
+To streamline the process of merging the accepted posts into the final blog post site, we have prepared a branch with all of the accepted blog posts in the staging repo which can be found here: 
+- [https://github.com/iclr-blogposts/staging/tree/accepted](https://github.com/iclr-blogposts/staging/tree/accepted)
+
+Please fetch this branch, and proceed with adding any final changes by creating a branch from accepted, and then merge your changes by opening a PR against this branch. 
+The checklist for updating your blog post is as follows:
+
+1. Implement any required changes from the review stage
+    - If you had a conditional acceptance, ensure that you update your post following the feedback given.
+2. Deanonymize your post
+    - Update the author list + any links that were anonymized for the review process
+3. Update formatting 
+    - **Abstracts:** ensure that your abstracts are contained within the `description` entry of the front-matter, so it renders correctly in the blog ([example](https://github.com/iclr-blogposts/staging/blob/aa15aa3797b572e7b7bb7c8881fd350d5f76fcbd/_posts/2022-12-01-distill-example.md?plain=1#L4-L))
+    - **Table of contents:** you must use the `toc` formatting like that in the distill template ([example](https://github.com/iclr-blogposts/staging/blob/aa15aa3797b572e7b7bb7c8881fd350d5f76fcbd/_posts/2022-12-01-distill-example.md?plain=1#L33-L42))
+    - **Bibliography:** uses correct reference style as per the distill template (i.e. using the bibtex file)
+
+Once you have updated your blog post with any necessary changes:
+
+- Open a pull request against the accepted branch of the staging repo. 
+- You should see a PR template when you open up a PR - please fill it in and make sure all of the required boxes are ticked before submitting your final PR. 
+
+
+Below is what you should see in the PR template:
+
+```md
+<!-- Please make sure you are opening a pull request against the `accepted` branch (not master!) of the STAGING repo (not 2023!) -->
+
+## OpenReview Submission Thread
+<!-- link to your OpenReview submission -->
+
+## Checklist before requesting a review
+<!-- To tick a box, put an 'x' inside it (e.g. [x]) -->
+
+- [ ] I am opening a pull request against the `accepted` branch of the `staging` repo
+- [ ] I have de-anonymized my post, added author lists, etc.
+- [ ] My post matches the formatting requirements
+	- [ ] I have a short 2-3 sentence abstract in the `description` field of my front-matter 
+	- [ ] I have a table of contents, formatted using the `toc` field of my front-matter 
+	- [ ] My bibliography is correctly formatted, using a `.bibtex` file as per the sample post
+
+## Changes implemented in response to reviewer feedback
+
+- [ ] Tick this box if you received a conditional accept
+- [ ] I have implemented the necessary changes in response to reviewer feedback (if any)
+
+<!-- briefly add your changes in response to reviewer feedback -->
+
+## Any other comments
+
+
+```
