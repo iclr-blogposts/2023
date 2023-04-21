@@ -11,6 +11,7 @@ nav_order: 2
 > - **February 2nd AOE** is now an *abstract deadline*; please submit this on [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F)).
 > - **February 10th AOE** is the deadline for any modifications to your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
 > - **April 28th AOE** is the deadline for the camera-ready submission. Please follow the instructions [here]({{ '/submitting#camera-ready-instructions' | relative_url }}).
+- If you are going to be presenting a poster in-person, please add the [blog post track sticker]({{ '/assets/pdf/sticker.pdf' | relative_url }}) to your poster.
 >
 > See the [submission instructions]({{ '/submitting#submitting-your-blog-post' | relative_url }}) for more details.
 
