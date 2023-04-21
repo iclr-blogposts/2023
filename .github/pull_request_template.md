@@ -6,6 +6,8 @@
 
 ## Checklist before requesting a review
 
+<!-- To tick a box, put an 'x' inside it (e.g. [x]) -->
+
 - [ ] I am opening a pull request against the `accepted` branch of the `staging` repo.
 - [ ] I have de-anonymized my post, added author lists, etc.
 - [ ] My post matches the formatting requirements
