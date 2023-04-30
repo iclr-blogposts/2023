@@ -8,7 +8,7 @@ htmlwidgets: true
 # Anonymize when submitting
 authors:
   - name: Fabian Pedregosa
-  - url: https://fa.bianp.net
+    url: https://fa.bianp.net
     affiliations:
       name: Google Research
 
