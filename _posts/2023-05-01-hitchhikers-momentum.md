@@ -2,7 +2,7 @@
 layout: distill
 title: A Hitchhiker's Guide to Momentum
 description: Polyak momentum is one of the most iconic methods in optimization. Despite it's simplicity, it features rich dynamics that depend both on the step-size and momentum parameter. In this blog post we identify the different regions of the parameter space and discuss their convergence properties using the theory of Chebyshev polynomials.
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -27,7 +27,7 @@ authors:
 #       name: IAS, Princeton
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-hitchhikers-momentum.bib  
+bibliography: 2023-05-01-hitchhikers-momentum.bib  
 
 
 # Add a table of contents to your post.
@@ -235,7 +235,7 @@ $$
 </div>
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/rate_convergence_momentum.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/rate_convergence_momentum.png" class="img-fluid" %}
 
 
 ## Gradient Descent with Momentum
@@ -413,7 +413,7 @@ where \(\sigma(\lambda) = {\small\dfrac{1}{2\sqrt{\mom}}}(1 + \mom - \step\,\lam
 A key feature that we'll use extensively about Chebyshev polynomials is that they behave very differently inside and outside the interval $$[-1, 1]$$.  Inside this interval (shaded blue region) the magnitude of these polynomials stays close to zero, while outside it explodes:
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/two_phases_chebyshev.gif" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/two_phases_chebyshev.gif" class="img-fluid" %}
 
 Let's make this observation more precise.
 
@@ -449,7 +449,7 @@ Using $$\lmin \leq \lmax$$ and that $$\sigma(\lambda)$$ is decreasing in $$\lamb
 These two conditions provide the upper and lower bound of the robust region.
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/sketch_robust_region.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/sketch_robust_region.png" class="img-fluid" %}
 
 
 ### Asymptotic rate
@@ -471,7 +471,7 @@ This is nothing short of magical. It would seem natural &ndash;and this will be 
 This also illustrates why we call this the <i>robust</i> region. In its interior, perturbing the step-size in a way that we stay within the region has no effect on the convergence rate. The next figure displays the asymptotic rate (darker is faster) in the robust region. 
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/rate_robust_region.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/rate_robust_region.png" class="img-fluid" %}
 
 
 ## The Lazy Region
@@ -486,7 +486,7 @@ Using the definition of $$\sigma$$ and solving for $$\step$$ gives the equivalen
 Note the second inequality is the same one as for the robust region \eqref{eq:robust_region} but with the inequality sign reversed, and so the region will be on the oposite side of that curve. We'll call this the <i>lazy region</i>, as in increasing the momentum will take us out of it and into the robust region.
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/sketch_lazy_region.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/sketch_lazy_region.png" class="img-fluid" %}
 
 
 
@@ -509,7 +509,7 @@ Unlike in the robust region, this rate depends on both the step-size and the mom
 
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/rate_lazy_region.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/rate_lazy_region.png" class="img-fluid" %}
 
 
 ## Knife's Edge
@@ -523,7 +523,7 @@ For parameters not in the robust or lazy region, we have that $$|\sigma(L)| > 1$
 \end{equation}
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/sketch_knife_edge.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/sketch_knife_edge.png" class="img-fluid" %}
 
 
 ### Asymptotic rate
@@ -537,7 +537,7 @@ The asymptotic rate can be computed using the same technique as in the lazy regi
 
 Pictorially, this corresponds to 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/rate_knife_edge.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/rate_knife_edge.png" class="img-fluid" %}
 
 
 ## Putting it All Together
@@ -558,10 +558,10 @@ Plotting the asymptotic rates for all regions we can see that Polyak momentum (t
 
 
 
-{% include figure.html path="assets/img/2022-12-01-hitchhikers-momentum/rate_convergence_momentum.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-hitchhikers-momentum/rate_convergence_momentum.png" class="img-fluid" %}
 
 
 
 ## Reproducibility
 
-All plots in this post were generated using the following Jupyer notebook: [[HTML]]({{'assets/html/2022-12-01-hitchhikers-momentum/hitchhikers-momentum.html' | relative_url}}) [[IPYNB]]({{'assets/html/2022-12-01-hitchhikers-momentum/hitchhikers-momentum.ipynb' | relative_url}})
+All plots in this post were generated using the following Jupyer notebook: [[HTML]]({{'assets/html/2023-05-01-hitchhikers-momentum/hitchhikers-momentum.html' | relative_url}}) [[IPYNB]]({{'assets/html/2023-05-01-hitchhikers-momentum/hitchhikers-momentum.ipynb' | relative_url}})

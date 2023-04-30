@@ -3,7 +3,7 @@ layout: distill
 title: Autoregressive Renaissance in Neural PDE Solvers
 description: 
   Recent developments in the field of neural partial differential equation (PDE) solvers have placed a strong emphasis on neural operators. However, the paper Message Passing Neural PDE Solver by Brandstetter et al. published in ICLR 2022 revisits autoregressive models and designs a message passing graph neural network that is comparable with or outperforms both the state-of-the-art Fourier Neural Operator and traditional classical PDE solvers in its generalization capabilities and performance. This blog post delves into the key contributions of this work, exploring the strategies used to address the common problem of instability in autoregressive models and the design choices of the message passing graph neural network architecture.
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -14,7 +14,7 @@ authors:
         name: University College London
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-autoregressive-neural-pde-solver.bib
+bibliography: 2023-05-01-autoregressive-neural-pde-solver.bib
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -201,7 +201,7 @@ Dirichlet boundary conditions prescribe a fixed value of the solution at a parti
 </details><br/>
 
 <div class="l-body-outset">
-  <iframe src="{{ 'assets/html/2022-12-01-autoregressive-neural-pde-solver/slider.html' | relative_url }}" frameborder='0' scrolling='no' height="750px" width="100%"></iframe>
+  <iframe src="{{ 'assets/html/2023-05-01-autoregressive-neural-pde-solver/slider.html' | relative_url }}" frameborder='0' scrolling='no' height="750px" width="100%"></iframe>
 </div>
 <div class="caption">
 Example of the wave equation PDE \(\partial^{2}_{t}u = c^{2}\partial^{2}_ {\mathbf{x}}u\) solved using finite differences. Drag the slider to watch it evolve in time!
@@ -315,7 +315,7 @@ A popular choice when using a gridded discretization is the <span style="color:#
 </p>
 
 <p>
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/fdm_animation.gif" style="max-width:690px;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/fdm_animation.gif" style="max-width:690px;height:auto;" %}
 </p>
 
 <div class="caption">
@@ -439,7 +439,7 @@ Neural solvers offer some very desirable properties that may serve to unify some
 Though most methods lie along a spectrum from classical leaning to end-to-end neural, a naive yet illustrative categorization into three groupings is shown below. 
 </p>
 <p>
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/PDEchart.png" style="max-width:690px;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/PDEchart.png" style="max-width:690px;height:auto;" %}
 </p>
 
 #### Fully Neural/Universal Function Approximators
@@ -491,7 +491,7 @@ Since the development of the DeepONet, many novel neural operators have emerged 
 </div>
 
 <p>
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/FNO.png" style="max-width:80%;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/FNO.png" style="max-width:80%;height:auto;" %}
 </p>
 <div class="caption">
 <abbr title="Fourier neural operator">FNO</abbr> architecture. For more details, see <a href="https://zongyi-li.github.io/blog/2020/fourier-pde/">this blogpost</a>. Credits: Li et al. <d-cite key="liFourierNeuralOperator2021"></d-cite>.
@@ -512,11 +512,11 @@ A parallel line of research involves using deep learning as a tool to improve cl
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
     <div class="vertical-center" style="background-color:white">
-        {% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/rnn.png" class="img-fluid rounded" %}
+        {% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/rnn.png" class="img-fluid rounded" %}
     </div>
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/wavenet.gif" class="img-fluid rounded" %}
+        {% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/wavenet.gif" class="img-fluid rounded" %}
     </div>
 </div>
 <div class="caption">
@@ -563,7 +563,7 @@ This category of models highlights the diverse ways that PDEs are used in deep l
 Brandstetter et al. propose a <span style="color:#9444e2;">fully neural PDE solver which capitalizes on neural message passing</span>. The overall architecture is laid out below, consisting of an <abbr title="multilayer perceptron">MLP</abbr> encoder, a <abbr title="graph neural network">GNN</abbr> processor, and a CNN decoder.
 
 <div class="l-body-outset" style="background-color:white">
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/MP-PDE-Solver.png" style="max-width:100%;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/MP-PDE-Solver.png" style="max-width:100%;height:auto;" %}
 </div>
 <div class="caption">
 Overall MP-PDE architecture. Credits: Brandstetter et al. <d-cite key="brandstetterMessagePassingNeural2022a"></d-cite>.
@@ -574,7 +574,7 @@ At its core, this model is autoregressive and thus faces the same challenge list
 ### The Pushforward Trick and Temporal Bundling
 
 <div class="l-body-outset">
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/pushforward3.jpg" style="max-width:100%;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/pushforward3.jpg" style="max-width:100%;height:auto;" %}
 <div class="caption">
 Pushforward trick compared to one-step and unrolled training. Credits: Brandstetter et al. <d-cite key="brandstetterMessagePassingNeural2022a"></d-cite>.
 </div>
@@ -624,10 +624,10 @@ While the network could be unrolled during training, this not only slows the tra
 
 <div class="row mt-3">
     <div class="col-8">
-        {% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/NN-AR.jpg" class="img-fluid rounded" %}
+        {% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/NN-AR.jpg" class="img-fluid rounded" %}
     </div>
     <div class="col-4">
-        {% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/temporalbundling.jpg" class="img-fluid rounded" %}
+        {% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/temporalbundling.jpg" class="img-fluid rounded" %}
     </div>
 </div>
 <div class="caption">
@@ -809,7 +809,7 @@ For example, after training a neural model and setting up an instance of <abbr t
 </table>
 
 <div class="l-body-outset">
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/shock_formation.png" style="max-width:100%;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/shock_formation.png" style="max-width:100%;height:auto;" %}
 <div class="caption">
 Demonstration of shock formation using MP-PDE from different training data resolutions. Credits: Brandstetter et al. <d-cite key="brandstetterMessagePassingNeural2022a"></d-cite>.
 </div>
@@ -818,7 +818,7 @@ Demonstration of shock formation using MP-PDE from different training data resol
 This experiment exemplifies the MP-PDE's ability to model shocks (where both the <abbr title="finite difference method">FDM</abbr> and PSM methods fail) across multiple resolutions. Even at a fifth of the resolution of the ground truth, both the small and large shocks are captured well.
 
 <div class="l-body-outset">
-{% include figure.html path="assets/img/2022-12-01-autoregressive-neural-pde-solver/2dshock.jpg" style="max-width:100%;height:auto;" %}
+{% include figure.html path="assets/img/2023-05-01-autoregressive-neural-pde-solver/2dshock.jpg" style="max-width:100%;height:auto;" %}
 <div class="caption">
 Demonstration of shock formation using MP-PDE from different training data resolutions. Credits: Brandstetter et al. <d-cite key="brandstetterMessagePassingNeural2022a"></d-cite>.
 </div>

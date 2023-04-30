@@ -2,7 +2,7 @@
 layout: distill
 title: How does the inductive bias influence the generalization capability of neural networks?
 description: [The blog post discusses how memorization and generalization are affected by extreme overparameterization. Therefore, it explains the overfitting puzzle in machine learning and how the inductive bias can help to understand the generalization capability of neural networks.]
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 # anonymize when submitting 
@@ -25,7 +25,7 @@ authors:
        name: TU Berlin
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks.bib  
+bibliography: 2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -47,7 +47,7 @@ Deep neural networks are a commonly used machine learning technique that has pro
 
 One open question in the field of machine learning is the **overfitting puzzle**, which describes the paradox that neural networks are often used in an overparameterized state (i.e., with more parameters than training examples), yet they are still able to generalize well to new, unseen data. This contradicts **classical learning theory**, which states that a model with too many parameters will simply memorize the training data and perform poorly on new data. This is based on the [**bias-variance tradeoff**](https://machinelearningcompass.com/model_optimization/bias_and_variance/) which is commonly illustrated in this way <d-cite key="fortmann2012understanding"></d-cite>:
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/bias_variance_tradeoff.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/bias_variance_tradeoff.png" class="img-fluid" %}
 
 The tradeoff consists of finding the optimal model complexity between two extremes: If there are too few parameters, the model may have high bias and underfit the data, resulting in poor performance on both the training and test data. On the other hand, if there are too many parameters, the model may have high variance and overfit the training data, resulting in a good performance on the training data but a poor performance on the test data.
 
@@ -77,7 +77,7 @@ So let us look at some of the results:
 
 
 <div class="l-page">
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_3.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="450px"></iframe>
+  <iframe src="{{ 'assets/html/2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_3.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="450px"></iframe>
 </div>
 
 The first column of the figure above shows the single data point that was used to train the network on, and all following columns show the test data with its specific results. The rows represent the different implementations of the respective networks (FCN, CNN).
@@ -97,13 +97,13 @@ The test data point is decomposed into components that are parallel $\Pi_{\paral
 
 This behavior can be confirmed by visualizing the results of the 1-layer FCN:
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_1layer.png" class="img-fluid" %}
 
 The inductive bias does not lead to either good generalization or memorization. Instead, the predictions become more random as the test data becomes less similar to the training data.
 
 Deeper networks tend to learn the constant function, resulting in a strong inductive bias towards the training output regardless of the specific input. This behavior is similar to that of a deep ReLU network, as shown in the figure comparing deep FCN and deep ReLU networks.
 
-{% include figure.html path="assets/img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2_compareFCNReLU.png" class="img-fluid" %}
 
 Zhang et al. [2020] <d-cite key="DBLP:conf/iclr/ZhangBHMS20"></d-cite> conclude that more complex network architectures are more prone to memorization. This finding aligns with statistical learning theory, as a more complex architecture has more parameters and, therefore, more overparameterization.
 
@@ -124,7 +124,7 @@ A better understanding of the evolution of the output can be obtained by examini
 
 <div class="l-page">
 
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="450px"></iframe>
+  <iframe src="{{ 'assets/html/2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/CNNs_intermedLayers.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="450px"></iframe>
 </div>
 
 
@@ -144,7 +144,7 @@ The first figure in this post shows that CNNs have better generalization capabil
 
 <div class="l-page" style="width: 704px; margin: auto;">
 
-  <iframe src="{{ 'assets/html/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/plot.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="480px"></iframe>
+  <iframe src="{{ 'assets/html/2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/plot.html' | relative_url }}" frameborder='0' scrolling='no' width="100%" height="480px"></iframe>
 </div>
 
 

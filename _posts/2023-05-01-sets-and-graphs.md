@@ -2,7 +2,7 @@
 layout: distill
 title: Universality of Neural Networks on Sets vs. Graphs
 description: Universal function approximation is one of the central tenets in theoretical deep learning research. It is the question of whether a specific neural network architecture is, in theory, able to approximate any function of interest. The ICLR paper “How Powerful are Graph Neural Networks?” shows that mathematically analysing the constraints of an architecture as a universal function approximator and alleviating these constraints can lead to more principled architecture choices, performance improvements, and long-term impact on the field. Specifically in the fields of learning on sets and learning on graphs, universal function approximation is a well-studied property. The two fields are closely linked because the need for permutation invariance in both cases leads to similar building blocks. However, we argue that these two fields have sometimes evolved in parallel, not fully exploiting their synergies. This post aims at bringing these two fields closer together, particularly from the perspective of universal function approximation.
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -20,7 +20,7 @@ authors:
       name: (*equal contribution)
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-sets-and-graphs.bib  
+bibliography: 2023-05-01-sets-and-graphs.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -59,14 +59,14 @@ _styles: >
 
 Before we dive into<d-footnote>It is important to briefly focus on declaring the *conflict of interest* we had while writing this blog. We are actively working on set and graph representation learning. Accordingly, several paragraphs of this write-up focus on papers that we have co-written. That being said, and in the context of ICLR, we declare that the majority of the ICLR papers referenced in this blog post do _not_ present a conflict of interest for us. Hence, we believe we have, to the best of our efforts, provided an objective and impartial view of learning universal representations over graphs and sets.</d-footnote> universal function approximation, let's start with the basics. What do we mean by learning on set- or graph-based data? In both cases, we assume no ordering (we will more formally describe this at the end of this section as the task being permutation _invariant_ or _equivariant_). A graph is typically thought of as a set of nodes with edges between the nodes. A set doesn't have edges, it just has the nodes, although we often don't call them nodes, but rather set elements. Both the nodes and the edges (in the case of graphs) can have feature vectors attached to them. The figure below (originally from Wagstaff et al. 2021<d-cite key="wagstaff21"></d-cite>) visualises this relationship:
 
-{% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_graphsandsets.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-sets-and-graphs/graphsuniv_graphsandsets.png" class="img-fluid" %}
 
 Examples of machine learning tasks on this type of data include 3D point cloud classification (a function mapping a set of coordinates to an object class) and molecular property prediction (a function mapping a molecular graph to, e.g., a free energy value).
 
 So, what are invariance and equivariance? Both concepts describe how the output of a function (or task) changes under a transformation of the input. Transformation can mean different things, but we restrict ourselves to permutations here for simplicity. A function $$f$$ is permutation *invariant* if the output does not change as the inputs are permuted. The left-hand side of the following figure below visualises that concept:
 
 
-{% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_permutations.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-sets-and-graphs/graphsuniv_permutations.png" class="img-fluid" %}
 
 The right-hand side depicts permutation _equivariance:_ changing the order of the input implies a change in the order of the output (but the values themselves remain unchanged).
 
@@ -100,7 +100,7 @@ The first part says: any concrete implementation of a 'universal' network archit
 
 One of the seminal papers discussing both permutation invariant neural networks and universal function approximation was Deep Sets by Zaheer et al. in 2017<d-cite key="Zaheer2017"></d-cite>. The idea is simple: apply the same neural network $$\phi$$ to several inputs, sum up their results, and apply a final neural network $$\rho$$.<d-footnote>Figure from Wagstaff et al. 2021.</d-footnote>
 
-{% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_deepsets.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-sets-and-graphs/graphsuniv_deepsets.png" class="img-fluid" %}
 
 
 Because the sum operation is permutation invariant, the final output is invariant with respect to the ordering of the inputs. In other words, the sum quite obviously restricts the space of learnable functions to permutation invariant ones. The question is, can a neural network with this architecture, in principle, learn _all_ (continuous) permutation invariant functions? Perhaps surprisingly, the authors show that all functions can indeed be represented with this architecture. The idea is a form of binary bit-encoding in the output of $$\phi$$, which we will call the _latent space_ from here on. Concretely, they argue that there is a bijective mapping from rational to natural numbers. Assuming that each input is a rational number, they first map each rational number $$x$$ to a natural number $$c(x)$$, and then each natural number to $$\phi(x) = 4^{-c(x)}$$. It is now easy to see that $$\sum_i \phi(x_i) \neq \sum_i \phi(y_i)$$ unless the finite sets $$ \\{ x_0, x_1, ... \\} $$ and $$\\{y_0, y_1, ...\\}$$ are the same. Now that we uniquely encoded each input, a universal decoder can map this to any output we want. This concludes the proof that the Deep Sets architecture is, in theory, a universal function approximator, despite its simplicity.
@@ -161,7 +161,7 @@ Summations $$\left(\bigoplus=\sum\right)$$, however, are an example of a suitabl
 
 Very similarly to the analysis from Wagstaff et al. in the domain of sets, a similar extension in the domain of graphs came through the work on [_principal neighbourhood aggregation_](**PNA**) by Corso, Cavalleri et al.<d-cite key="Corso"></d-cite>. We already discussed why it is a good idea to focus on features coming from $$\mathbb{R}$$ rather than $$\mathbb{Q}$$---the universal approximation theorem only applies to functions that are continuous on $$\mathbb{R}$$. However, it turns out that, when we let $$x_i, y_i\in\mathbb{R}$$, it is easily possible to construct neighbourhood multisets for which setting $$\bigoplus=\sum$$ would **not** preserve injectivity: 
 
-{% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_examples.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-sets-and-graphs/graphsuniv_examples.png" class="img-fluid" %}
 
 In fact, PNA itself is based on a proof that it is _impossible_ to build an injective function over multisets with real-valued features using _any_ **single** aggregator. In general, for an injective function over $$n$$ neighbours, we need _at least_ $$n$$ aggregation functions (applied in parallel). PNA then builds an empirically powerful aggregator combination, leveraging this insight while trying to preserve numerical stability.
 
@@ -190,7 +190,7 @@ This process continues as long as the _histogram_ of $$x_i^{(t)}$$ changes---ini
 
 While remarkably simple, the WL test can accurately distinguish most graphs of real-world interest. It does have some rather painful failure modes, though; for example, it cannot distinguish a 6-cycle from two triangles!
 
-{% include figure.html path="assets/img/2022-12-01-sets-and-graphs/graphsuniv_wlfail.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-sets-and-graphs/graphsuniv_wlfail.png" class="img-fluid" %}
 
 This is because, locally, _all nodes look the same_ in these two graphs, and the histogram never changes.
 

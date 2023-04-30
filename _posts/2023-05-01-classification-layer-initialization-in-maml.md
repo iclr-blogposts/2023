@@ -2,7 +2,7 @@
 layout: distill
 title: Strategies for Classification Layer Initialization in Model-Agnostic Meta-Learning
 description: [This blog post discusses different strategies for initializing the classification layers parameters before fine-tuning on a new task in Model-Agnostic Meta-Learning. Each of the strategies in question has emerged from a different problem, and it will be analyzed whether one approach can solve the problems addressed by the other approaches.]
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 # anonymize when submitting 
@@ -25,7 +25,7 @@ authors:
        name: TU Berlin
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-classification-layer-initialization-in-maml.bib  
+bibliography: 2023-05-01-classification-layer-initialization-in-maml.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -112,7 +112,7 @@ an approach called <strong>UnicornMAML</strong> is presented. It is explicitly m
 <br/><br/>
 
 
-{% include figure.html path="assets/img/2022-12-01-classification-layer-initialization-in-maml/perm_final.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-classification-layer-initialization-in-maml/perm_final.png" class="img-fluid" %}
 
 <p align = "center">
 <em>Fig.1 Example of MAML and a class label permutation <d-cite key="DBLP:conf/iclr/YeC22"></d-cite>. We can see the randomness introduced, as $\mathbf{w_1}$ is supposed to interpret the input features as "unicorn" for the first task and as "bee" for the second. For both tasks, the class outputted as a prediction should be the same, as in human perception, both tasks are identical. This, however, is obviously not the case.</em>
@@ -133,7 +133,7 @@ This collapses the models meta-parameters to $ \theta = \\{\mathbf{w}, \phi\\} $
 <br/><br/>
 
 
-{% include figure.html path="assets/img/2022-12-01-classification-layer-initialization-in-maml/unicorn_maml_final.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-classification-layer-initialization-in-maml/unicorn_maml_final.png" class="img-fluid" %}
 
 <p align = "center">
 <em>Fig.2 Overview of UnicornMAML <d-cite key="DBLP:conf/iclr/YeC22"></d-cite>. We can see that class label permutations don't matter anymore, as before fine-tuning, the probability of predicting each class is the same.</em>
@@ -178,7 +178,8 @@ Kao et al. [2022] <d-cite key="DBLP:conf/iclr/KaoCC22"></d-cite> modify the orig
 An overview of MAML with the zeroing trick is displayed below:
 
 <div class="l-page">
-  <iframe src="{{ 'assets/html/2022-12-01-classification-layer-initialization-in-maml/algorithm.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="400px"></iframe>
+  <iframe src="{{ 'assets/html/2023-05-01
+-classification-layer-initialization-in-maml/algorithm.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="400px"></iframe>
 </div>
 
 

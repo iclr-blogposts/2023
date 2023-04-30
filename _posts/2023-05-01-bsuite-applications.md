@@ -8,7 +8,7 @@ description: In 2019, researchers at DeepMind published a suite of reinforcement
   or handle delayed rewards. In this blog post, we extend their work by providing specific examples 
   of how bsuite can address common challenges faced by reinforcement learning practitioners 
   during the development process.
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -21,7 +21,7 @@ authors:
       name: USA
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-bsuite-applications.bib  
+bibliography: 2023-05-01-bsuite-applications.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -117,7 +117,7 @@ The bsuite evaluation of an agent yields a radar chart (Fig. 1) that displays th
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar01.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar01.png" class="img-fluid" %}
 
 </div>
 <div class="caption">
@@ -128,7 +128,7 @@ An example environment is *deep sea* that targets exploration power. As shown in
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/diagram02.png" class="img-fluid asdf" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/diagram02.png" class="img-fluid asdf" %}
 
 <div class="caption">
     Figure 2. Illustration of deep sea environment taken from <d-cite key="osband_behaviour_2020"></d-cite>.
@@ -177,7 +177,7 @@ Example: Figure 3 shows the performance of the Stable-Baselines3 (SB3) implement
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar11.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar11.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 3. Comparison of SB3 default DQN, A2C, and PPO baseline algorithms.
@@ -192,7 +192,7 @@ Example: Figure 4 compares our default DQN implementation against the example DQ
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar12.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar12.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 4. Comparison of SB3 DQN and bsuite DQN.
@@ -208,7 +208,7 @@ Example: Figure 5 compares the default DQN implementation when varying replay bu
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar13.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar13.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 5. Comparison of DQN with varying buffer sizes.
@@ -231,7 +231,7 @@ Example: Figure 6 shows the performance of the default DQN agent versus an agent
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar21.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar21.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 6. Comparison of DQN with and without reward normalization.
@@ -247,7 +247,7 @@ Example: Figure 7 shows the results of PPO with a recurrent network versus PPO h
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar22.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar22.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 7. Comparison of PPO with frame stacking and PPO with RNN.
@@ -269,7 +269,7 @@ Example: Figure 8 shows the results of running PPO with various entropy bonus co
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar31.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar31.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 8. Comparison of default PPO with varying entropy bonuses.
@@ -284,7 +284,7 @@ Example: Figure 9 shows the results of default DQN with varying learning rates o
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar32.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar32.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 9. Comparison of default DQN with varying learning rates.
@@ -298,7 +298,7 @@ Example: Figure 10 shows the performance of DQN with various epsilon-greedy expl
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar33.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar33.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 10. Comparison of default DQN with varying epsilon annealing lengths.
@@ -319,7 +319,7 @@ Example: Figure 11 shows the default PPO implementation against a PPO implementa
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar41.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar41.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 11. Comparison of default PPO with miscoded PPO.
@@ -334,7 +334,7 @@ Example: Figure 12 shows the results of the SB3 DQN with our default experimenta
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar42.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar42.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 12. Comparison of DQN with small and large burn-in.
@@ -356,7 +356,7 @@ Example: Figure 13 shows the results of PPO against PPO with a recurrent neural 
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar51.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar51.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 13. Comparison of default PPO with PPO RNN.
@@ -371,7 +371,7 @@ Example: Figure 14 shows the results of our default DQN compared against the SB3
 
 <div style="text-align: center;">
 
-{% include figure.html path="assets/img/2022-12-01-bsuite-applications/radar52.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-bsuite-applications/radar52.png" class="img-fluid" %}
 
 <div class="caption">
     Figure 14. Comparison of DQN with QRDQN variants.

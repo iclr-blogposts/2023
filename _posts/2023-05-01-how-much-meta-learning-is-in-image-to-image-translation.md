@@ -2,7 +2,7 @@
 layout: distill
 title: How much meta-learning is in image-to-image translation?
 description: ...in which we find a connection between meta-learning literature and a paper studying how well CNNs deal with nuisance transforms in a class-imbalanced setting. Closer inspection reveals a surprising amount of similarity - from meta-information to loss functions. This implies that the current conception of meta-learning might be too narrow.
-date: 2022-12-01
+date: 2023-05-01
 htmlwidgets: true
 
 authors:
@@ -20,7 +20,7 @@ authors:
       name: TU Berlin 
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-how-much-meta-learning-is-in-image-to-image-translation.bib  
+bibliography: 2023-05-01-how-much-meta-learning-is-in-image-to-image-translation.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -47,7 +47,7 @@ If we train a Convolutional Neural Net (CNN) to classify animals on a set of ran
 
 We might expect a sophisticated learner to look at the entire dataset, recognize the random brightness modifications across all species of animal and henceforth ignore brightness when making predictions. If this applied to our experiment, the CNN would be similarly good at ignoring lighting variations on all animals. Furthermore, we would expect the CNN to become more competent at ignoring lighting variations in proportion to **the total amount of images**, irrespective of which animal they depict. 
 
-{% include figure.html path="assets/img/2022-12-01-how-much-meta-learning-is-in-image-to-image-translation/CONCEPTUAL_DIAGRAM.svg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-much-meta-learning-is-in-image-to-image-translation/CONCEPTUAL_DIAGRAM.svg" class="img-fluid" %}
 
 Zhou et al.<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> show that a CNN does not behave like this: When using a CNN on a **class-imbalanced** classification task with random nuisance transformations, the CNNs invariance to the transformation is proportional to the size of the training set **for each class**. This finding suggests CNNs don't **transfer invariance** between classes when learning such a classification task.
 
@@ -109,7 +109,7 @@ If the learner is invariant to the transformation, the predicted probability dis
 
 The result: eKLD falls with class size. This implies that the CNN does not learn that there are the same nuisance transformations on all images and therefore does not transfer this knowledge to the classes with less training data. A CNN learns invariance **separately for each class** (see also Zhou et al.<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> section 3.2). 
 
-{% include figure.html path="assets/img/2022-12-01-how-much-meta-learning-is-in-image-to-image-translation/EKLD.svg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-much-meta-learning-is-in-image-to-image-translation/EKLD.svg" class="img-fluid" %}
 
 
 ## How is this a meta-learning experiment? 
@@ -145,13 +145,13 @@ Zhou et al.<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> don't stop there.
 
 MUNIT networks are capable of performing image-to-image translation, which means that they can translate an image from one domain, such as pictures of leopards, into another domain, such as pictures of house cats. The translated image should look like a real house cat while still resembling the original leopard image. For instance, if the leopard in the original image has its eyes closed, the translated image should contain a house cat with closed eyes. Eye state is a feature present in both domains, so a good translator should not alter it. On the other hand, a leopard's fur is yellow and spotted, while a house cat's fur can be white, black, grey, or brown. To make the translated images indistinguishable from real house cats, the translator must thus replace leopard fur with house cat fur.
 
-{% include figure.html path="assets/img/2022-12-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_ENCODING.svg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_ENCODING.svg" class="img-fluid" %}
 
 MUNIT networks learn to perform translations by correctly distinguishing the domain-agnostic features (such as eye state) from the domain-specific features (such as the distribution of fur color). They embed an image into two latent spaces: a content space that encodes the domain-agnostic features and a style space that encodes the domain-specific features (see figure above).
 
 To transform a leopard into a house cat, we can encode the leopard into a content and a style code, discard the leopard-specific style code, randomly select a cat-specific style code, and assemble a house cat image that looks similar by combining the leopard's content code with the randomly chosen cat style code (see figure below).
 
-{% include figure.html path="assets/img/2022-12-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_TRANSLATION.svg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_TRANSLATION.svg" class="img-fluid" %}
 
 Zhou et al.<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite> modify the process of using MUNIT to transfer images between domains. They do not use MUNIT to translate images **between** domains but **within** a domain. The MUNIT network exchanges the style code of an image with another style code of the same domain. For example, if the domain is house cats, the MUNIT network might translate a grey house cat into a black one. The learning task in this single-domain application of MUNIT is to decompose example-agnostic content features from example-specific style features so that the translated images still look like house cats. For example, fur color is a valid style feature for translating within the 'house cat' domain because every house cat has a fur color. A translator only switching fur color is hard to detect.
 
@@ -220,7 +220,7 @@ where $ \theta $ are the model parameters updated in the inner loop, $ \mathcal{
 
 While not adhering to Francheschi et al.'s [2018] notion of a meta-learner as "nesting two search problems", it turns out that the loss functions of MUNIT can be similarly decomposed:
 
-{% include figure.html path="assets/img/2022-12-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_LOSS.svg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-05-01-how-much-meta-learning-is-in-image-to-image-translation/MUNIT_LOSS.svg" class="img-fluid" %}
 
 
 MUNIT's loss function consists of two adversarial (GAN) <d-cite key="DBLP:conf/nips/GoodfellowPMXWOCB14"></d-cite> loss terms (see figure above) with several auxiliary reconstruction loss terms. To keep the notation simple, we combine all reconstruction terms into a joined reconstruction loss $ \mathcal{L}_{recon}(\theta_c, \theta_s) $, where $ \theta_c $ are the parameters of the *content* encoding/decoding networks and $ \theta_s $ are the parameters of the *style* encoding/decoding networks. We will only look at one of the two GAN losses in detail since they are symmetric, and one is discarded entirely when MUNIT is used on a single domain in the fashion of Zhou et al.<d-cite key="DBLP:conf/iclr/ZhouTRKPHF22"></d-cite>.
