@@ -40,7 +40,7 @@ toc:
       - name: MAML's SCL Intuition
   - name: Initialization using prototypes
   - name: What else is there?
-  - name: Conclusion & Discussion
+  - name: Conclusion and Discussion
 ---
 
 
@@ -178,8 +178,7 @@ Kao et al. [2022] <d-cite key="DBLP:conf/iclr/KaoCC22"></d-cite> modify the orig
 An overview of MAML with the zeroing trick is displayed below:
 
 <div class="l-page">
-  <iframe src="{{ 'assets/html/2023-05-01
--classification-layer-initialization-in-maml/algorithm.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="400px"></iframe>
+  <iframe src="{{ 'assets/html/2023-05-01-classification-layer-initialization-in-maml/algorithm.html' | relative_url }}" frameborder='0' scrolling='no' width="100%"  height="400px"></iframe>
 </div>
 
 
@@ -274,7 +273,7 @@ LEO deviates from the initialization scheme, however, as optimization is done in
 
 Another related method is called MetaOptNet <d-cite key="DBLP:conf/cvpr/LeeMRS19"></d-cite>. In this approach, convex base learners, like support vector machines, are used as the classification head. Those can be optimized till convergence, which solves, e.g., the problem of varying performance due to random class label orderings.
 
-## Conclusion & Discussion
+## Conclusion and Discussion
 To conclude, we've seen that a variety of problems can be tackled by using initialization strategies for MAML's linear classification head, including:
 - Varying performance due to random class label orderings
 - Ability of MAML to work on datasets where the number of classes per task varies
