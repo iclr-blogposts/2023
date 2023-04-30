@@ -17,16 +17,58 @@ subtitle:
 # social: false  # includes social icons at the bottom of the page
 ---
 
-> **Announcement**: the submission deadline has been slightly modified. 
-> - **February 2nd AOE** is now an *abstract deadline*; please submit this on [OpenReview](https://openreview.net/group?id=ICLR.cc/2023/BlogPosts&referrer=%5BHomepage%5D(%2F)).
-> - **February 10th AOE** is the deadline for any modifications to your blog posts (via a [pull request on github](https://github.com/iclr-blogposts/staging/pulls)).
-> - **April 28th AOE** is the deadline for the camera-ready submission. Please follow the instructions [here]({{ '/submitting#camera-ready-instructions' | relative_url }}).
-- If you are going to be presenting a poster in-person, please add the [blog post track sticker]({{ '/assets/pdf/sticker.pdf' | relative_url }}) to your poster.
->
-> See the [submission instructions]({{ '/submitting#submitting-your-blog-post' | relative_url }}) for more details.
+**Announcements**: 
+- The track has concluded and accepted blogposts are viewable [here]({{ '/blog' | relative_url }})!
+- The poster session for the blog track will take place at **11:30** on **Tuesday May 2nd** in room **MH1-2-3-4**. 
+  - Check [here](https://iclr.cc/virtual/2023/workshop/14478) for more information, and come by to check out the posters!
+
+## Contents
+
+- [Accepted Posts](#accepted-posts)
+- [ICLR 2023 Blogposts Track](#iclr-2023-blogposts-track)
+- [Key Dates](#key-dates)
+- [Submissions](#submissions)
+- [Organizers](#organizers)
 
 
-# ICLR 2023 Blogposts Track
+## Accepted Posts
+
+**[How does the inductive bias influence the generalization capability of neural networks?]({% post_url 2023-05-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Charlotte Barth, Thomas Goerttler, Klaus Obermayer_
+
+**[Universality of Neural Networks on Sets vs. Graphs]({% post_url 2023-05-01-sets-and-graphs %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Fabian B. Fuchs, Petar Veličković_
+
+**[Data Poisoning is Hitting a Wall]({% post_url 2023-05-01-facial-poisoning %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Rajat Sahay_
+
+**[Decay No More]({% post_url 2023-05-01-adamw %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Fabian Schaipp_
+
+**[Rethinking the Implementation Tricks and Monotonicity Constraint in Cooperative Multi-agent Reinforcement Learning]({% post_url 2023-05-01-riit %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Jian Hu, Siying Wang, Siyang Jiang, Weixun Wang_
+
+**[Autoregressive Renaissance in Neural PDE Solvers]({% post_url 2023-05-01-autoregressive-neural-pde-solver %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Yolanne Lee_
+
+**[A Hitchhiker's Guide to Momentum]({% post_url 2023-05-01-hitchhikers-momentum %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Fabian Pedregosa_
+
+**[Thinking Like Transformers]({% post_url 2023-05-01-raspy %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Alexander Rush, Gail Weiss_
+
+**[Strategies for Classification Layer Initialization in Model-Agnostic Meta-Learning]({% post_url 2023-05-01-classification-layer-initialization-in-maml %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Nys Tjade Siegel, Thomas Goerttler, Klaus Obermayer_
+
+**[Practical Applications of Bsuite For Reinforcement Learning]({% post_url 2023-05-01-bsuite-applications %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Loren Anderson, Nathan Bittner_
+
+**[How much meta-learning is in image-to-image translation?]({% post_url 2023-05-01-how-much-meta-learning-is-in-image-to-image-translation %})**
+: &nbsp;&nbsp;&nbsp;&nbsp; _Maximilian Eißler, Thomas Goerttler, Klaus Obermayer_
+
+
+
+## ICLR 2023 Blogposts Track
 
 The Machine Learning community is currently experiencing a
 [reproducibility crisis](https://neuripsconf.medium.com/designing-the-reproducibility-program-for-neurips-2020-7fcccaa5c6ad)
