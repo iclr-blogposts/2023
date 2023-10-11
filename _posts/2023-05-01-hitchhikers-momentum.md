@@ -265,7 +265,7 @@ difference between the current and the previous iterate $$(\xx_{t} - \xx_{t-1})$
 
 Despite its simplicity, gradient descent with momentum exhibits unexpectedly rich dynamics that we'll explore on this post. 
 
-### History and relatex work
+### History and related work
 
 The origins of momentum can be traced back to Frankel's method in the 1950s for solving linear system of equations.<d-cite key="frankel1950convergence"></d-cite> It was later generalized by Boris Polyak to non-quadratic objectives<d-cite key="polyak1964some"></d-cite>.
 While the quadratic case is by now well understood, the general strongly convex case has instead had some fascinating developments in the last years.
